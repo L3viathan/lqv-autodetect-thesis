@@ -1,0 +1,21 @@
+\begin{thebibliography}{}
+
+\bibitem[Finkel et~al., 2005]{stanfordNER}
+Finkel, J.~R., Grenager, T., and Manning, C. (2005).
+\newblock Incorporating non-local information into information extraction
+  systems by gibbs sampling.
+\newblock In {\em Proceedings of the 43rd Annual Meeting on Association for
+  Computational Linguistics}, pages 363--370. Association for Computational
+  Linguistics.
+
+\bibitem[Graff et~al., 2003]{gigaword}
+Graff, D., Kong, J., Chen, K., and Maeda, K. (2003).
+\newblock English gigaword.
+\newblock {\em Linguistic Data Consortium, Philadelphia}.
+
+\bibitem[Valeeva, 2013]{valeeva}
+Valeeva, M. (2013).
+\newblock Annotation of factors of linguistic quality for multi-document
+  summarization.
+
+\end{thebibliography}

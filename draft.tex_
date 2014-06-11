@@ -1,0 +1,207 @@
+\documentclass[a4paper,10pt]{scrartcl}
+\usepackage{ngerman}
+\usepackage{amsmath, amsfonts, epsfig, xspace}
+%\usepackage[LGRx,T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage[greek,english]{babel}
+\usepackage{algorithm,algorithmic}
+\usepackage[normal,tight,center]{subfigure}
+\setlength{\subfigcapskip}{-.5em}
+\usepackage{color}
+\definecolor{Red}{RGB}{255,0,0}
+\definecolor{Blue}{RGB}{0,0,255}
+
+%\newcommand{\textgreek}[1]{\begingroup\fontencoding{LGR}\selectfont#1\endgroup}
+
+\newcommand{\cn}{$^\text{[citation needed] }$}
+
+\author{Jonathan Oberländer}
+
+\title{Draft}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+The task of summarizing a text to shrink it down to a fraction of its size while retaining the essence of the text has received much attention in the last years$^\text{[citation needed]}$. Summarization systems can be divided in abstractive (systems that try to extract the \textit{semantics} of a text and build a new one using the information gathered) and extractive systems (that select a subset of the sentences or phrases of the source text to present the most important parts only), the latter of which currently are considered more popular and capable.
+
+To measure the performance of summarization systems, different aspects of the result can be considered: The most popular systems used (\textit{\textsc{Rogue}}, Lin, 2004; and \textit{Pyramid}, Nenkova \& Passonneau, 2004) put weight on \textit{content selection}, but while good content selection is a necessary condition for a good summary it is not a sufficient one.
+
+We are taking a look at \textit{readability} as defined by \textcolor{Red}{Valeeva et al. (2013)}, meaning linguistic quality in several aspects.
+
+The goal of this work is to create a system that annotates summaries with scores for various violation types that are used in the LQVCorpus by Valeeva et al. We start with the violation type \texttt{other\_{}ungrammatical\_{}form}, meaning general ungrammaticality.
+
+%The most commonly used evaluation measures used to test the performance of summarization systems are the automatic \textsc{Bleu} method (Papineni et al., 2002), originally designed for the evaluation of Machine Translation, and the Pyramid score (Nenkova \& Passonneau, 2004), based on evaluation by human judges. \textsc{Bleu} requires human-annotated summaries of the same source document and is therefore only \textcolor{Red}{foo bar}.
+
+%Pyramid scores and also the scores used at the Document Understanding Conference
+
+\section{Related Work}
+
+Chodorow \& Leacock (2000) detect grammatical errors by inferring negative evidence from textual corpora on the domain of TOEFL essay grading. Their approach consists of training on selected words (\textit{knowledge}, \textit{concentrate} and \textit{interest}, because they occur often in TOEFL tests and can be used to find common mistakes of language learners. In our domain, where we want to check for grammaticality of sentences from summaries, we have different kinds of errors as the source texts are expected to be grammatical. Their system also results in an overall grammaticality which isn't of much use if we want to annotate ungrammaticality per sentence.
+
+Brockett et al. (2006) and Sun et al. (2007) use similar approaches, also directed at detecting typical L2 learners' mistakes, Bender et al. (2004) even use hand-written rules for a few common errors.
+
+Wagner et al. (2007) compare several approaches to detect grammatical errors: They first look into deep processing using the XLE LFG tagger, either by using XLE directly to perform the classification or by using a decision tree trained on features from XLE's output statistics. The other, shallow approaches consists of classification via frequency thresholds or decision trees trained on the rarest POS n-grams in the input sentence. And finally, they combine the deep and shallow decision tree features, which results in the best results. In case our approach doesn't meet our requirements, we will look into an adaption of some of the described methods.
+
+%\# Coreference Problems (antecedents, first mention without ..., etc. pp.)
+%I couldn't find papers on evaluating sentences by means of coreference, but my approach could be to do coreference resolution with some state-of-the-art tool on the source and the summary, and then compare whether the same words are in the same set. That evaluates the coreference system alongside the summary, though.
+
+%-use certainty of resolution?
+
+%\# unrelatedness
+
+
+
+%\# redundancy
+
+\section{Experiments}
+
+As training corpus, I used a subset of the Gigaword corpus (afe) in its raw and POS-tagged form. The data was split in 5 parts, where the first part was used for training, the second one for first evaluations while the last three were reserved for future use. Using the SRI Language Modeling Toolkit (http://www.speech.sri.com/projects/srilm/) a model was trained on the raw text (afe-1.model.grammatical) and on the POS-tagged text (afe-1.pos.model.grammatical):\\
+
+\texttt{ngram-count -unk -text \textit{input} -lm \textit{output}}\\
+
+To detect typical incomplete sentences, a cutoff corpus was created based on the grammatical data, and a model each (afe-1.model.cutoff and afe-1.pos.model.cutoff) trained on cutoff raw and POS-tagged data. To create cutoff data, a simple sed command was used to delete the last three words per sentence:\\
+
+\texttt{sed 's/\textbackslash{}S*\textbackslash{}s\textbackslash{}S*\textbackslash{}s\textbackslash{}S*\$//' <\textit{input} >\textit{output}}\\
+
+Using the second parts of the corpora as evaluation texts, first, average perplexity values were calculated by testing both the original and the cutoff texts on the grammatical and cutoff models:\\
+
+\texttt{ngram -unk -ppl \textit{input} -lm \textit{model}}\\
+
+\begin{table}
+\label{ppl1results}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+& \textbf{Grammatical Model} & \textbf{Cutoff Model}\\
+\hline
+\textbf{Grammatical Text} & $371.434$ / $481.907$ & $535.22$ / $705.658$ \\
+\hline
+\textbf{Cutoff Text} & $441.76$ / $598.157$ & $364.081$ / $488.256$ \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Average perplexity for raw text (Cutoff). The first number denotes the normal perplexities (ppl), the second one perplexities excluding end-of-sentence-tags (ppl1).}
+\end{table}
+
+\begin{table}
+\label{ppl2results}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+& \textbf{Grammatical Model} & \textbf{Cutoff Model}\\
+\hline
+\textbf{Grammatical Text} & $7.94769$ / $8.60945$ & $10.98$ / $12.0435$ \\
+\hline
+\textbf{Cutoff Text} & $10.9481$ / $12.1501$ & $8.76886$ / $9.63802$ \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Average perplexity for POS-tagged text (Cutoff). The first number denotes the normal perplexities (ppl), the second one perplexities excluding end-of-sentence-tags (ppl1).}
+\end{table}
+
+The results are shown in Table \ref{ppl1results} and \ref{ppl2results}. The first value in each cell stands for perplexity on all input tokens and the second one for a perplexity measure that excludes end-of-sentence tags (that are automatically added to the model). It is not surprising that the absolute values are lower for the POS-tagged text, since there is a much smaller number of different POS tags than there are different words in the corpus. The (desired) effect is actually much more visible in Table \ref{ppl2results}: The perplexity is low when testing a text on the corresponding model, but rather high when testing on the other model. 
+
+To better simulate ungrammatical sentences in a more general way, a second way of modification was applied to the raw text to produce what we call the ungrammatical data: Using a python script, every third word was deleted. The script randomized whether to start the deletion with the first, second or third token per sentence.
+
+\begin{table}
+\label{ppl3results}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+& \textbf{Grammatical Model} & \textbf{Ungrammatical Model}\\
+\hline
+\textbf{Grammatical Text} & $371.434$ / $481.907$ & $794.225$ / $1065.49$ \\
+\hline
+\textbf{Ungrammatical Text} & $2512.59$ / $4209.89$ & $860.287$ / $1343.09$ \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Average perplexity for raw text (Ungrammatical)}
+\end{table}
+
+\begin{table}
+\label{ppl4results}
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+& \textbf{Grammatical Model} & \textbf{Ungrammatical Model}\\
+\hline
+\textbf{Grammatical Text} & $7.94769$ / $8.60945$ & $12.0692$ / $13.2866$ \\
+\hline
+\textbf{Ungrammatical Text} & $23.1292$ / $27.7389$ & $12.4588$ / $14.4164$ \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Average perplexity for POS-tagged text (Ungrammatical)}
+\end{table}
+
+The result when comparing the grammatical and ungrammatical data looks even more promising, it is presented in Tables \ref{ppl3results} and \ref{ppl4results}. It almost seems like using a text model rather than a POS-tagged one would give better results.
+
+However, these are just average values. To be useful, there shouldn't be to much variation in the individual sentences. To evaluate the distributions, the perplexities were calculated per-sentence and their densities plotted (see Figure \ref{graph1}). The black line is the grammatical text, the red one the cutoff and the blue one the ungrammatical. To be able to classify a given sentence into one or the other class, we will have to set a threshold. As a start, the point where the two densities meet (around 854.9117) was found using the R-command
+\begin{verbatim}
+d1$x[abs(d1$y-d3$y) < 0.00001]
+\end{verbatim}
+where \texttt{d1} and \texttt{d3} were the two densities.
+
+In comparism, \ref{graph2} shows the same graph, but with the POS-tagged model and sentences. This seems rather promising in the detection of incomplete sentences.
+
+\begin{figure}
+\label{graph1}
+\begin{center}
+\includegraphics[scale=0.4]{plot-Mgram.png}
+\end{center}
+\caption{Grammatical vs. \textcolor{Red}{cutoff} vs. \textcolor{Blue}{ungrammatical} text on the grammatical model (ppl)}
+\end{figure}
+
+\begin{figure}
+\label{graph2}
+\begin{center}
+\includegraphics[scale=0.4]{plot-Mgram-pos.png}
+\end{center}
+\caption{Grammatical vs. \textcolor{Red}{cutoff} vs. \textcolor{Blue}{ungrammatical} POS on the grammatical POS model (ppl)}
+\end{figure}
+
+As another experiment, the LQVCorpus was split into sentences (using Stanford CoreNLP) and every sentence was classified with the model and the obtained threshold. In addition, the existing human judgements were extracted and projected onto the sentence units.
+
+With the obtained threshold for testing for ungrammaticality on the grammatical model, the manual annotations of ungrammaticality (\texttt{other\_{}ungrammatical\_{}form}) from the LQVCorpus were transferred onto their respective sentences and compared to the models decision for that sentence. The performance, which can be seen in table~\ref{expresults}, is a disappointing precision of 12.405\% with a recall of 61.089\% and an overall accuracy of 54.90\%. It is clear that the model is too aggressive, a different threshold might improve the performance, but it is also clear that this model will never reach high scores.
+
+\begin{table}
+\label{expresults}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+\textit{Model} { } \textbackslash{ } \textit{Gold} & \textbf{Grammatical} & \textbf{Ungrammatical}\\
+\hline
+\textbf{Grammatical} & 3852 & 293 \\
+\hline
+\textbf{Ungrammatical} & 3248 & 460 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Cross tabulation for our model's assignment of ungrammaticality with the threshold derived from the gigaword data. The numbers are the amount of sentences with the given classification.}
+\end{table}
+
+To further analyse the issue, a closer look was taken into the LQVCorpus in regards to the \texttt{other\_{}ungrammatial\_{}form} type. The fifth of the corpus the models were trained on was looked through manually, and the conclusion was that there are several subtypes of ungrammaticality that behave very differently (see Figure~\ref{subtypes}). More than half of the faulty sentences were ungrammatical because they contained nonwords composed of two words without a space inbetween. It therefore seems to be good to test for individual subtypes to achieve higer results.
+
+\begin{figure}
+\label{subtypes}
+\begin{center}
+\includegraphics[scale=0.4]{subtypes.png}
+\end{center}
+\caption{\textbf{Subtypes of ungrammaticality.} A: Words mashed together without spaces. B: Not ungrammatical in my judgement. C: Missing articles/pronouns. D: Punctuation errors. E: Capitalisation errors. F: Different sentences mashed together. G: Heading in text. H: Sentence cut-off at beginning. I: Should be \texttt{incomplete\_{}sentence}. J: URL in text.}
+\end{figure}
+
+Because of the intuition of error types and the high occurence of subtype A (Words mashed together without spaces), a primitive baseline was created to only test for that: A list of known tokens was generated from 20\% of the AFE part of gigaword again, and every sentence in the test set was tested for unknown tokens. Sentences with potentially unknown tokens were then fed into the Stanford NER to exclude named entities. This primitive baseline (without looking much into false positives) already got precision and recall of 42\% and an accuracy of 65\% on the test set. This seems low, but the reader should bear in mind that this was compared to the gold standard of ungrammaticality, of which, according to the detailed look into the development set, only about 54\% were of the desired subtype. This means the performance is capped at about that percentage. The author also believes the baseline could be improved by cleaning the tokens a bit better.
+
+Next, we looked into using the output of a parser to detect ungrammatical sentences. Wagner et al. used the XLE LFG parser, which, given a sentence, marks parses with a \texttt{*} if the parse uses dispreffered structures. To further improve upon that, they also used parser output statistics, including that markedness, number of subtrees, number of words, and parsing time to compute decision trees. \texttt{//waiting for grammar}
+
+We could also try parsing sentences with a constituency parser and use the likelyhood(s) of the most likely parse(s) to decide grammaticality or at least use that as a feature for e.g. training the decision trees, but we might have to make sure that every sentence will yield a parse. Quoting the Stanford Parser FAQ though,
+\textit{``One could attempt to assess grammaticality by looking at the probabilities that the parser returns for sentences, but it is difficult to normalize this number to give a useful "grammaticality" score, since the probability strongly depends on other factors like the length of the sentence, the rarity of the words in the sentence, and whether word dependencies in the sentence being tested were seen in the training data or not.''}
+
+\subsection{Redundancy}
+The error type of redundancy among sentences that follow each other seem to have a straightforward solution: Testing for token overlap and marking the sentences as redundant if the overlap is greater than some threshold. A first implementation of token overlap detection used a fixed arbitrary threshold of 9, but that threshold should later be adapted to the sentence length. Without stop word elimination and treating each sentence as an unordered bag of words rather than accounting for the order of words, the system already reliably\cn detects duplicate and clearly redudant sentences that reuse a lot of tokens.
+
+\end{document}

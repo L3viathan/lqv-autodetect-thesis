@@ -1,0 +1,98 @@
+\documentclass[a4paper,10pt]{scrartcl}
+\usepackage{ngerman}
+\usepackage{amsmath, amsfonts, epsfig, xspace}
+\usepackage[utf8x]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage{color}
+
+\usepackage{natbib} %schönere Zitate
+
+\usepackage[colorinlistoftodos,textsize=tiny]{todonotes}
+
+\presetkeys{todonotes}{fancyline}{}
+\definecolor{todoorange}{rgb}{1, 0.8, 0.4}
+
+\newcommand{\comment}[1]{
+\todo[bordercolor=todoorange!80!black,color=todoorange]{\textbf{Comment:} #1}
+}
+
+\newcommand{\cn}{$^\text{[citation needed] }$}
+
+\author{Jonathan Oberländer}
+
+\title{Automatic Detection of Linguistic Quality Violations}
+
+\begin{document}
+
+\maketitle
+
+%TODO: Stichworte zu allem
+% nonword "missing_spaces" nennen (?)
+% labels an den Graph
+% in Beispielen Probleme fett machen
+% ungrammatical: 2 Sätze zusammengeklebt ODER was aus langem Satz entfernt, ebenfalls markieren
+% precision & recall, etc "methods" -> "metrics"
+
+% probieren: known words stemmen und zu testendes auch
+% "NER" mit YAGO oder Wikipedia ?
+
+% exp 2 und 2a: weglassen? auf dev-1 einzeln evaluieren
+
+% precision/recall/…: umgekehrt ebenfalls, d.h. 
+% von wie vielen Sätzen sind welche Klassen
+
+% in Tabellen: auf was getestet?
+
+% baseline: random bzw. most-common class
+
+% POS-Tags-threshold, d.h. unseen n-grams -> ungrammatical
+
+% (english resource grammar)
+
+% mapping to source sentences
+% Levenshtein auf Wortebene (?)
+
+\section{Introduction}
+% Motivation, What am I trying to do
+
+\section{Related Work}
+% other works on grammaticality and so on
+
+\section{The LQVCorpus}
+% describe the corpus and its flaws
+
+\section{Experiments}
+% All experiments, intermixed with small discussion segments
+\subsection{Datelines}
+% Regex foo, explanation plus evaluation(?)
+\subsubsection{Method}
+\subsubsection{Evaluation}
+
+\subsection{Grammaticality}
+\subsubsection{Method}
+\subsubsection{Evaluation}
+% previous tries with LMs(?), unknown_tokens, unknown_tokens+LM+weka->decision trees
+\subsection{Redundancy}
+% token overlap
+%TODO: phrase based
+
+\subsection{Unrelatedness} %evtl
+
+
+%\section{Evaluation} oder auch nicht
+% or skip entirely and put in experiments? final results here?
+
+\section{Discussion}
+% What seem to be the best methods for the various tasks and why?
+% Why does what works work and not that which doesn't?
+
+\section{Conclusion} % & Future Work
+% What can my results be used for? What should be investigated later?
+% What could possibly be needed to work on the types not looked at here? (entity, semrel, …)
+
+\newpage
+\bibliography{referenzen}
+\bibliographystyle{apalike}
+
+\end{document}

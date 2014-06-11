@@ -1,0 +1,60 @@
+inverted:
+
+FP: 6 (davon 0 egale)
+FN: 1
+TP: 146
+TN: 8
+N: 9
+P: 152
+overall: 161
+
+normal:
+
+FP: 6 (davon 0 egale)
+FN: 1
+TP: 8
+TN: 146
+N: 147
+P: 14
+overall: 161
+
+inverted (wiki'd):
+FP: 2 (davon 0 egale)
+FN: 1
+TP: 150
+TN: 8
+
+pre: 98.68%
+rec: 99.34%
+acc: 98.17%
+F-score: 99.01%
+
+normal (wiki'd):
+FP: 2 (davon 0 egale)
+FN: 1
+TP: 8
+TN: 150
+N: 151
+P: 10
+gold_hits: 9
+overall: 161
+
+pre: 80.00%
+rec: 88.89%
+acc: 98.14%
+F-score: 84.21%
+
+
+zusammen:
+
+FP: 12
+FN: 2
+TP: 154
+TN: 154
+N: 156
+P: 166
+
+
+precision: 154/166
+recall: 154/(154+2)
+F-score: 2*(pr*re/(pr+re))
