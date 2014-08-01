@@ -51,6 +51,8 @@
 % mapping to source sentences
 % Levenshtein auf Wortebene (?)
 
+\maketableofcontents%TODO
+
 \section{Introduction}
 % Motivation, What am I trying to do
 Evaluation of automatic summarization systems has largely been done on content coverage, which is why generated summaries often lack linguistic quality \citep{nenkova2011foundations}, meaning that they contain many errors of various kinds. A new focus on linguistic quality (LQ) evaluation would presumably help decrease these issues and produce overall better summarization systems.
@@ -156,7 +158,7 @@ The standard metrics precision, recall and F-score are used for evaluation.
 Table~\ref{eval_unknowntokens} shows the results of the evaluation. %The values for \textit{positive\comment{unsure about the naming. ``target class'' and ``inverted class''?} set} are the evaluation where the target class is the one of sentences containing a \texttt{missing spaces} violation, in the \textit{negative set}, the target class is the sentences \textit{not} containing such a violation. 
 Because the amount of sentences not containing a missing spaces violation is much larger than the ones that do, several weighted metrics are provided, too:
 
-The micro-average method consists of summing up the individual values from the confusion matrix (True Positive, False Positive, True Negative and False Negative) and calculating new metrics based on the results. We only display the F-score here, since F-score, recall and precision are identical for a 2-class scenario: Since the true positives of the missing spaces class are identical with the true negatives of the no missing spaces class (and vice versa), the new number of true positives and true negatives (for the micro average) is $tp + tn$ of any of the two classes. The same goes for false negatives and false positives. That means that when only dealing with two classes, in the micro-average method, the terms \textit{positive} and \textit{negative} can be used interchangeably. As precision is defined as $\frac{tp}{tp+fp}$ and recall as $\frac{tp}{tp+fn}$; as the equations only differ in whether they use $fp$ or $fn$ (which are exactly the same here) in the divisor, precision and recall (and therefore F-score, too, since the F-score is simply the harmonic mean of precision and recall) are identical.
+The micro-average method consists of summing up the individual values from the confusion matrix (True Positive, False Positive, True Negative and False Negative) and calculating new metrics based on the results. We only display the F-score here, since F-score, recall and precision are identical for a 2-class scenario: Since the true positives of the missing spaces class are identical with the true negatives of the no missing spaces class (and vice versa), the new number of true positives and true negatives (for the micro average) is $tp + tn$ of any of the two classes. The same goes for false negatives and false positives. That means that when only dealing with two classes, in the micro-average method, the terms \textit{positive} and \textit{negative} can be used interchangeably. As precision is defined as $\frac{tp}{tp+fp}$ and recall as $\frac{tp}{tp+fn}$; as the equations only differ in whether they use $fp$ or $fn$ (which are exactly the same here) in the divisor, precision and recall (and therefore F-score, too, since the F-score is simply the harmonic mean of precision and recall) are identical. %TODO Micro-average WEG und Accuracy nennen. Nach hinten.
 
 Macro-averages are just arithmetic means of precision and recall. For both micro- and macro-average, the new F-score is calculated from the new scores.
 
@@ -181,8 +183,6 @@ Both \textbf{UnknownTokens\textsubscript{general}} and \textbf{UnknownTokens\tex
 \textbf{UT\textsubscript{wn+heur+ner+wiki}} & 70.30 & 95.95 & 81.15 & 99.77 & 97.77 & 98.76 & 97.67 & 85.04 & 96.86 & 90.57\\
 \hline
 \textbf{UT\textsubscript{source}} & 95.89 & 94.59 & 95.24 & 99.70 & 99.70 & 99.70 & 99.50 & 97.80 & 97.15 & 97.47\\
-
-
 \end{tabular}
 \end{center}
 \caption{Evaluation of \textbf{UnknownTokens} on \textit{dev-2}, in percent. \textbf{UT\textsubscript{wordnet+heur+ner+wiki}} is equivalent to \textbf{UnknownTokens\textsubscript{general}}. \textbf{\textsubscript{wn}} = Wordnet-based dictionary, \textbf{\textsubscript{heur}} = title case heuristics, \textbf{\textsubscript{ner}} = Stanford NER, \textbf{\textsubscript{wiki}} = Wikipedia entry check}
@@ -222,10 +222,12 @@ Both \textbf{UnknownTokens\textsubscript{general}} and \textbf{UnknownTokens\tex
 % previous tries with LMs(?), unknown_tokens, unknown_tokens+LM+weka->decision trees
 To detect more general forms of ungrammaticality, several other methods were investigated. Following \cite{wagner2007comparative}, we learn decision trees from outputs of several systems that on their own have not proven sufficient for this task. For this experiment, the development set \textit{dev-1} was used.
 \subsubsection{Method}
-The free WEKA software~\citep{garner1995weka} is an allround machine learning toolkit.
+The free WEKA software~\citep{hall2009weka} is an allround machine learning toolkit.
 
 %As an input, WEKA requires an ARFF file, which we created using three features:
 We provide three features for WEKA:
+
+%TODO: we train a lm... then we....
 
 \textbf{Language Model} is a numeric feature, the surprisal value for a sentence, returned by SRILM~\citep{stolcke2002srilm}, a language modeling toolkit, trained on the same Gigaword corpus we used as a word source in \textbf{UnknownTokens\textsubscript{general}} (section~\ref{sec_unknowntokens}).
 
@@ -236,7 +238,7 @@ Finally, \textbf{numberofwords}, is the number of words in the sentence. We foll
 
 \subsubsection{Evaluation}
 
-We performed 10-fold cross-validation using the WEKA Scheme \textit{RandomForest}, which lead to a weighted F-score of 86.3\%. The summarized evaluation can be seen in Table~\ref{wekaeval}.
+We performed 10-fold cross-validation using the WEKA Scheme \textit{RandomForest}\comment{cite \& gehört zu method}, which lead to a weighted F-score of 86.3\%. The summarized evaluation can be seen in Table~\ref{wekaeval}.
 
 \begin{table}
 	\begin{center}
@@ -264,11 +266,9 @@ We performed 10-fold cross-validation using the WEKA Scheme \textit{RandomForest
 		\hline   
 	\end{tabular}
 	\end{center}
-	\caption{Evaluation of the DecisionTree method, as reported by WEKA, using 10-fold cross-validation and the RandomForest scheme.}
+	\caption{Evaluation of the DecisionTree method, as reported by WEKA, using 10-fold cross-validation and the RandomForest scheme. TODO add to Table 1}
 	\label{wekaeval}
 \end{table}
-
-\comment{Full evaluation commented out for now}
 % === Run information ===
 
 % Scheme:       weka.classifiers.trees.RandomForest -I 10 -K 0 -S 1 -num-slots 1
@@ -320,6 +320,7 @@ We performed 10-fold cross-validation using the WEKA Scheme \textit{RandomForest
 
 \subsection{Datelines}
 % Regex foo, explanation plus evaluation(?)
+%TODO: Beispiel am Anfang.
 Source texts from news articles, like the ones in the TAC dataset, often contain datelines, which sometimes make it into the generated summary. While in the context of the article datelines made sense (often displayed smaller or otherwise visually distinctive), they are not needed, distracting and confusing in the summaries.
 
 \subsubsection{Method}
@@ -344,7 +345,9 @@ which our system doesn't match.
 
 \subsection{Redundancy}
 % token overlap
-%TODO: phrase based
+%TODO: segment based
+% threshold auf dev-Set perfekt machen, auf test-set testen
+% gegen Ende: wordnet most-frequent-sense
 
 \subsection{Unrelatedness} %evtl
 

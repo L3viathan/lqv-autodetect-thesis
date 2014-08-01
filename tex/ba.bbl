@@ -13,16 +13,16 @@ Friedrich, A., Valeeva, M., and Palmer, A. (2014).
 \newblock Lqvsumm: A corpus of linguistic quality violations in multi-document
   summarization.
 
-\bibitem[Garner et~al., 1995]{garner1995weka}
-Garner, S.~R. et~al. (1995).
-\newblock Weka: The waikato environment for knowledge analysis.
-\newblock In {\em Proceedings of the New Zealand computer science research
-  students conference}, pages 57--64. Citeseer.
-
 \bibitem[Graff et~al., 2003]{gigaword}
 Graff, D., Kong, J., Chen, K., and Maeda, K. (2003).
 \newblock English gigaword.
 \newblock {\em Linguistic Data Consortium, Philadelphia}.
+
+\bibitem[Hall et~al., 2009]{hall2009weka}
+Hall, M., Frank, E., Holmes, G., Pfahringer, B., Reutemann, P., and Witten,
+  I.~H. (2009).
+\newblock The weka data mining software: an update.
+\newblock {\em ACM SIGKDD explorations newsletter}, 11(1):10--18.
 
 \bibitem[Nenkova et~al., 2011]{nenkova2011foundations}
 Nenkova, A., McKeown, K., et~al. (2011).

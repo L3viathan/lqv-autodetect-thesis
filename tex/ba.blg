@@ -9,43 +9,43 @@ Warning--empty journal in friedrichlqvsumm
 Warning--empty booktitle in wagner2007comparative
 You've used 9 entries,
             1935 wiz_defined-function locations,
-            520 strings with 5246 characters,
-and the built_in function-call counts, 3469 in all, are:
-= -- 339
-> -- 141
-< -- 6
-+ -- 48
-- -- 46
-* -- 260
-:= -- 599
-add.period$ -- 27
+            521 strings with 5270 characters,
+and the built_in function-call counts, 3488 in all, are:
+= -- 332
+> -- 161
+< -- 4
++ -- 58
+- -- 54
+* -- 279
+:= -- 615
+add.period$ -- 26
 call.type$ -- 9
-change.case$ -- 65
+change.case$ -- 70
 chr.to.int$ -- 9
 cite$ -- 11
-duplicate$ -- 155
-empty$ -- 252
-format.name$ -- 59
-if$ -- 696
+duplicate$ -- 144
+empty$ -- 241
+format.name$ -- 66
+if$ -- 679
 int.to.chr$ -- 1
 int.to.str$ -- 0
 missing$ -- 8
 newline$ -- 46
 num.names$ -- 27
-pop$ -- 81
+pop$ -- 82
 preamble$ -- 1
-purify$ -- 65
+purify$ -- 70
 quote$ -- 0
-skip$ -- 110
+skip$ -- 100
 stack$ -- 0
-substring$ -- 191
-swap$ -- 22
-text.length$ -- 2
+substring$ -- 188
+swap$ -- 15
+text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 54
 warning$ -- 2
-while$ -- 26
+while$ -- 25
 width$ -- 0
-write$ -- 111
+write$ -- 110
 (There were 3 warnings)
