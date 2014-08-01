@@ -4,8 +4,18 @@
 \usepackage[utf8x]{inputenc}
 \usepackage[english]{babel}
 
+
 \usepackage{color}
 
+\usepackage{listings} %regex (listings)
+\lstset{
+    breaklines     = true,
+    stepnumber     = 5,
+    stringstyle    = \ttfamily,
+    showstringspaces=true
+}
+
+\usepackage{rotating} %landscape tables
 \usepackage{natbib} %schönere Zitate
 
 \usepackage[colorinlistoftodos,textsize=tiny]{todonotes}
@@ -27,18 +37,6 @@
 
 \maketitle
 
-%TODO: Stichworte zu allem
-% nonword "missing_spaces" nennen (?)
-% labels an den Graph
-% in Beispielen Probleme fett machen
-% ungrammatical: 2 Sätze zusammengeklebt ODER was aus langem Satz entfernt, ebenfalls markieren
-% precision & recall, etc "methods" -> "metrics"
-
-% probieren: known words stemmen und zu testendes auch
-% "NER" mit YAGO oder Wikipedia ?
-
-% exp 2 und 2a: weglassen? auf dev-1 einzeln evaluieren
-
 % precision/recall/…: umgekehrt ebenfalls, d.h. 
 % von wie vielen Sätzen sind welche Klassen
 
@@ -55,30 +53,300 @@
 
 \section{Introduction}
 % Motivation, What am I trying to do
+Evaluation of automatic summarization systems has largely been done on content coverage, which is why generated summaries often lack linguistic quality \citep{nenkova2011foundations}, meaning that they contain many errors of various kinds. A new focus on linguistic quality (LQ) evaluation would presumably help decrease these issues and produce overall better summarization systems.
+
+As a first step in this direction, \cite{friedrichlqvsumm} created the \textit{LQVCorpus}, which consists of multi-document summaries from the TAC 2011 shared task on Guided Summarization \citep{owczarzak2011overview}, annotated manually with LQ violations on entity, clause and discourse level.
+
+Manual annotation is an expensive and time-consuming process, for which an automatic system could be an alternative. Our work deals with creating such a system that manages at least part of the annotation automatically. We develop and evaluate our system on top of the \textit{LQVCorpus}.
 
 \section{Related Work}
 % other works on grammaticality and so on
 
-\section{The LQVCorpus}
+\section{Finding Ungrammaticality}
 % describe the corpus and its flaws
+
+As a first step, we inspect the corpus. We find that the type system of the LQVCorpus~\citep{valeeva} is not detailed enough for our purposes and has a few shortcomings: Especially under the label of \texttt{other\_ungrammatical\_form} many different types of errors are combined. For this reason, we define a number of subtypes for this violation:
+
+\begin{description}
+\item[missing spaces] \hfill \\
+	This is the most common type of error: The sentence contains a word that does not exist. In almost all cases, this happens when whitespace between two words is missing.
+
+	Example: \textit{A strong earthquake measuring 7.8 magnitude struck \\\textbf{Wenchuancounty} of Sichuan Province on Monday, leaving at least \\\textbf{12,000people} died and thousands more injured.}
+
+\item[missing words] \hfill \\
+	One or multiple words are clearly missing. These seem to most often be function words such as articles or pronouns, rather than content words. In the example, an underscore marks the position where a word, probably ``was'' is missing.
+
+	Example: \textit{An Israeli woman \_ killed and 11 others were wounded in the suicide bombing at a shopping mall in southern Israeli town of Dimona.}
+
+\item[punctuation error] \hfill \\
+	Most of the time, this means: Punctuation is missing, but it can also mean there is something else wrong with punctuation in that sentence which makes it ungrammatical, as can be seen in the example: Unbalanced parantheses.
+
+	Example: \textit{China has allocated 200 million yuan (million dollars for disaster relief work after an earthquake rocked the country's killing at least seven people, state reported on Tuesday.}
+
+\item[capitalization error] \hfill \\
+	A word that should be capitalized is not or one that should not be capitalized is.
+
+	Example: \textit{earlier on \textbf{m}onday \textbf{g}erman chancellor \textbf{a}ngela \textbf{m}erkel and foreign \\minister \textbf{f}rank \textbf{w}alter \textbf{s}teinmeier offered their condolences to \textbf{c}hina over the heavy loss of life in the powerful earthquake that hit \textbf{c}hina's southwestern province of \textbf{s}ichuan.}
+
+\item[unparsable]\hfill \\
+	This subtype means that the (human) annotator was unable to make sense of the sentence and considers it not correctly parsable. Most instances of this subtype seem to happen when sentence fusion occurs; the summarization system combined two or more sentences in an ungrammatical or meaningless way.
+	%This subtype looks similar to a punctuation error, but differs in that sentences are intermixed with each other; in the middle of one sentence, the reader suddenly finds themself in a different one. This could also happen if part of a sentence was removed. In the example, an underscore marks the point at which the break happens.
+
+	Example: \textit{All of those provinces and Chongqing, a special municipality \_ deepest condolences to those who lost their loved ones in the devastating natural disaster.}
+
+\item[heading] \hfill \\
+	The sentence contain (usually at the beginning) a sequence of capitalized or otherwise heading-like words. % that aren't part of a dateline.
+
+	Example: \textit{THE CURRENT FIX: Internet applications such as firewalls and spam filters attempt to control security threats.}
+
+\item[incomplete sentence] \hfill \\
+	The type system of the LQVCorpus~\citep{valeeva} defines an \texttt{incomplete\_sentence} violation as words being cut off at the end of a sentence. A couple of times though, this also occurs at the beginning of a sentence. We restructure the type system by treating all types of incomplete sentences as this subtype of \texttt{other\_ungrammatical\_form}.
+
+	Example: \textit{A Palestinian suicide bomber detonated an explosive belt at a \\commercial center in Dimona on}.
+\item[should be other type] \hfill \\
+	Sometimes sentences that are tagged as \texttt{other\_ungrammaticality} should (also) be tagged as another type, such as sentences containing datelines. This doesn't necessarily mean that the sentence contains no other ungrammaticalities. This subtype be caused by inconsistencies in the corpus, or from the process of mapping the annotated violations to sentences. While the following example is an \texttt{incomplete sentence}, it also contains a dateline.
+
+	Example: \textit{its deepest sympathy to the Israeli people,\textbf{00 a.m. local time (0800 GMT)} as a suicide bomber detonated an explosive belt in the commercial center, according to local media reports.}
+%\item[not ungrammatical] \hfill \\
+%	As is to be expected, the annotation of the corpus isn't correct 100\% of the time. This subtype merely denotes a correct sentence that was incorrectly marked as ungrammatical.
+%
+%	Example: \textit{One Israeli woman was killed and at least eight others wounded on Monday in a suicide bombing which ripped through a commercial center in the southern Israeli town of Dimona, the first attack of the kind since January 2007.}
+
+%%% did not occur in dev-2
+
+\end{description}
+
+The corpus was split into five parts (\textit{dev-1} through \textit{dev-2}), each containing 8 topics, so that e.g. \textit{dev-1} contains topics D1101 through D1108.
+
+After manually counting and investigating these subtypes on \textit{dev-1} we then mark these types in \textit{dev-2} for every sentence that is tagged as \texttt{other\_ungrammatical\_form} in the corpus. We allow sentences to have multiple subtypes and also annotate \texttt{incomplete\_sentence} violations with additional (sub)types, if applicable. The frequency distribution of the subtypes in \textit{dev-2} can be seen in Figure~\ref{subtypes}.
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.6]{subtypes_dev2.png}
+\end{center}
+\caption{\textbf{Subtypes of ungrammaticality in \textit{dev-2}.} Where the annotator didn't know what subtype to annotate the sentence with, they selected ``other''.}
+\label{subtypes}
+\end{figure}
 
 \section{Experiments}
 % All experiments, intermixed with small discussion segments
-\subsection{Datelines}
-% Regex foo, explanation plus evaluation(?)
+We conduct a number of experiments to find reliable ways to detect different kinds of ungrammaticality. The annotation, \comment{besser?}our experiments and the evaluation are all done on sentence basis. We use Stanford CoreNLP for sentence splitting.
+
+\subsection{Detecting Unknown Tokens}
+\label{sec_unknowntokens}
+Perhaps the most noticeable result is the large portion of \textit{missing spaces} violations, meaning clauses that include tokens which aren't correct words. Almost all of these cases come from a missing space between two words forming tokens such as \texttt{reportsreaching} or \texttt{Wenchuancounty}. As there is such a large amount of this type, finding a reliable detection method for this subtype would significantly boost detection of ungrammaticality in general.
+
 \subsubsection{Method}
+%.Being the biggest amount of cases of ungrammaticality, \textit{missing spaces} violations seem to have a straightforward solution which we call the \textbf{UnknownTokens} approach
+We call our approach to identifying missing spaces \textbf{UnknownTokens}: Tagging a sentence as containing a \textit{missing spaces} ungrammaticality if and only if there is a token in the sentence that isn't a ``known'' token, i.e. one that doesn't exist in a list of known words. In our setting, we can easily deduce such a list from the source documents of the automatic summarization process. If the source document is available and used as a base for our vocabulary, we call that approach \textbf{UnknownTokens\textsubscript{source}}.
+
+In case the original documents aren't available or this method should be used in a different setting, we also investigate how to adapt our approach to that. This approach has a few steps, which we will all evaluate individually:
+First, an initial list of words is created from a large text corpus (\textbf{UnknownTokens\textsubscript{wn}}); we use the first 20\% of the AFE part of the gigaword corpus \citep{gigaword}. If the corpus is large and general enough, this will probably cover a large vocabulary.%contain every common (and uncommon) word.
+
+Because this will not include words for named entities yet, we only consider a token to be an unknown token, if it is not tagged as a Named Entity by a Named Entity Recognizer (\textbf{UnknownTokens\textsubscript{ner}}). We employ the Stanford Named Entity Recognizer \citep{stanfordNER}, which is a widely used, state-of-the-art NER that comes with a model for the English language.
+
+In order to improve upon the NER and further increase recall, we use two simple heuristics (\textbf{UnknownTokens\textsubscript{heur}}): Firstly, we assume that words that start with a capital letter and are only followed by lower case letters are named entities and therefore no unknown tokens. Finally, we automatically check whether an unknown token has an entry on the online encyclopedia Wikipedia (\textbf{UnknownTokens\textsubscript{wiki}}).
+
+We automatically label any tokens that are neither on our list of known tokens from GigaWord, nor tagged as a named entity as ``unknown'' and tag the sentence as containing unknown tokens. The combined method \textbf{UnknownTokens\textsubscript{wn+heur+ner+wiki}} is what we call \textbf{UnknownTokens\textsubscript{general}}.
+
+\subsubsection{Evaluation}
+We evaluate how effective \textbf{UnknownTokens} is in detecting \texttt{missing spaces} violations, both with (\textbf{UnknownTokens\textsubscript{source}}) and without (\textbf{UnknownTokens\textsubscript{general}}) access to the source documents, and compare it to a \textbf{baseline}, which always assumes the most common case (no \texttt{missing spaces} violation).
+The standard metrics precision, recall and F-score are used for evaluation.
+
+Table~\ref{eval_unknowntokens} shows the results of the evaluation. %The values for \textit{positive\comment{unsure about the naming. ``target class'' and ``inverted class''?} set} are the evaluation where the target class is the one of sentences containing a \texttt{missing spaces} violation, in the \textit{negative set}, the target class is the sentences \textit{not} containing such a violation. 
+Because the amount of sentences not containing a missing spaces violation is much larger than the ones that do, several weighted metrics are provided, too:
+
+The micro-average method consists of summing up the individual values from the confusion matrix (True Positive, False Positive, True Negative and False Negative) and calculating new metrics based on the results. We only display the F-score here, since F-score, recall and precision are identical for a 2-class scenario: Since the true positives of the missing spaces class are identical with the true negatives of the no missing spaces class (and vice versa), the new number of true positives and true negatives (for the micro average) is $tp + tn$ of any of the two classes. The same goes for false negatives and false positives. That means that when only dealing with two classes, in the micro-average method, the terms \textit{positive} and \textit{negative} can be used interchangeably. As precision is defined as $\frac{tp}{tp+fp}$ and recall as $\frac{tp}{tp+fn}$; as the equations only differ in whether they use $fp$ or $fn$ (which are exactly the same here) in the divisor, precision and recall (and therefore F-score, too, since the F-score is simply the harmonic mean of precision and recall) are identical.
+
+Macro-averages are just arithmetic means of precision and recall. For both micro- and macro-average, the new F-score is calculated from the new scores.
+
+Both \textbf{UnknownTokens\textsubscript{general}} and \textbf{UnknownTokens\textsubscript{source}} improve vastly over the baseline.
+
+
+%%%BEGIN BACKUP WITHOUT WEIGHTED MEAN:
+\begin{sidewaystable}
+\begin{center}
+\begin{tabular}{r|c|c|c|c|c|c|c|c|c|c|}
+& \multicolumn{3}{c|}{Missing spaces} & \multicolumn{3}{c|}{No missing spaces} & Micro-average & \multicolumn{3}{c|}{Macro-average}\\
+& \textbf{P} & \textbf{R} & \textbf{F} & \textbf{P} & \textbf{R} & \textbf{F} & \textbf{F} & \textbf{P} & \textbf{R} & \textbf{F}\\
+\hline
+\textbf{Baseline} & 0.0 & 0.0 & 0.0 & 94.79 & 100 & 97.33 & 94.79 & 47.40 & 50.0 & 48.67\\
+\hline
+\textbf{UT\textsubscript{wn}} & 14.96 & 98.65 & 25.98 & 99.89 & 69.14 & 81.72 & 70.68 & 57.43 & 83.90 & 68.19\\
+\hline
+\textbf{UT\textsubscript{wn+heur}} & 30.51 & 97.30 & 46.45 & 99.83 & 87.81 & 93.43 & 88.30 & 65.17 & 92.56 & 76.49\\
+\hline
+\textbf{UT\textsubscript{wn+heur+ner}} & 35.47 & 97.30 & 51.99 & 99.84 & 90.26 & 94.81 & 90.63 & 67.66 & 93.78 & 78.61\\
+\hline
+\textbf{UT\textsubscript{wn+heur+ner+wiki}} & 70.30 & 95.95 & 81.15 & 99.77 & 97.77 & 98.76 & 97.67 & 85.04 & 96.86 & 90.57\\
+\hline
+\textbf{UT\textsubscript{source}} & 95.89 & 94.59 & 95.24 & 99.70 & 99.70 & 99.70 & 99.50 & 97.80 & 97.15 & 97.47\\
+
+
+\end{tabular}
+\end{center}
+\caption{Evaluation of \textbf{UnknownTokens} on \textit{dev-2}, in percent. \textbf{UT\textsubscript{wordnet+heur+ner+wiki}} is equivalent to \textbf{UnknownTokens\textsubscript{general}}. \textbf{\textsubscript{wn}} = Wordnet-based dictionary, \textbf{\textsubscript{heur}} = title case heuristics, \textbf{\textsubscript{ner}} = Stanford NER, \textbf{\textsubscript{wiki}} = Wikipedia entry check}
+\label{eval_unknowntokens}
+\end{sidewaystable}
+%%%END BACKUP WITHOUT WEIGHTED MEAN
+
+%%%BACKUP WITH WEIGHTED MEAN:
+% \begin{sidewaystable}
+% \begin{center}
+% \begin{tabular}{r|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+% & \multicolumn{3}{c|}{Positive Set} & \multicolumn{3}{c|}{Negative Set} & \multicolumn{3}{c|}{Weighted Mean} & Micro-average & \multicolumn{3}{c|}{Macro-average}\\
+% & \textbf{P} & \textbf{R} & \textbf{F} & \textbf{P} & \textbf{R} & \textbf{F} & \textbf{P} & \textbf{R} & \textbf{F} & \textbf{F} & \textbf{P} & \textbf{R} & \textbf{F}\\
+% \hline
+% \textbf{Baseline} & 0.0 & 0.0 & 0.0 & 94.79 & 100 & 97.33 & 89.85 & 94.79 & 92.26 & 94.79 & 47.40 & 50.0 & 48.67\\
+% \hline
+% \textbf{UT\textsubscript{wn}} & 14.96 & 98.65 & 25.98 & 99.89 & 69.14 & 81.72 & 95.47 & 70.68 & 78.82 & 70.68 & 57.43 & 83.90 & 68.19\\
+% \hline
+% \textbf{UT\textsubscript{wn+heur}} & 30.51 & 97.30 & 46.45 & 99.83 & 87.81 & 93.43 & 96.22 & 88.30 & 90.98 & 88.30 & 65.17 & 92.56 & 76.49\\
+% \hline
+% \textbf{UT\textsubscript{wn+heur+ner}} & 35.47 & 97.30 & 51.99 & 99.84 & 90.26 & 94.81 & 96.49 & 90.63 & 92.58 & 90.63 & 67.66 & 93.78 & 78.61\\
+% \hline
+% \textbf{UT\textsubscript{wn+heur+ner+wiki}} & 70.30 & 95.95 & 81.15 & 99.77 & 97.77 & 98.76 & 98.23 & 97.68 & 97.84 & 97.67 & 85.04 & 96.86 & 90.57\\
+% \hline
+% \textbf{UT\textsubscript{source}} & 95.89 & 94.59 & 95.24 & 99.70 & 99.70 & 99.70 & 99.50 & 99.43 & 99.47 & 99.50 & 97.80 & 97.15 & 97.47\\
+
+
+% \end{tabular}
+% \end{center}
+% \caption{Evaluation of \textbf{UnknownTokens} on \textit{dev-2}, in percent. \textbf{UT\textsubscript{wordnet+heur+ner+wiki}} is equivalent to \textbf{UnknownTokens\textsubscript{general}}. \textbf{\textsubscript{wn}} = Wordnet-based dictionary, \textbf{\textsubscript{heur}} = title case heuristics, \textbf{\textsubscript{ner}} = Stanford NER, \textbf{\textsubscript{wiki}} = Wikipedia entry check}
+% \label{eval_unknowntokens}
+% \end{sidewaystable}
+%%%END BACKUP WITH WEIGHTED MEAN
+
+
+\subsection{DecisionTree}
+% previous tries with LMs(?), unknown_tokens, unknown_tokens+LM+weka->decision trees
+To detect more general forms of ungrammaticality, several other methods were investigated. Following \cite{wagner2007comparative}, we learn decision trees from outputs of several systems that on their own have not proven sufficient for this task. For this experiment, the development set \textit{dev-1} was used.
+\subsubsection{Method}
+The free WEKA software~\citep{garner1995weka} is an allround machine learning toolkit.
+
+%As an input, WEKA requires an ARFF file, which we created using three features:
+We provide three features for WEKA:
+
+\textbf{Language Model} is a numeric feature, the surprisal value for a sentence, returned by SRILM~\citep{stolcke2002srilm}, a language modeling toolkit, trained on the same Gigaword corpus we used as a word source in \textbf{UnknownTokens\textsubscript{general}} (section~\ref{sec_unknowntokens}).
+
+\textbf{missing spaces} is the classification of \textbf{UnknownTokens\textsubscript{source}} for a given sentence, as described above.
+
+Finally, \textbf{numberofwords}, is the number of words in the sentence. We follow \cite{wagner2007comparative} here, the intuition is that ungrammatical sentences will often be extraordinarily long, or very short.
+
+
 \subsubsection{Evaluation}
 
-\subsection{Grammaticality}
+We performed 10-fold cross-validation using the WEKA Scheme \textit{RandomForest}, which lead to a weighted F-score of 86.3\%. The summarized evaluation can be seen in Table~\ref{wekaeval}.
+
+\begin{table}
+	\begin{center}
+	\begin{tabular}{|r|l|}
+		\hline
+		Correctly Classified Instances     &  1215 (88.1073\%)\\
+		\hline
+		Incorrectly Classified Instances   &   164 (11.8927\%)\\
+		\hline
+		Kappa statistic                    &     0.3351\\
+		\hline
+		Mean absolute error                &     0.1491\\
+		\hline
+		Root mean squared error            &     0.3094\\
+		\hline
+		Relative absolute error            &    65.2325\%\\
+		\hline
+		Root relative squared error        &    91.6119\%\\
+		\hline
+		Coverage of cases (0.95 level)     &    96.2292\%\\
+		\hline
+		Mean rel. region size (0.95 level) &    66.4612\%\\
+		\hline
+		Total Number of Instances          &   1379\\
+		\hline   
+	\end{tabular}
+	\end{center}
+	\caption{Evaluation of the DecisionTree method, as reported by WEKA, using 10-fold cross-validation and the RandomForest scheme.}
+	\label{wekaeval}
+\end{table}
+
+\comment{Full evaluation commented out for now}
+% === Run information ===
+
+% Scheme:       weka.classifiers.trees.RandomForest -I 10 -K 0 -S 1 -num-slots 1
+% Relation:     ungrammaticality
+% Instances:    1379
+% Attributes:   4
+%               language_model
+%               nonwords
+%               numberofwords
+%               class
+% Test mode:    10-fold cross-validation
+
+% === Classifier model (full training set) ===
+
+% Random forest of 10 trees, each constructed while considering 3 random features.
+% Out of bag error: 0.1291
+
+
+
+% Time taken to build model: 0.43 seconds
+
+% === Stratified cross-validation ===
+% === Summary ===
+
+% Correctly Classified Instances        1215               88.1073 %
+% Incorrectly Classified Instances       164               11.8927 %
+% Kappa statistic                          0.3351
+% Mean absolute error                      0.1491
+% Root mean squared error                  0.3094
+% Relative absolute error                 65.2325 %
+% Root relative squared error             91.6119 %
+% Coverage of cases (0.95 level)          96.2292 %
+% Mean rel. region size (0.95 level)      66.4612 %
+% Total Number of Instances             1379     
+
+% === Detailed Accuracy By Class ===
+
+%                  TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+%                  0.970    0.707    0.901      0.970    0.934      0.361    0.766     0.938     ungrammaticality-no
+%                  0.293    0.030    0.596      0.293    0.393      0.361    0.766     0.417     ungrammaticality-yes
+% Weighted Avg.    0.881    0.618    0.861      0.881    0.863      0.361    0.766     0.869     
+
+% === Confusion Matrix ===
+
+%     a    b   <-- classified as
+%  1162   36 |    a = ungrammaticality-no
+%   128   53 |    b = ungrammaticality-yes
+
+
+\subsection{Datelines}
+% Regex foo, explanation plus evaluation(?)
+Source texts from news articles, like the ones in the TAC dataset, often contain datelines, which sometimes make it into the generated summary. While in the context of the article datelines made sense (often displayed smaller or otherwise visually distinctive), they are not needed, distracting and confusing in the summaries.
+
 \subsubsection{Method}
+The emerging patterns are so regular, that we use regular expressions to detect them. A few iterations of the regex were done, but so far the highest results were achieved using the regular expression
+
+\begin{lstlisting}
+UTC|^\d{4}-\d{2}-\d{2}|^[A-Z]{3,}|^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)
+\end{lstlisting}
+
+The expression has four parts, of which only one has to match to make the system classify a sentence as containing datelines: The first part matches the string ``UTC'' (Coordinated Universal Time, a common fragment in datelines), the second one numeric dates like \texttt{2014-04-13}, the third one capitalized words that are longer than 4 letters and are therefore expected not to be abbreviations (an example would be \texttt{LONDON, Feb. 4 (Xinhua)}), and the final part matches abbreviated names of months. Only ``UTC'' can occur anywhere, everything else needs to occur at the beginning of a sentence to be counted.
+
 \subsubsection{Evaluation}
-% previous tries with LMs(?), unknown_tokens, unknown_tokens+LM+weka->decision trees
+This very simple approach was evaluated on \textit{dev-2} and leads to good results: The F-score of the class of dateline-containing sentences is 90.7\% (precision: 90.3\%, recall: 91.1\%). When looking into the inaccurately detected instances, the inconsistencies of the LQVCorpus make up most of the misses:
+
+\textit{IVORY TUSKS}
+
+is classified as containing a dateline by the regular expression, but is not annotated as such in the corpus. An example of a false negative would be:
+
+\textit{00 a.m. local time (0800 GMT)}
+
+which our system doesn't match.
+
 \subsection{Redundancy}
 % token overlap
 %TODO: phrase based
 
 \subsection{Unrelatedness} %evtl
-
 
 %\section{Evaluation} oder auch nicht
 % or skip entirely and put in experiments? final results here?

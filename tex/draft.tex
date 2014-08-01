@@ -23,7 +23,6 @@
 \definecolor{todogreen}{rgb}{0.8, 1.0, 0.4}
 \definecolor{todopurple}{RGB}{255, 100, 127}
 
-\setlength{\textfloatsep}{0.1cm}
 
 \newcommand{\comment}[1]{
 \todo[bordercolor=todoorange!80!black,color=todoorange]{\textbf{Comment:} #1}
@@ -215,15 +214,15 @@ In experiment 2, with the same data, we use the \textit{missing spaces} type as 
 & Precision & Recall & Accuracy & F-Score \\
 \hline
 Experiment 1 (missing spaces) & 42.85\% & 100.00\% & 95.03\% & 59.99\% \\
-\hline
+\hline %WARUM TODO SIND HIER DIE ACCURACIES IUNTERCSHIEDLICH
 Experiment 1 (no missing spaces) & 96.05\% & 99.32\% & 95.65\% & 97.66\% \\
 \hline
-Experiment 1+wiki (missing spaces) & 80.00\% & 88.88\% & 98.14\% & 84.21\% \\
+Experiment 1+wiki (missing spaces) & 78.04\% & 88.89\% & 98.14\% & 83.11\% \\ %80, 88.89, 98.14, 84.21
 \hline
-Experiment 1+wiki (no missing spaces) & 98.68\% & 99.34\% & 98.17\% & 99.01\% \\
+Experiment 1+wiki (no missing spaces) & 98.68\% & 99.34\% & 98.17\% & 99.01\% \\ %groß rausstellen
 \hline
-Experiment 1a & 57.14\% & 88.89\% & 95.65\% & 69.56\% \\
-\hline
+%Experiment 1a & 57.14\% & 88.89\% & 95.65\% & 69.56\% \\
+%\hline
 Baseline (missing spaces) & 0\% & 0\% & 94.40\% & 0\% \\ %tp & fp == 0
 \hline
 Baseline (no missing spaces) & 94.40\% & 100\% & 94.40\% & 97.12\% \\
@@ -233,7 +232,7 @@ Baseline (no missing spaces) & 94.40\% & 100\% & 94.40\% & 97.12\% \\
 %Experiment 2a & 71.42\% & 25.64\% & 79.50\% & 37.73\% \\
 \end{tabular}
 \end{center}
-\caption{Evaluation of \textbf{UnknownTokens}}
+\caption{Evaluation of \textbf{UnknownTokens}} %auf dev-1? dev-2?
 \label{eval3}
 \end{table}
 \begin{table}
@@ -255,7 +254,23 @@ Micro-average F-score & 95.65\% \\
 Macro-average F-score & 78.83\% \\
 \end{tabular}
 \end{center}
-\caption{Macro- and micro-averages for \textbf{UnknownTokens}}
+\caption{Macro- and micro-averages for \textbf{UnknownTokens}} %in große tabelle
+
+%TODO Anzahl Instanzen Reinschreiben!! TODO DANGER!! sort-of done, BUT NOT REALLY
+
+%TODO Fehlerfälle angucken und gucken, was noch machen
+
+%tokens von originaldokumenten nehmen TODO
+
+% rohdaten sind hier: summarization/data/tac/TAC_2011_Guided_Summarization_Task/GuidedSumm2011_test
+
+
+%ToDO weka daten/ergebnisse Anne schicken, vorher! done
+
+%TODO ein paar source-dokumente mit dependency-parser parsen
+
+%TODO mapping schreiben (Stichwort: plagiarism detection)
+% 10 ungrammatical (ohne unknown_tokens) parsen und satz "vorbereiten" (für mit manfred besprechen)
 \label{eval3}
 \end{table}
 
@@ -264,48 +279,8 @@ A evaluation lead to the results shown in Table~\ref{eval3}. The perhaps surpris
 
 In a second set of experiments (1a and 2a, also shown in Table~\ref{eval3}), we varied the settings of our previous experiments: In experiment 1a, we additionally annotated sentences of the violation type \texttt{incomplete sentence} with the subtype nonword, if applicable. In experiment 2a, we looked into how good the system could decide whether a sentence was either one of \texttt{incomplete sentence} or \textit{other ungrammatical form}, which lead to an increased precision, along with a severe decline in recall, because most incomplete sentences don't contain nonwords. It is to be expected that combining this approach with a seperate system for detection of cutoff sentences will lead to a much higher performance.
 
-%wie berechne ich P/R/F? <done
-
-% evaluation
-% dazu schreiben, worauf ich testete, und warum die Accuracy so hoch ist<done
-% deutlicher schreiben ^, und "on"-Formulierungen überdenken<done
-
-% [10.04.14 12:27:26] Annemarie Friedrich: im Zweifel: experiment 1/2 und im Text erklären was du machst <done
-% [10.04.14 12:27:50] Annemarie Friedrich: in der Tabelle dann auf die Beschreibungen verweisen: Exp1 (unknwon tokens), Exp2 (ungramm.) <done
-
-% Und auf jeden Fall sagen, dass das System alle sätze in Dev2 as input bekommt und taggt <done
-
-% 2. Evaluation, wo alle incompl_sent als ungrammat. zählen <done
-
-% Exp 1a: with nonword incompletesentences annotated as such
-% FP: 6 (davon 2 egale)
-% FN: 1
-% TP: 8
-% TN: 146
-% N: 147
-% P: 14
-% Precision: 8/(8+6) = 0.57142
-% Recall: 8/(8+1) = 0.8889
-% Accuracy: (8+146)/161 = 0.9565
-% F-Score: 0.69564
-
-% Exp 2a: with incompl. counting as hits
-% FP: 4
-% FN: 29
-% TP: 10
-% TN: 118
-% overall: 161
-
-% Precision: 10/(10+4) = 0.7142
-% Recall: 10/(10+29) = 0.2564
-% Accuracy: 0.795
-% F-Score: 0.37733
-
-
 %eigene Todo:
 % parser + arff
-
-
 
 \section{Discussion}
 
@@ -314,13 +289,95 @@ When looking into the false positives, this result can be broken down to one mai
 Clauses can contain multiple violations, such as \textit{other ungrammatical form} and \textit{incomplete sentence}. As only one of them was annotated, and the subtype was only added to clauses of the ungrammaticality type \textit{other ungrammatical form}, a large portion of the false positives isn't actually detected incorrectly, but rather not fully annotated. The fragment
 
 \begin{quote}
-	A spokesman for al-Aqsa Martyrs Brigades, armed wing ofPalestinian\\
-	Fatah movement, denied on Monday the reports that thetwo suicide
+	A spokesman for al-Aqsa Martyrs Brigades, armed wing \textbf{ofPalestinian}\\
+	Fatah movement, denied on Monday the reports that \textbf{thetwo} suicide
 \end{quote}
 
 was annotated (correctly) as \textit{incomplete sentence}, but it is clear that the sentence also contains general ungrammaticality. As such, the system detected it as an unknown token and was punished for that decision.\todo{Adressed in exp 1a and 2a, rewrite}
 \newpage
 \bibliography{referenzen}
 \bibliographystyle{apalike}
+
+% UnknownTokens_source (in braces: for other class):
+
+% FP: 3 {FN}
+% FN: 4 {FP}
+% TP: 70 {TN}
+% TN: 1342 {TP}
+% N: 1346 {P}
+% P: 73 {N}
+
+% Precision: 70/73 = 95.89% {1342/1346 = 99.70%}
+% Recall: 70/(70+4) = 94.59% {1342/(1342+4) = 99.70%}
+% F-Score: 2*((.9589*.9459)/(.9589+.9459)) = 95.24% {99.70%}
+
+% weighted: 74 instances vs. 1345 non-instances -> 5.21%
+% weighted precision: .9589*.0521 + .997*.9479 = 99.50%
+% weighted recall: .9459*.0521 + .997*.9479 = 99.43%
+% weighted F-Score: .9524*.0521 + .997*.9479 = 99.47
+
+% micro-average precision: (70+1342)/(1346+73) 99.50%
+% micro-average recall: (70+1342)/(70+1342+4+3) 99.50%
+% micro-average F-score: 99.5%
+
+% macro-average precision: 97.80%
+% macro-average recall: 97.15%
+% macro-average f-score: 97.47%
+
+
+% UnknownTokens_general (in braces: for other class):
+
+% FP: 30 {FN}
+% FN: 3 {FP}
+% TP: 71 {TN}
+% TN: 1315 {TP}
+% N: 1318 {P}
+% P: 101 {N}
+
+% precision 71/101 = 70.30% {1315/1318=99.77%}
+% recall 71/(71+3) = 95.95% {1315/(1315+30) = 97.77%}
+% f-score 2*70.3*95.95/(70.3+95.95) = 81.15% {98.76%}
+
+% weighted: (see above)
+% weighted precision: .703*.0521+.9977*.9479 = 98.23%
+% weighted recall: .9595*.0521+.9777*.9479 = 97.68%
+% weighted f-score: .8115*.0521+.9876*.9479 = 97.84%
+
+% micro-average precision: (71+1315)/(101+1318) = 97.67%
+% micro-average recall: (71+1315)/(71+1315+3+30) = 97.67%
+% micro-average f-score: 97.67%
+
+% macro-average precision: 85.04%
+% macro-average recall: 96.86%
+% macro-average f-score: 90.57%
+
+
+% Baseline (in braces: for other class):
+
+% FP: 0 {FN}
+% FN: 74 {FP}
+% TP: 0 {TN}
+% TN: 1345 {TP}
+% N: 1419 {P}
+% P: 0 {N}
+
+% Precision: 0% {1345/1419 = 94.79%}
+% Recall: 0% {1345/(1345+0) = 100%}
+% F-Score: 0% {97.33%}
+ 
+% weighted: (see above)
+% weighted precision: .9479*.9479 = 89.85%
+% weighted recall: .9479*1 = 94.79%
+% weighted f-score: 92.26%
+
+% micro-average precision: 1345/1419 = 94.79
+% micro-average recall: 1345/(1345+74) = 94.79
+% micro-average f-score: 94.79%
+
+% macro-average precision: 47.40%
+% macro-average recall: 50%
+% macro-average f-score: 48.67%
+
+
 
 \end{document}

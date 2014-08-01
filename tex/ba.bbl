@@ -1,3 +1,56 @@
 \begin{thebibliography}{}
 
+\bibitem[Finkel et~al., 2005]{stanfordNER}
+Finkel, J.~R., Grenager, T., and Manning, C. (2005).
+\newblock Incorporating non-local information into information extraction
+  systems by gibbs sampling.
+\newblock In {\em Proceedings of the 43rd Annual Meeting on Association for
+  Computational Linguistics}, pages 363--370. Association for Computational
+  Linguistics.
+
+\bibitem[Friedrich et~al., 2014]{friedrichlqvsumm}
+Friedrich, A., Valeeva, M., and Palmer, A. (2014).
+\newblock Lqvsumm: A corpus of linguistic quality violations in multi-document
+  summarization.
+
+\bibitem[Garner et~al., 1995]{garner1995weka}
+Garner, S.~R. et~al. (1995).
+\newblock Weka: The waikato environment for knowledge analysis.
+\newblock In {\em Proceedings of the New Zealand computer science research
+  students conference}, pages 57--64. Citeseer.
+
+\bibitem[Graff et~al., 2003]{gigaword}
+Graff, D., Kong, J., Chen, K., and Maeda, K. (2003).
+\newblock English gigaword.
+\newblock {\em Linguistic Data Consortium, Philadelphia}.
+
+\bibitem[Nenkova et~al., 2011]{nenkova2011foundations}
+Nenkova, A., McKeown, K., et~al. (2011).
+\newblock Foundations and trends{\textregistered} in information retrieval.
+\newblock {\em Foundations and Trends{\textregistered} in Information
+  Retrieval}, 5(2-3):103--233.
+
+\bibitem[Owczarzak and Dang, 2011]{owczarzak2011overview}
+Owczarzak, K. and Dang, H.~T. (2011).
+\newblock Overview of the tac 2011 summarization track: Guided task and aesop
+  task.
+\newblock In {\em Proceedings of the Text Analysis Conference (TAC 2011),
+  Gaithersburg, Maryland, USA, November}.
+
+\bibitem[Stolcke et~al., 2002]{stolcke2002srilm}
+Stolcke, A. et~al. (2002).
+\newblock Srilm-an extensible language modeling toolkit.
+\newblock In {\em INTERSPEECH}.
+
+\bibitem[Valeeva, 2013]{valeeva}
+Valeeva, M. (2013).
+\newblock Annotation of factors of linguistic quality for multi-document
+  summarization.
+
+\bibitem[Wagner et~al., 2007]{wagner2007comparative}
+Wagner, J., Foster, J., and van Genabith, J. (2007).
+\newblock A comparative evaluation of deep and shallow approaches to the
+  automatic detection of common grammatical errors.
+\newblock Association for Computational Linguistics.
+
 \end{thebibliography}
