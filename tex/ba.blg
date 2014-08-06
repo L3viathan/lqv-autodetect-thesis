@@ -6,46 +6,47 @@ Database file #1: referenzen.bib
 Warning--entry type for "valeeva" isn't style-file defined
 --line 1 of file referenzen.bib
 Warning--empty journal in friedrichlqvsumm
+Warning--can't use both volume and number fields in sun2007detecting
 Warning--empty booktitle in wagner2007comparative
-You've used 9 entries,
+You've used 20 entries,
             1935 wiz_defined-function locations,
-            521 strings with 5270 characters,
-and the built_in function-call counts, 3488 in all, are:
-= -- 332
-> -- 161
-< -- 4
-+ -- 58
-- -- 54
-* -- 279
-:= -- 615
-add.period$ -- 26
-call.type$ -- 9
-change.case$ -- 70
-chr.to.int$ -- 9
-cite$ -- 11
-duplicate$ -- 144
-empty$ -- 241
-format.name$ -- 66
-if$ -- 679
+            588 strings with 7190 characters,
+and the built_in function-call counts, 8190 in all, are:
+= -- 806
+> -- 314
+< -- 22
++ -- 112
+- -- 104
+* -- 627
+:= -- 1372
+add.period$ -- 63
+call.type$ -- 20
+change.case$ -- 148
+chr.to.int$ -- 20
+cite$ -- 23
+duplicate$ -- 370
+empty$ -- 599
+format.name$ -- 135
+if$ -- 1667
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 8
-newline$ -- 46
-num.names$ -- 27
-pop$ -- 82
+missing$ -- 21
+newline$ -- 101
+num.names$ -- 60
+pop$ -- 178
 preamble$ -- 1
-purify$ -- 70
+purify$ -- 150
 quote$ -- 0
-skip$ -- 100
+skip$ -- 267
 stack$ -- 0
-substring$ -- 188
-swap$ -- 15
-text.length$ -- 1
+substring$ -- 484
+swap$ -- 74
+text.length$ -- 10
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 54
-warning$ -- 2
-while$ -- 25
+type$ -- 116
+warning$ -- 3
+while$ -- 65
 width$ -- 0
-write$ -- 110
-(There were 3 warnings)
+write$ -- 257
+(There were 4 warnings)

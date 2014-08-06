@@ -3,6 +3,62 @@
 \usepackage{amsmath, amsfonts, epsfig, xspace}
 \usepackage[utf8x]{inputenc}
 \usepackage[english]{babel}
+% For graphics
+\usepackage[pdftex]{graphicx}
+% you can place a figure at the position where it occurs in the text using [H]
+\usepackage{here}
+% For flexible tables
+\usepackage{multirow}
+% Math symbols not defined in the usual package, e.g. arrows that are crossed.
+\usepackage{amssymb}
+
+% Arrows with text / superscript
+\usepackage{amsmath}
+% Adjust margin of paper.
+\usepackage{geometry}
+\geometry{a4paper, top=25mm, left=25mm, right=25mm, bottom=25mm}
+
+% Zeilenabstand 1.25 %
+\linespread{1.2}
+
+% Example Environments
+\usepackage{amsthm}
+\newtheoremstyle{style}   
+  {0.5cm}              %Space above    
+  {-0.8cm}              %Space below
+  {}                      %Body font: original {\normalfont}    
+  {}                      %Indent amount (empty = no indent,%\parindent = paraindent)    
+  {\normalfont\bfseries}  %Thm head font original       
+  {{\normalfont\bfseries \thmname{#1}\thmnumber{ #2}}}
+\theoremstyle{style}
+\newtheorem{example}{Example}[section]
+
+% Formula Environments
+\newtheorem{formula}{Formula}[section]
+
+% Computational Linguistics trees etc.
+\usepackage{xyling}
+
+% Nicer captions
+\usepackage{caption2}
+\newcaptionstyle{mystyle}{%
+  \normalcaptionparams
+  \renewcommand\captionlabelfont{\bfseries}%
+  \renewcommand\captionlabeldelim{.}%
+  \onelinecaptionsfalse
+  \usecaptionstyle{centerlast}}
+
+\captionstyle{mystyle}
+
+% Table of contents depth
+\setcounter{tocdepth}{3}
+
+% A horizontal rule for the title page
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+% Paragraph and indent (as required by Prof. Dr. Pinkal)
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2ex plus 0.5ex minus 0.2ex}
 
 
 \usepackage{color}
@@ -35,7 +91,26 @@
 
 \begin{document}
 
-\maketitle
+\input{title.tex}
+
+\thispagestyle{empty}
+\begin{abstract}
+\setlength{\parskip}{2ex plus 0.5ex minus 0.2ex}
+...Abstract here...
+
+\end{abstract}
+\newpage
+
+% Table of contents
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+
+% Start of content
+\setcounter{page}{1}		% Seitenzähler auf 1 setzen %
+%\pagestyle{fancy}				% fancy header style
+\pagenumbering{arabic}
+\newpage
 
 % precision/recall/…: umgekehrt ebenfalls, d.h. 
 % von wie vielen Sätzen sind welche Klassen
@@ -51,7 +126,7 @@
 % mapping to source sentences
 % Levenshtein auf Wortebene (?)
 
-\maketableofcontents%TODO
+\maketableofcontents
 
 \section{Introduction}
 % Motivation, What am I trying to do
@@ -63,6 +138,19 @@ Manual annotation is an expensive and time-consuming process, for which an autom
 
 \section{Related Work}
 % other works on grammaticality and so on
+
+Most work in the field of automatic grammar checking seems to have been done in the area of second language learning.
+\cite{bender2004arboretum} use the LKB parser and generator \cite{copestake2002implementing} with the English Resource Grammar \citep{flickinger2000building} to build \textit{Arboretum}, a system that, when given an erroneous input sentence, detects that error and outputs a corrected version of the sentence. Their method uses manually selected mal-rules \citep{schneider1998recognizing} to detect error types specific to second language learners of English.
+
+While this seems to work for their specific domain, it does not transform well into ours: The mistakes language learners make, and the kind of ungrammaticality summarization systems produce, are very different. Source texts that are being summarized are usually grammatical, and get their ungrammaticality during summarization from being compressed from two formerly grammatical sentences into one ungrammatical one, for example. Mistakes typical for learners of English as a second language either usually do not occur in automatic summarizations (such as misspelt words), or do happen, but due to a different cause (for example agreement).
+
+\cite{chodorow2000unsupervised} build \textit{ALEK}, a system to grade TOEFL essays. It does so by viewing the task as an extension of Word Sense Disambiguation, and collecting n-grams of POS-tags and function words, and then classifying using primitive statistical measures like \textit{Mutual Information} and the $\chi^2$ test. However, only the whole essay is classified into one of six possible scores, and this decision is only made by looking at the test subject's understanding of the three words \textit{Concentrate}, \textit{Interest} and \textit{Knowledge} in context.
+
+\cite{sun2007detecting}, while also citing second language learning as their primary application, use a different approach: Instead of manually writing rules, they employ a supervised statistical learning method. They extract what they call \textit{labeled sequential patterns} (ngrams associated with a class) from both erroneous and correct sentences in their training corpus, enrich them with other automatically computed features, and use them as input for classification models; an SVM \citep[SVMlight,][]{Joachims/02a} and a Na\"ive Bayes classification model. The system achieves F-scores of around 80\%.
+
+There also has been work in the area of assessing grammaticality of automatically generated summaries, namely \cite{vadlapudi2010automated}. They used n-grams on POS-tag level and evaluated their system by looking at how well their classification correlates to ROGUE scores \citep{lin2004rouge}. \citeauthor{vadlapudi2010automated} achieve a Spearman's $\rho{}$ correlation of up to 77\% to ROGUE scores manually assigned by annotators.
+
+\cite{wagner2007comparative} compare various methods for detecting ungrammaticality: The ``flat'' method of using n-grams, a parser-based method using the XLE LFG parser \citep{maxwell1996efficient}, and using decision trees trained on the output of each of these methods. Their best method achieves an F-score of about 67\%.
 
 \section{Finding Ungrammaticality}
 % describe the corpus and its flaws
@@ -132,7 +220,7 @@ After manually counting and investigating these subtypes on \textit{dev-1} we th
 
 \section{Experiments}
 % All experiments, intermixed with small discussion segments
-We conduct a number of experiments to find reliable ways to detect different kinds of ungrammaticality. The annotation, \comment{besser?}our experiments and the evaluation are all done on sentence basis. We use Stanford CoreNLP for sentence splitting.
+We conduct a number of experiments to find reliable ways to detect different kinds of ungrammaticality. The annotation, our experiments and the evaluation are all done on sentence basis. We use Stanford CoreNLP for sentence splitting.
 
 \subsection{Detecting Unknown Tokens}
 \label{sec_unknowntokens}
@@ -158,31 +246,31 @@ The standard metrics precision, recall and F-score are used for evaluation.
 Table~\ref{eval_unknowntokens} shows the results of the evaluation. %The values for \textit{positive\comment{unsure about the naming. ``target class'' and ``inverted class''?} set} are the evaluation where the target class is the one of sentences containing a \texttt{missing spaces} violation, in the \textit{negative set}, the target class is the sentences \textit{not} containing such a violation. 
 Because the amount of sentences not containing a missing spaces violation is much larger than the ones that do, several weighted metrics are provided, too:
 
-The micro-average method consists of summing up the individual values from the confusion matrix (True Positive, False Positive, True Negative and False Negative) and calculating new metrics based on the results. We only display the F-score here, since F-score, recall and precision are identical for a 2-class scenario: Since the true positives of the missing spaces class are identical with the true negatives of the no missing spaces class (and vice versa), the new number of true positives and true negatives (for the micro average) is $tp + tn$ of any of the two classes. The same goes for false negatives and false positives. That means that when only dealing with two classes, in the micro-average method, the terms \textit{positive} and \textit{negative} can be used interchangeably. As precision is defined as $\frac{tp}{tp+fp}$ and recall as $\frac{tp}{tp+fn}$; as the equations only differ in whether they use $fp$ or $fn$ (which are exactly the same here) in the divisor, precision and recall (and therefore F-score, too, since the F-score is simply the harmonic mean of precision and recall) are identical. %TODO Micro-average WEG und Accuracy nennen. Nach hinten.
+The micro-average method consists of summing up the individual values from the confusion matrix (True Positive, False Positive, True Negative and False Negative) and calculating new metrics based on the results. We only display the F-score here, since F-score, recall and precision are identical for a 2-class scenario: Since the true positives of the missing spaces class are identical with the true negatives of the no missing spaces class (and vice versa), the new number of true positives and true negatives (for the micro average) is $tp + tn$ of any of the two classes. The same goes for false negatives and false positives. That means that when only dealing with two classes, in the micro-average method, the terms \textit{positive} and \textit{negative} can be used interchangeably. As precision is defined as $\frac{tp}{tp+fp}$ and recall as $\frac{tp}{tp+fn}$; as the equations only differ in whether they use $fp$ or $fn$ (which are exactly the same here) in the divisor, precision and recall (and therefore F-score, too, since the F-score is simply the harmonic mean of precision and recall) are identical.
 
 Macro-averages are just arithmetic means of precision and recall. For both micro- and macro-average, the new F-score is calculated from the new scores.
 
-Both \textbf{UnknownTokens\textsubscript{general}} and \textbf{UnknownTokens\textsubscript{source}} improve vastly over the baseline.
+Both \textbf{UnknownTokens\textsubscript{general}} and \textbf{UnknownTokens\textsubscript{source}} improve vastly over the baseline, but it is clear, that if the source text is available, it should be used to infer known words.
 
 
 %%%BEGIN BACKUP WITHOUT WEIGHTED MEAN:
 \begin{sidewaystable}
 \begin{center}
-\begin{tabular}{r|c|c|c|c|c|c|c|c|c|c|}
-& \multicolumn{3}{c|}{Missing spaces} & \multicolumn{3}{c|}{No missing spaces} & Micro-average & \multicolumn{3}{c|}{Macro-average}\\
-& \textbf{P} & \textbf{R} & \textbf{F} & \textbf{P} & \textbf{R} & \textbf{F} & \textbf{F} & \textbf{P} & \textbf{R} & \textbf{F}\\
+\begin{tabular}{r|c|c|c|c|c|c|c|c|}
+& \multicolumn{3}{c|}{Missing spaces} & \multicolumn{3}{c|}{No missing spaces} & Macro-average & Accuracy\\
+& \textbf{P} & \textbf{R} & \textbf{F} & \textbf{P} & \textbf{R} & \textbf{F} & \textbf{F} & \\
 \hline
-\textbf{Baseline} & 0.0 & 0.0 & 0.0 & 94.79 & 100 & 97.33 & 94.79 & 47.40 & 50.0 & 48.67\\
+\textbf{Baseline} & 0.0 & 0.0 & 0.0 & 94.8 & \textbf{100} & 97.3 & 48.7 & 94.8\\
 \hline
-\textbf{UT\textsubscript{wn}} & 14.96 & 98.65 & 25.98 & 99.89 & 69.14 & 81.72 & 70.68 & 57.43 & 83.90 & 68.19\\
+\textbf{UT\textsubscript{wn}} & 15.0 & \textbf{98.7} & 26.0 & \textbf{99.9} & 69.1 & 81.7 & 68.2 & 70.7\\
 \hline
-\textbf{UT\textsubscript{wn+heur}} & 30.51 & 97.30 & 46.45 & 99.83 & 87.81 & 93.43 & 88.30 & 65.17 & 92.56 & 76.49\\
+\textbf{UT\textsubscript{wn+heur}} & 30.5 & 97.3 & 46.5 & 99.8 & 87.8 & 93.4 & 76.5 & 88.3\\
 \hline
-\textbf{UT\textsubscript{wn+heur+ner}} & 35.47 & 97.30 & 51.99 & 99.84 & 90.26 & 94.81 & 90.63 & 67.66 & 93.78 & 78.61\\
+\textbf{UT\textsubscript{wn+heur+ner}} & 35.5 & 97.3 & 52.0 & 99.8 & 90.3 & 94.8 & 78.6 & 90.6\\
 \hline
-\textbf{UT\textsubscript{wn+heur+ner+wiki}} & 70.30 & 95.95 & 81.15 & 99.77 & 97.77 & 98.76 & 97.67 & 85.04 & 96.86 & 90.57\\
+\textbf{UT\textsubscript{wn+heur+ner+wiki}} & 70.3 & 96.0 & 81.2 & 99.8 & 97.8 & 98.8 & 90.6 & 97.7\\
 \hline
-\textbf{UT\textsubscript{source}} & 95.89 & 94.59 & 95.24 & 99.70 & 99.70 & 99.70 & 99.50 & 97.80 & 97.15 & 97.47\\
+\textbf{UT\textsubscript{source}} & \textbf{95.9} & 94.6 & \textbf{95.2} & 99.7 & 99.7 & \textbf{99.7} & \textbf{97.5} & \textbf{99.5}\\
 \end{tabular}
 \end{center}
 \caption{Evaluation of \textbf{UnknownTokens} on \textit{dev-2}, in percent. \textbf{UT\textsubscript{wordnet+heur+ner+wiki}} is equivalent to \textbf{UnknownTokens\textsubscript{general}}. \textbf{\textsubscript{wn}} = Wordnet-based dictionary, \textbf{\textsubscript{heur}} = title case heuristics, \textbf{\textsubscript{ner}} = Stanford NER, \textbf{\textsubscript{wiki}} = Wikipedia entry check}
@@ -218,57 +306,32 @@ Both \textbf{UnknownTokens\textsubscript{general}} and \textbf{UnknownTokens\tex
 %%%END BACKUP WITH WEIGHTED MEAN
 
 
-\subsection{DecisionTree}
+\subsection{Detecting Ungrammaticality}
 % previous tries with LMs(?), unknown_tokens, unknown_tokens+LM+weka->decision trees
 To detect more general forms of ungrammaticality, several other methods were investigated. Following \cite{wagner2007comparative}, we learn decision trees from outputs of several systems that on their own have not proven sufficient for this task. For this experiment, the development set \textit{dev-1} was used.
 \subsubsection{Method}
-The free WEKA software~\citep{hall2009weka} is an allround machine learning toolkit.
+We train a language model on parts (the same parts we used as a word source in \textbf{UnknownTokens\textsubscript{general}} (section~\ref{sec_unknowntokens})) of the Gigaword corpus\citep{gigaword}, extract perplexity scores for the sentences in our test set, and annotate them automatically. For the language model generation and the extraction of perplexity scores, we employ SRILM~\citep{stolcke2002srilm}, a language modeling toolkit.
 
+
+%The free WEKA software~\citep{hall2009weka} is an allround machine learning toolkit.
+We then use a RandomForest \citep{breiman2001random} to learn decision trees. For this task, we use the machine learning toolkit WEKA \citep{hall2009weka}.
 %As an input, WEKA requires an ARFF file, which we created using three features:
-We provide three features for WEKA:
+We use three features for our decision tree:
 
-%TODO: we train a lm... then we....
+\begin{itemize}
+	\item \textbf{LM\_PP} is the perplexity calculated for a sentence by the language model, following \cite{sun2007detecting}. This is a numeric feature. It proved to not be sufficient for detecting ungrammaticality on its own.
+	\item \textbf{missing spaces} is the classification of \textbf{UnknownTokens\textsubscript{source}} for a given sentence, as described in section~\ref{sec_unknowntokens}. This is a binary feature.
+	\item \textbf{numberofwords} is the number of words in the sentence. We follow \cite{wagner2007comparative} here, the intuition is that ungrammatical sentences will often be extraordinarily long, or very short:
 
-\textbf{Language Model} is a numeric feature, the surprisal value for a sentence, returned by SRILM~\citep{stolcke2002srilm}, a language modeling toolkit, trained on the same Gigaword corpus we used as a word source in \textbf{UnknownTokens\textsubscript{general}} (section~\ref{sec_unknowntokens}).
+		\textit{Former US President George W Bush, Who Will attend a memorial service on Tuesday, Virginia, and the university of at least 33 people Were killed, in the Worst shooting rampage in modern history, the White House said.}
 
-\textbf{missing spaces} is the classification of \textbf{UnknownTokens\textsubscript{source}} for a given sentence, as described above.
-
-Finally, \textbf{numberofwords}, is the number of words in the sentence. We follow \cite{wagner2007comparative} here, the intuition is that ungrammatical sentences will often be extraordinarily long, or very short.
-
+		\textit{The report of a}
+\end{itemize}
 
 \subsubsection{Evaluation}
 
-We performed 10-fold cross-validation using the WEKA Scheme \textit{RandomForest}\comment{cite \& gehört zu method}, which lead to a weighted F-score of 86.3\%. The summarized evaluation can be seen in Table~\ref{wekaeval}.
+We performed 10-fold cross-validation, which lead to a weighted F-score of 86.3\%. A total of 1215 (88.1\%) instances was classified correctly, 164 (11.9\%) incorrectly.
 
-\begin{table}
-	\begin{center}
-	\begin{tabular}{|r|l|}
-		\hline
-		Correctly Classified Instances     &  1215 (88.1073\%)\\
-		\hline
-		Incorrectly Classified Instances   &   164 (11.8927\%)\\
-		\hline
-		Kappa statistic                    &     0.3351\\
-		\hline
-		Mean absolute error                &     0.1491\\
-		\hline
-		Root mean squared error            &     0.3094\\
-		\hline
-		Relative absolute error            &    65.2325\%\\
-		\hline
-		Root relative squared error        &    91.6119\%\\
-		\hline
-		Coverage of cases (0.95 level)     &    96.2292\%\\
-		\hline
-		Mean rel. region size (0.95 level) &    66.4612\%\\
-		\hline
-		Total Number of Instances          &   1379\\
-		\hline   
-	\end{tabular}
-	\end{center}
-	\caption{Evaluation of the DecisionTree method, as reported by WEKA, using 10-fold cross-validation and the RandomForest scheme. TODO add to Table 1}
-	\label{wekaeval}
-\end{table}
 % === Run information ===
 
 % Scheme:       weka.classifiers.trees.RandomForest -I 10 -K 0 -S 1 -num-slots 1
@@ -321,7 +384,11 @@ We performed 10-fold cross-validation using the WEKA Scheme \textit{RandomForest
 \subsection{Datelines}
 % Regex foo, explanation plus evaluation(?)
 %TODO: Beispiel am Anfang.
-Source texts from news articles, like the ones in the TAC dataset, often contain datelines, which sometimes make it into the generated summary. While in the context of the article datelines made sense (often displayed smaller or otherwise visually distinctive), they are not needed, distracting and confusing in the summaries.
+Source texts from news articles, like the ones in the TAC dataset, often contain datelines, which sometimes make it into the generated summary. While in the context of the article datelines made sense (often displayed smaller or otherwise visually distinctive), they are not needed, distracting and confusing in the summaries:
+
+\textit{\textbf{BLACKSBURG, Virginia 2007-04-16 18:34: 44 UTC} A gunman opened fire in a dorm and classroom at Virginia Tech on Monday, killing at least 30 people in the deadliest shooting rampage in U.S. history.}
+
+
 
 \subsubsection{Method}
 The emerging patterns are so regular, that we use regular expressions to detect them. A few iterations of the regex were done, but so far the highest results were achieved using the regular expression
@@ -363,7 +430,7 @@ which our system doesn't match.
 % What could possibly be needed to work on the types not looked at here? (entity, semrel, …)
 
 \newpage
-\bibliography{referenzen}
 \bibliographystyle{apalike}
+\bibliography{referenzen}
 
 \end{document}
