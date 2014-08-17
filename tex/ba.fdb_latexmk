@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex ba"] 1408009788 "ba.aux" "ba.bbl" "ba" 1408009791
+["bibtex ba"] 1408315092 "ba.aux" "ba.bbl" "ba" 1408315095
   "/usr/local/texlive/2012/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "ba.aux" 1408009790 4210 c0b5ca6bf711375046d9a8a7bfd59c95 ""
+  "ba.aux" 1408315094 4370 c831566e92005430787a3a44c6df2541 ""
   "ba.bcf" 0 -1 0 ""
   "referenzen.bib" 1407281149 5569 94fb54afac05bf7120033510517bed8a ""
   (generated)
   "ba.bbl"
   "ba.blg"
-["pdflatex"] 1408009788 "ba.tex" "ba.pdf" "ba" 1408009791
+["pdflatex"] 1408315093 "ba.tex" "ba.pdf" "ba" 1408315095
   "./eule.png" 1368526714 13317 044aa032b9ef7b434f87da786908e4ab ""
   "/usr/local/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii" 1337017135 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2012/texmf-dist/tex/generic/babel/babel.def" 1312409092 29228 2fe939254f4b17ac18a8c0fb8aa39dff ""
@@ -165,10 +165,10 @@
   "/usr/local/texlive/2012/texmf-dist/tex/latex/xcolor/xcolor.sty" 1169481954 55224 a43bab84e0ac5e6efcaf9a98bde73a94 ""
   "/usr/local/texlive/2012/texmf-dist/tex/latex/xkeyval/xkeyval.sty" 1218672668 4934 8ea45c150f1216b4eb8e3b63954e4bbf ""
   "/usr/local/texlive/2012/texmf-dist/tex/latex/xyling/xyling.sty" 1155513795 34663 ac631973e5977dd61e72ade3aa4aea8d ""
-  "ba.aux" 1408009790 4210 c0b5ca6bf711375046d9a8a7bfd59c95 ""
-  "ba.bbl" 1408009788 5022 272661ab899557de7b394d3357ec9cb2 "bibtex ba"
-  "ba.tex" 1407798293 29701 72d783b6dbf07ce152d4998f03dd96b4 ""
-  "ba.toc" 1408009790 1030 6460f2e29510dd5d41044823de7d3b77 ""
+  "ba.aux" 1408315094 4370 c831566e92005430787a3a44c6df2541 ""
+  "ba.bbl" 1408315093 5022 272661ab899557de7b394d3357ec9cb2 "bibtex ba"
+  "ba.tex" 1408315088 31829 6c3db207ad16e4a647e6f741fe35b9fb ""
+  "ba.toc" 1408315094 1154 20a3d3a3fb39f0529a226552b4913b90 ""
   "here.sty" 1282150722 8528 5bb9106badb0ced5731e7cb55f84e6ab ""
   "subtypes_dev2.png" 1404020032 31185 adee37e18552a059cdca6dcab1675085 ""
   "title.tex" 1407333377 1012 6006fc8fa9516b63d7105d5c87ed0b76 ""

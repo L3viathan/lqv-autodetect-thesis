@@ -418,7 +418,33 @@ which our system doesn't match.
 
 Automatic summaries constructed from multiple source texts on the same topic often suffer from redundancy, as sentences that contain the same or largely the same information are occasionally included in the summary. As a consequence, reading fluency is impaired.
 
-While --- in contrast to many other linguistic quality violations --- this has an impact on traditional evaluation scores for automatic summarization systems (because the information density is lower than it could be), it is also considered to be a problem in our domain.
+While --- in contrast to many other linguistic quality violations --- this also has an impact on traditional evaluation scores for automatic summarization systems (because the information density is lower than it could be), it is also considered to be a problem of our domain.
+
+In the LQVCorpus, different degrees of redundant sentence pairs occur. Some sentence pairs annotated as redundant contain similar information, but using completely different phrasing and focus:
+
+%low example
+\textit{According to a survey by the State Food and Drug Administration, 65 percent of the respondents worried about the food safety situation in China.}
+
+\textit{Food and drug safety has become a major concern of Chinese people.}
+
+Other pairs of sentences are apparently at least partly composed of the same source sentence, but are still different. One of the sentences might contain additional information and the two sentences might still be of very different length:
+
+%medium example
+\textit{Cyclone Sidr, described as the worst storm in years to hit low-lying and disaster-prone Bangladesh, crashed into the southwestern coast Thursday night before sweeping north over the capital Dhaka.}
+
+\textit{The cyclone hit the southwestern coast of Bangladesh on Thursday before sweeping north to the capital Dhaka.}
+
+Finally, sometimes subsequent sentences have marginal differences:
+%high example
+\textit{An unknown number of cats and dogs suffered kidney failure and about 10 died after eating the affected pet food, Menu Foods said in announcing the North American recall.}
+
+\textit{An unknown number of cats and dogs suffered kidney failure, and about 10 died after eating the affected pet food, Menu Foods said in announcing the North American recall.}
+
+We are seeking to find all of these sentences, but concentrate on the latter two cases where the redundancy is obvious for humans.
+
+\subsubsection{Method}
+
+\subsubsection{Evaluation}
 
 prec: 72.72727272727273
 rec: 41.02564102564102
