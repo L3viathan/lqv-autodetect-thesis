@@ -1,6 +1,6 @@
 \contentsline {section}{\numberline {1}Introduction}{1}
 \contentsline {section}{\numberline {2}Related Work}{1}
-\contentsline {section}{\numberline {3}Finding Ungrammaticality}{2}
+\contentsline {section}{\numberline {3}Corpus Study}{2}
 \contentsline {section}{\numberline {4}Experiments}{3}
 \contentsline {subsection}{\numberline {4.1}Detecting Unknown Tokens}{3}
 \contentsline {subsubsection}{\numberline {4.1.1}Method}{5}
