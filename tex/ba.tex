@@ -144,7 +144,7 @@ Evaluation of automatic summarization systems has largely been done on content c
 
 As a first step in this direction, \cite{friedrichlqvsumm} created the \textit{LQVCorpus}, which consists of multi-document summaries from the TAC 2011 shared task on Guided Summarization \citep{owczarzak2011overview}, annotated manually with LQ violations on entity, clause and discourse level.
 
-Manual annotation is an expensive and time-consuming process, for which an automatic system could be an alternative. Our work deals with creating such a system that manages at least part of the annotation automatically. We develop and evaluate our system on top of the \textit{LQVCorpus}.
+Manual annotation is an expensive and time-consuming process, for which an automatic system could be an alternative. Our work deals with creating such a system that manages at least part of the annotation automatically. We develop and evaluate our system on top of the \textit{LQVCorpus}. We also limit ourselves to the clause-level violations listed in \cite{friedrichlqvsumm}, except for \texttt{no\_semantic\_relation}.
 
 The rest of this paper is organized as follows:
 
@@ -239,7 +239,7 @@ After manually counting and investigating these subtypes on \textit{dev-1} we th
 \section{Experiments}
 \label{experiments}
 % All experiments, intermixed with small discussion segments
-We conduct a number of experiments to find reliable ways to detect different kinds of ungrammaticality. The annotation, our experiments and the evaluation are all done on sentence basis. We use Stanford CoreNLP for sentence splitting.
+We conduct a number of experiments to find reliable ways to detect different kinds of ungrammaticality. The annotation, our experiments and the evaluation are all done on sentence basis. We use Stanford CoreNLP \citep{manning-EtAl:2014:P14-5} for sentence splitting.
 
 \subsection{Detecting Unknown Tokens}
 \label{sec_unknowntokens}
@@ -430,6 +430,7 @@ is classified as containing a dateline by the regular expression, but is not ann
 which our system doesn't match.
 
 \subsection{Redundancy}
+\label{redundancy}
 % token overlap
 %TODO: segment based
 % threshold auf dev-Set perfekt machen, auf test-set testen
@@ -534,6 +535,23 @@ The results can be seen in Table~\ref{eval_redundancy}. Evidently, the \textbf{U
 \label{discussion}
 % What seem to be the best methods for the various tasks and why?
 % Why does what works work and not that which doesn't?
+Detecting linguistic quality violations automatically is not a trivial task.
+
+- but: sometimes easier than expected
+
+%KRITIK!!
+The corpus we used was not an optimal choice either.
+
+The LQVCorpus that we used for all of our experiments is, unfortunately, not large enough to have a wide coverage of all violations. This can be seen most prominently when trying to detect redundancy (Section~\ref{redundancy}).
+
+Apart from its size, the corpus is also often annotated inconsistently or at least inappropriate for our purposes. In general, annotations are done on the clause level, where clauses are arbitrary substrings of the summary. As we classify and evaluate on sentences produced by Stanford CoreNLP \citep{manning-EtAl:2014:P14-5}, this introduces noise.
+
+Annotations aren't done consistently throughout the corpus, and often very different violations are annotated with the same label, the most obvious example of this being shown in Section~\ref{corpus_study}. This is not automatically a weakness of the corpus itself, but rather an unfitness for our purposes.
+%show example
+
+- corpus: small, inconsistent, sometimes wrong, but: nothing else available
+- tailored to corpus
+
 
 \section{Conclusion} % & Future Work
 \label{conclusion}
