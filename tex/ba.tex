@@ -459,6 +459,21 @@ Finally, as a further \textbf{Baseline} we classify all sentence pairs as not co
 In the corpus, redundancy isn't annotated on sentence base, but rather on clause level, where ``clause'' is an arbitrary substring of the summary text. That means that redundancy annotations can span over many sentences, can skip sentences inbetween and can be contained in a single sentence.
 
 For our purposes, we only consider redundancies that occur in two subsequent sentences and our evaluation metrics are based on those.
+
+To obtain a good threshold for \textbf{Unigrams}, \textbf{Bigrams}, and \textbf{Combined}, we compare their performance on the development sets \texttt{dev-1} and \texttt{dev-2}. The results can be seen in Figure~\ref{redundancy_graph}.
+
+\begin{figure}
+\begin{center}
+\includegraphics[scale=0.15]{a.png}
+\end{center}
+\caption{Performance of various thresholds for \textbf{Unigrams}, \textbf{Bigrams}, and \textbf{Combined} in \textit{dev-1} and \textit{dev-2}. Continuous lines are recall, dashed lines are precision and bold lines are F-score.}
+\label{redundancy_graph}
+\end{figure}
+
+As is to be expected, higher thresholds correlate with higher precision and lower recall. And while the F-scores are given in Figure~\ref{redundancy_graph} for informational purposes, they are not what we want to optimize; while recall is desirable, we feel that precision is much more important for a system that annotates violations.
+
+We therefore choose a threshold of $0.4$ for the \textbf{Bigrams} and \textbf{Combined}, and one of $0.5$ for \textbf{Unigrams}, because there appear to be local maxima at that point with still some amount of recall.
+
 \subsection{Unrelatedness} %evtl %NOOO
 %\section{Evaluation} oder auch nicht
 % or skip entirely and put in experiments? final results here?

@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex ba"] 1408369619 "ba.aux" "ba.bbl" "ba" 1408369621
+["bibtex ba"] 1408370942 "ba.aux" "ba.bbl" "ba" 1408370946
   "/usr/local/texlive/2012/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "ba.aux" 1408369621 4469 257d36c9a196d8d8689b7fb53e385daa ""
+  "ba.aux" 1408370945 4812 9e5e6054e229b1a3a4ddc47ce5e3f20e ""
   "ba.bcf" 0 -1 0 ""
   "referenzen.bib" 1408353045 5810 431d2177e20e047323db25971e38d6ab ""
   (generated)
   "ba.bbl"
   "ba.blg"
-["pdflatex"] 1408369620 "ba.tex" "ba.pdf" "ba" 1408369621
+["pdflatex"] 1408370943 "ba.tex" "ba.pdf" "ba" 1408370946
   "./eule.png" 1368526714 13317 044aa032b9ef7b434f87da786908e4ab ""
   "/usr/local/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii" 1337017135 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2012/texmf-dist/tex/generic/babel/babel.def" 1312409092 29228 2fe939254f4b17ac18a8c0fb8aa39dff ""
@@ -165,10 +165,11 @@
   "/usr/local/texlive/2012/texmf-dist/tex/latex/xcolor/xcolor.sty" 1169481954 55224 a43bab84e0ac5e6efcaf9a98bde73a94 ""
   "/usr/local/texlive/2012/texmf-dist/tex/latex/xkeyval/xkeyval.sty" 1218672668 4934 8ea45c150f1216b4eb8e3b63954e4bbf ""
   "/usr/local/texlive/2012/texmf-dist/tex/latex/xyling/xyling.sty" 1155513795 34663 ac631973e5977dd61e72ade3aa4aea8d ""
-  "ba.aux" 1408369621 4469 257d36c9a196d8d8689b7fb53e385daa ""
-  "ba.bbl" 1408369620 5249 3f908cb147a565734e09342616e04bbd "bibtex ba"
-  "ba.tex" 1408369611 33508 a2c9954787d0ad72d191c2c5a47efa34 ""
-  "ba.toc" 1408369621 1157 b1e970cec7ac3adafacc6cde5024611f ""
+  "a.png" 1408368844 509059 d778eb5b3f1f2b4d3552365c83f9ed20 ""
+  "ba.aux" 1408370945 4812 9e5e6054e229b1a3a4ddc47ce5e3f20e ""
+  "ba.bbl" 1408370943 5249 3f908cb147a565734e09342616e04bbd "bibtex ba"
+  "ba.tex" 1408370938 34095 0fe850b6b03be3c6b2f9cf7922aa2d76 ""
+  "ba.toc" 1408370945 1157 01e033245a57ec722bca771865ddc5b0 ""
   "here.sty" 1282150722 8528 5bb9106badb0ced5731e7cb55f84e6ab ""
   "subtypes_dev2.png" 1404020032 31185 adee37e18552a059cdca6dcab1675085 ""
   "title.tex" 1407333377 1012 6006fc8fa9516b63d7105d5c87ed0b76 ""
