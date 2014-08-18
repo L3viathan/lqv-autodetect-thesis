@@ -85,6 +85,8 @@
 
 \newcommand{\cn}{$^\text{[citation needed] }$}
 
+\renewcommand\abstractname{\textbf{Abstract}}
+
 \author{Jonathan Oberländer}
 
 \title{Automatic Detection of Linguistic Quality Violations}
@@ -96,7 +98,7 @@
 \thispagestyle{empty}
 \begin{abstract}
 \setlength{\parskip}{2ex plus 0.5ex minus 0.2ex}
-...Abstract here...
+\textbf{Abstract} \quad ...Abstract here...
 
 \end{abstract}
 \newpage
@@ -539,6 +541,8 @@ Detecting linguistic quality violations automatically is not a trivial task.
 
 - but: sometimes easier than expected
 
+%einzelne Experimente..
+
 %KRITIK!!
 The corpus we used was not an optimal choice either.
 
@@ -552,11 +556,19 @@ Annotations aren't done consistently throughout the corpus, and often very diffe
 - corpus: small, inconsistent, sometimes wrong, but: nothing else available
 - tailored to corpus
 
+%what could be done better?
+
 
 \section{Conclusion} % & Future Work
 \label{conclusion}
 % What can my results be used for? What should be investigated later?
 % What could possibly be needed to work on the types not looked at here? (entity, semrel, …)
+
+Future work:
+- the tool
+- other methods?
+
+- other violations?
 
 \newpage
 \bibliographystyle{apalike}

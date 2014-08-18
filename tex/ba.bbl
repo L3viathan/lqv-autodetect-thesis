@@ -69,6 +69,13 @@ Lin, C.-Y. (2004).
 \newblock In {\em Text Summarization Branches Out: Proceedings of the ACL-04
   Workshop}, pages 74--81.
 
+\bibitem[Manning et~al., 2014]{manning-EtAl:2014:P14-5}
+Manning, C.~D., Surdeanu, M., Bauer, J., Finkel, J., Bethard, S.~J., and
+  McClosky, D. (2014).
+\newblock The {Stanford} {CoreNLP} natural language processing toolkit.
+\newblock In {\em Proceedings of 52nd Annual Meeting of the Association for
+  Computational Linguistics: System Demonstrations}, pages 55--60.
+
 \bibitem[Maxwell and Kaplan, 1996]{maxwell1996efficient}
 Maxwell, J. and Kaplan, R. (1996).
 \newblock An efficient parser for lfg.
