@@ -444,16 +444,22 @@ We are seeking to find all of these sentences, but concentrate on the latter two
 
 \subsubsection{Method}
 
-Our method consists of a simple unigram overlap score, combined with a few optimizations.
+Our method (\textbf{Unigrams}) consists of a simple unigram overlap score, which we found to outperform more sophisticated approaches:
+
+First, we remove all non-alphanumeric characters from both sentences and split them into words. We then treat the words as a set and divide the cardinality of the intersection of each sentence's set by the number of words in the smaller sentence. A given threshold is then used to classify instances.
+
+A number of other methods are also implemented: \textbf{Bigrams} is a variation of the \textbf{Unigrams} method which uses bigrams instead of unigrams. \textbf{Combined} is using a score that the mean of the \textbf{Unigrams} and \textbf{Bigrams} scores.
+
+\textbf{Levenshtein} consists of the standard edit distance\citep{levenshtein1966binary} on word level. A threshold of 2 yielded best results on our development set, meaning that sentences are classified as containing redundancies if their word-level Levenshtein distance is 1 or 0. Prior to computation of the score, non-alphanumeric characters were again pruned from the sentences.
+
+Finally, as a further \textbf{Baseline} we classify all sentence pairs as not containing redundancies.
 
 \subsubsection{Evaluation}
 
-prec: 72.72727272727273
-rec: 41.02564102564102
-F: 52.45901639344262
+In the corpus, redundancy isn't annotated on sentence base, but rather on clause level, where ``clause'' is an arbitrary substring of the summary text. That means that redundancy annotations can span over many sentences, can skip sentences inbetween and can be contained in a single sentence.
 
-\subsection{Unrelatedness} %evtl
-
+For our purposes, we only consider redundancies that occur in two subsequent sentences and our evaluation metrics are based on those.
+\subsection{Unrelatedness} %evtl %NOOO
 %\section{Evaluation} oder auch nicht
 % or skip entirely and put in experiments? final results here?
 

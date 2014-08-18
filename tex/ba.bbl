@@ -57,6 +57,12 @@ Joachims, T. (2002).
   Methods, Theory, and Algorithms}.
 \newblock Kluwer/Springer.
 
+\bibitem[Levenshtein, 1966]{levenshtein1966binary}
+Levenshtein, V.~I. (1966).
+\newblock Binary codes capable of correcting deletions, insertions and
+  reversals.
+\newblock In {\em Soviet physics doklady}, volume~10, page 707.
+
 \bibitem[Lin, 2004]{lin2004rouge}
 Lin, C.-Y. (2004).
 \newblock Rouge: A package for automatic evaluation of summaries.
