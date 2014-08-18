@@ -8,45 +8,45 @@ Warning--entry type for "valeeva" isn't style-file defined
 Warning--empty journal in friedrichlqvsumm
 Warning--can't use both volume and number fields in sun2007detecting
 Warning--empty booktitle in wagner2007comparative
-You've used 21 entries,
+You've used 22 entries,
             1935 wiz_defined-function locations,
-            595 strings with 7335 characters,
-and the built_in function-call counts, 8583 in all, are:
-= -- 845
-> -- 321
-< -- 25
-+ -- 114
-- -- 106
-* -- 651
-:= -- 1432
-add.period$ -- 66
-call.type$ -- 21
-change.case$ -- 154
-chr.to.int$ -- 21
-cite$ -- 24
-duplicate$ -- 395
-empty$ -- 632
-format.name$ -- 138
-if$ -- 1755
+            600 strings with 7572 characters,
+and the built_in function-call counts, 9171 in all, are:
+= -- 907
+> -- 344
+< -- 26
++ -- 122
+- -- 114
+* -- 695
+:= -- 1521
+add.period$ -- 70
+call.type$ -- 22
+change.case$ -- 163
+chr.to.int$ -- 22
+cite$ -- 25
+duplicate$ -- 422
+empty$ -- 674
+format.name$ -- 147
+if$ -- 1883
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 22
-newline$ -- 106
-num.names$ -- 63
-pop$ -- 187
+missing$ -- 23
+newline$ -- 111
+num.names$ -- 66
+pop$ -- 199
 preamble$ -- 1
-purify$ -- 156
+purify$ -- 165
 quote$ -- 0
-skip$ -- 286
+skip$ -- 307
 stack$ -- 0
-substring$ -- 502
-swap$ -- 83
-text.length$ -- 12
+substring$ -- 546
+swap$ -- 93
+text.length$ -- 13
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 122
+type$ -- 128
 warning$ -- 3
-while$ -- 68
+while$ -- 73
 width$ -- 0
-write$ -- 271
+write$ -- 285
 (There were 4 warnings)

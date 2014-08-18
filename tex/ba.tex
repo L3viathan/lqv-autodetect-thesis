@@ -130,13 +130,28 @@
 
 \section{Introduction}
 % Motivation, What am I trying to do
+With an ever-growing amount of information, it is becoming increasingly important to reduce that information to a processible amount, by summarizing it. Most of the time, it is infeasible to do this by hand, and there is thus a need for automating the process.
+
+\textit{Automatic summarization systems} take one or more documents and produce a summary that contains the most important information from these documents. Such systems can be divided in \textit{extractive} and \textit{abstractive}, and in \textit{single-document} and \textit{multi-document} summarization systems.
+
+A \textit{single-document} system takes only one document as an input and produces a summary of that document, while a \textit{multi-document} system summarizes multiple documents on the same topic.
+
+An \textit{abstractive} system is one which infers knowledge from its input into an internal semantic representation and generates a new text based on that knowledge. The task of constructing an abstractive summarization system is very complex, which is why most systems used today are \textit{extractive}, which means they work by taking phrases from their input and glue them together to produce an output.
+
+We are only concerned with extractive, multi-document summarization.
+
 Evaluation of automatic summarization systems has largely been done on content coverage, which is why generated summaries often lack linguistic quality \citep{nenkova2011foundations}, meaning that they contain many errors of various kinds. A new focus on linguistic quality (LQ) evaluation would presumably help decrease these issues and produce overall better summarization systems.
 
 As a first step in this direction, \cite{friedrichlqvsumm} created the \textit{LQVCorpus}, which consists of multi-document summaries from the TAC 2011 shared task on Guided Summarization \citep{owczarzak2011overview}, annotated manually with LQ violations on entity, clause and discourse level.
 
 Manual annotation is an expensive and time-consuming process, for which an automatic system could be an alternative. Our work deals with creating such a system that manages at least part of the annotation automatically. We develop and evaluate our system on top of the \textit{LQVCorpus}.
 
+The rest of this paper is organized as follows:
+
+The next section discusses related work. In Section~\ref{corpus_study}, we take a look at the \textit{LQVCorpus} and the challenges it poses for our experiments and methods, which are discussed in Section~\ref{experiments}, where we also evaluate our experiments. We discuss our results in Section~\ref{discussion}. In Section~\ref{conclusion}, we discuss future work and conclude.
+
 \section{Related Work}
+\label{related_work}
 % other works on grammaticality and so on
 
 Most work in the field of automatic grammar checking seems to have been done in the area of second language learning.
@@ -152,7 +167,10 @@ There also has been work in the area of assessing grammaticality of automaticall
 
 \cite{wagner2007comparative} compare various methods for detecting ungrammaticality: The ``flat'' method of using n-grams, a parser-based method using the XLE LFG parser \citep{maxwell1996efficient}, and using decision trees trained on the output of each of these methods. Their best method achieves an F-score of about 67\%.
 
+The BLEU score \citep{papineni2002bleu} is a method for evaluating the effectiveness of a machine translation system, which uses a number of (human) reference translations to score an automatic translation. They showed that their score correlates highly with human evaluation, which has lead to the BLEU score having become the standard evaluation metric for machine translation.
+
 \section{Corpus Study}
+\label{corpus_study}
 % describe the corpus and its flaws
 
 As a first step, we inspect the corpus. We find that the type system of the LQVCorpus~\citep{valeeva} is not detailed enough for our purposes and has a few shortcomings: Especially under the label of \texttt{other\_ungrammatical\_form} many different types of errors are combined. For this reason, we define a number of subtypes for this violation:
@@ -219,6 +237,7 @@ After manually counting and investigating these subtypes on \textit{dev-1} we th
 \end{figure}
 
 \section{Experiments}
+\label{experiments}
 % All experiments, intermixed with small discussion segments
 We conduct a number of experiments to find reliable ways to detect different kinds of ungrammaticality. The annotation, our experiments and the evaluation are all done on sentence basis. We use Stanford CoreNLP for sentence splitting.
 
@@ -452,7 +471,9 @@ A number of other methods are also implemented: \textbf{Bigrams} is a variation 
 
 \textbf{Levenshtein} consists of the standard edit distance\citep{levenshtein1966binary} on word level. A threshold of 2 yielded best results on our development set, meaning that sentences are classified as containing redundancies if their word-level Levenshtein distance is 1 or 0. Prior to computation of the score, non-alphanumeric characters were again pruned from the sentences.
 
-Finally, as a further \textbf{Baseline} we classify all sentence pairs as not containing redundancies.
+Finally, as a further \textbf{Baseline} we classify all sentence pairs as containing redundancies.
+
+We briefly considered using BLEU scores \citep{papineni2002bleu} for redundancy detection (with the rationale that if the second sentence is a ``good translation'' of the first one, it might be redundant), but BLEU scores get their performance from having multiple reference translations available, which is not the case here.
 
 \subsubsection{Evaluation}
 
@@ -460,7 +481,7 @@ In the corpus, redundancy isn't annotated on sentence base, but rather on clause
 
 For our purposes, we only consider redundancies that occur in two subsequent sentences and our evaluation metrics are based on those.
 
-To obtain a good threshold for \textbf{Unigrams}, \textbf{Bigrams}, and \textbf{Combined}, we compare their performance on the development sets \texttt{dev-1} and \texttt{dev-2}. The results can be seen in Figure~\ref{redundancy_graph}.
+To obtain a good threshold for \textbf{Unigrams}, \textbf{Bigrams}, and \textbf{Combined}, we compare their performance on the development sets \textit{dev-1} and \textit{dev-2}. The results can be seen in Figure~\ref{redundancy_graph}.
 
 \begin{figure}
 \begin{center}
@@ -474,15 +495,48 @@ As is to be expected, higher thresholds correlate with higher precision and lowe
 
 We therefore choose a threshold of $0.4$ for the \textbf{Bigrams} and \textbf{Combined}, and one of $0.5$ for \textbf{Unigrams}, because there appear to be local maxima at that point with still some amount of recall.
 
-\subsection{Unrelatedness} %evtl %NOOO
+The results can be seen in Table~\ref{eval_redundancy}. Evidently, the \textbf{Unigrams} method outperforms \textbf{Levenshtein} and the \textbf{Baseline} as well as the other n-gram methods.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{r|c|c|c|}
+& Precision & Recall & F-Score \\
+\hline
+\textbf{Baseline} & 4.5\% & \textbf{100\%} & 8.7\% \\
+\hline
+\textbf{Levenshtein} & 15.8\% & 17.3\% & 3.1\% \\
+\hline
+\textbf{Unigrams} & \textbf{58.0\%} & 28.2\% & \textbf{37.0\%} \\
+\hline
+\textbf{Bigrams} & 55.6\% & 14.5\% & 22.9\% \\
+\hline
+\textbf{Combined} & 56.8\% & 24.3\% & 34.0\% \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Evaluation of \textbf{Unigrams}, \textbf{Unigrams}, and \textbf{Unigrams} on everything but \textit{dev-1} and \textit{dev-2}}
+\label{eval_redundancy}
+\end{table}
+
+% Bigrams: 0.5555555555555556,0.14450867052023122,0.22935779816513763
+% Combined: 0.5675675675675675,0.24277456647398843,0.340080971659919
+% Unigrams: 0.5802469135802469,0.27167630057803466,0.3700787401574803
+
+% Levenshtein: 0.15789473684210526,0.017341040462427744,0.03125
+
+% Baseline: 0.045240585774058575,1.0,0.08656492369276958
+
+%\subsection{Unrelatedness} %evtl %NOOO
 %\section{Evaluation} oder auch nicht
 % or skip entirely and put in experiments? final results here?
 
 \section{Discussion}
+\label{discussion}
 % What seem to be the best methods for the various tasks and why?
 % Why does what works work and not that which doesn't?
 
 \section{Conclusion} % & Future Work
+\label{conclusion}
 % What can my results be used for? What should be investigated later?
 % What could possibly be needed to work on the types not looked at here? (entity, semrel, …)
 

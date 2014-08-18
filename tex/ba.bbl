@@ -87,6 +87,13 @@ Owczarzak, K. and Dang, H.~T. (2011).
 \newblock In {\em Proceedings of the Text Analysis Conference (TAC 2011),
   Gaithersburg, Maryland, USA, November}.
 
+\bibitem[Papineni et~al., 2002]{papineni2002bleu}
+Papineni, K., Roukos, S., Ward, T., and Zhu, W.-J. (2002).
+\newblock Bleu: a method for automatic evaluation of machine translation.
+\newblock In {\em Proceedings of the 40th annual meeting on association for
+  computational linguistics}, pages 311--318. Association for Computational
+  Linguistics.
+
 \bibitem[Schneider and McCoy, 1998]{schneider1998recognizing}
 Schneider, D. and McCoy, K.~F. (1998).
 \newblock Recognizing syntactic errors in the writing of second language
