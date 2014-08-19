@@ -243,11 +243,11 @@ After manually counting and investigating these subtypes on \textit{dev-1} we th
 % All experiments, intermixed with small discussion segments
 We conduct a number of experiments to find reliable ways to detect different kinds of ungrammaticality. The annotation, our experiments and the evaluation are all done on sentence basis. We use Stanford CoreNLP \citep{manning-EtAl:2014:P14-5} for sentence splitting.
 
-\subsection{Detecting Unknown Tokens}
+\subsection{Detecting Ungrammaticality}
 \label{sec_unknowntokens}
 Perhaps the most noticeable result is the large portion of \textit{missing spaces} violations, meaning clauses that include tokens which aren't correct words. Almost all of these cases come from a missing space between two words forming tokens such as \texttt{reportsreaching} or \texttt{Wenchuancounty}. As there is such a large amount of this type, finding a reliable detection method for this subtype would significantly boost detection of ungrammaticality in general.
 
-\subsubsection{Method}
+\subsubsection{The UnknownTokens method}
 %.Being the biggest amount of cases of ungrammaticality, \textit{missing spaces} violations seem to have a straightforward solution which we call the \textbf{UnknownTokens} approach
 We call our approach to identifying missing spaces \textbf{UnknownTokens}: Tagging a sentence as containing a \textit{missing spaces} ungrammaticality if and only if there is a token in the sentence that isn't a ``known'' token, i.e. one that doesn't exist in a list of known words. In our setting, we can easily deduce such a list from the source documents of the automatic summarization process. If the source document is available and used as a base for our vocabulary, we call that approach \textbf{UnknownTokens\textsubscript{source}}.
 
@@ -260,7 +260,7 @@ In order to improve upon the NER and further increase recall, we use two simple 
 
 We automatically label any tokens that are neither on our list of known tokens from GigaWord, nor tagged as a named entity as ``unknown'' and tag the sentence as containing unknown tokens. The combined method \textbf{UnknownTokens\textsubscript{wn+heur+ner+wiki}} is what we call \textbf{UnknownTokens\textsubscript{general}}.
 
-\subsubsection{Evaluation}
+\subsubsection{Evaluation of UnknownTokens}
 We evaluate how effective \textbf{UnknownTokens} is in detecting \texttt{missing spaces} violations, both with (\textbf{UnknownTokens\textsubscript{source}}) and without (\textbf{UnknownTokens\textsubscript{general}}) access to the source documents, and compare it to a \textbf{baseline}, which always assumes the most common case (no \texttt{missing spaces} violation).
 The standard metrics precision, recall and F-score are used for evaluation.
 
@@ -327,10 +327,10 @@ Both \textbf{UnknownTokens\textsubscript{general}} and \textbf{UnknownTokens\tex
 %%%END BACKUP WITH WEIGHTED MEAN
 
 
-\subsection{Detecting Ungrammaticality}
+\subsubsection{The RandomForest method}
 % previous tries with LMs(?), unknown_tokens, unknown_tokens+LM+weka->decision trees
 To detect more general forms of ungrammaticality, several other methods were investigated. Following \cite{wagner2007comparative}, we learn decision trees from outputs of several systems that on their own have not proven sufficient for this task. For this experiment, the development set \textit{dev-1} was used.
-\subsubsection{Method}
+
 We train a language model on parts (the same parts we used as a word source in \textbf{UnknownTokens\textsubscript{general}} (section~\ref{sec_unknowntokens})) of the Gigaword corpus\citep{gigaword}, extract perplexity scores for the sentences in our test set, and annotate them automatically. For the language model generation and the extraction of perplexity scores, we employ SRILM~\citep{stolcke2002srilm}, a language modeling toolkit.
 
 
@@ -349,7 +349,7 @@ We use three features for our decision tree:
 		\textit{The report of a}
 \end{itemize}
 
-\subsubsection{Evaluation}
+\subsubsection{Evaluation of RandomForest}
 
 We performed 10-fold cross-validation, which lead to a weighted F-score of 86.3\%. A total of 1215 (88.1\%) instances was classified correctly, 164 (11.9\%) incorrectly.
 
@@ -493,6 +493,8 @@ To obtain a good threshold for \textbf{Unigrams}, \textbf{Bigrams}, and \textbf{
 \caption{Performance of various thresholds for \textbf{Unigrams}, \textbf{Bigrams}, and \textbf{Combined} in \textit{dev-1} and \textit{dev-2}. Continuous lines are recall, dashed lines are precision and bold lines are F-score.}
 \label{redundancy_graph}
 \end{figure}
+
+For recall, \textbf{Unigrams} outperforms \textbf{Bigrams}, while for precision \textbf{Bigrams} is predominant.
 
 As is to be expected, higher thresholds correlate with higher precision and lower recall. And while the F-scores are given in Figure~\ref{redundancy_graph} for informational purposes, they are not what we want to optimize; while recall is desirable, we feel that precision is much more important for a system that annotates violations.
 
