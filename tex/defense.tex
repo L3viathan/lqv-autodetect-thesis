@@ -124,7 +124,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{UnknownTokens}
+  \frametitle{\textbf{UnknownTokens}}
   \textbf{Idea:}
 
   Sentence contains violation iff any word $\not\in$ known tokens
@@ -141,21 +141,37 @@
 \begin{frame}
   \frametitle{\textbf{UnknownTokens\textsubscript{general}}}
   \begin{itemize}
-    \item Tokens from (parts of) Gigaword = \textbf{UnknownTokens\textsubscript{gw}}
-    \item + Heuristics (Capitalized words) = \textbf{UnknownTokens\textsubscript{gw+heur}}
-    \item + NER \citep{stanfordNER} = \textbf{UnknownTokens\textsubscript{gw+heur+ner}}
+    \item Tokens from (parts of) Gigaword = \textbf{UnknownTokens\textsubscript{gw}}\pause
+    \item + Heuristics (Capitalized words) = \textbf{UnknownTokens\textsubscript{gw+heur}}\pause
+    \item + NER \citep{stanfordNER} = \textbf{UnknownTokens\textsubscript{gw+heur+ner}}\pause
     \item + Wikipedia = \textbf{UnknownTokens\textsubscript{gw+heur+ner+wiki}}
   \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{detecting ungrammaticality:UT\_evaluation}
-  foo bar
+  \frametitle{\textbf{UnknownTokens}: Evaluation}
+  \begin{tabular}{r|c|c|c|c|c|c|c|c|}
+  & \multicolumn{3}{c|}{Missing spaces} & \multicolumn{3}{c|}{No missing spaces}\\
+  & \textbf{P} & \textbf{R} & \textbf{F} & \textbf{P} & \textbf{R} & \textbf{F}\\
+  \hline
+  \textbf{Baseline} & 0.0 & 0.0 & 0.0 & 94.8 & \textbf{100} & 97.3\\
+  \hline
+  \textbf{UT\textsubscript{gw}} & 15.0 & \textbf{98.7} & 26.0 & \textbf{99.9} & 69.1 & 81.7\\
+  \hline
+  \textbf{UT\textsubscript{gw+heur}} & 30.5 & 97.3 & 46.5 & 99.8 & 87.8 & 93.4\\
+  \hline
+  \textbf{UT\textsubscript{gw+heur+ner}} & 35.5 & 97.3 & 52.0 & 99.8 & 90.3 & 94.8\\
+  \hline
+  \textbf{UT\textsubscript{gw+heur+ner+wiki}} & 70.3 & 96.0 & 81.2 & 99.8 & 97.8 & 98.8\\
+  \hline
+  \textbf{UT\textsubscript{source}} & \textbf{95.9} & 94.6 & \textbf{95.2} & 99.7 & 99.7 & \textbf{99.7}\\
+  \hline
+  \end{tabular}
 \end{frame}
 
 \begin{frame}
-  \frametitle{detecting ungrammaticality:decision trees}
-  foo bar
+  \frametitle{RandomForest}
+  General
 \end{frame}
 
 \begin{frame}

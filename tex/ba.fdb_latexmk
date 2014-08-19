@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex ba"] 1408479616 "ba.aux" "ba.bbl" "ba" 1408479623
+["bibtex ba"] 1408479616 "ba.aux" "ba.bbl" "ba" 1408480193
   "/usr/local/texlive/2012/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "ba.aux" 1408479621 5688 4f76bf3c7d5b1e08a0b0fd65754419ab ""
+  "ba.aux" 1408480192 5688 4f76bf3c7d5b1e08a0b0fd65754419ab ""
   "ba.bcf" 0 -1 0 ""
   "referenzen.bib" 1408442718 7788 baa1b96daef5424e4c7b2b7c4030e535 ""
   (generated)
   "ba.bbl"
   "ba.blg"
-["pdflatex"] 1408479616 "ba.tex" "ba.pdf" "ba" 1408479623
+["pdflatex"] 1408480187 "ba.tex" "ba.pdf" "ba" 1408480193
   "./eule.png" 1368526714 13317 044aa032b9ef7b434f87da786908e4ab ""
   "/usr/local/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii" 1337017135 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2012/texmf-dist/tex/generic/babel/babel.def" 1312409092 29228 2fe939254f4b17ac18a8c0fb8aa39dff ""
@@ -166,10 +166,10 @@
   "/usr/local/texlive/2012/texmf-dist/tex/latex/xkeyval/xkeyval.sty" 1218672668 4934 8ea45c150f1216b4eb8e3b63954e4bbf ""
   "/usr/local/texlive/2012/texmf-dist/tex/latex/xyling/xyling.sty" 1155513795 34663 ac631973e5977dd61e72ade3aa4aea8d ""
   "a.png" 1408368844 509059 d778eb5b3f1f2b4d3552365c83f9ed20 ""
-  "ba.aux" 1408479621 5688 4f76bf3c7d5b1e08a0b0fd65754419ab ""
+  "ba.aux" 1408480192 5688 4f76bf3c7d5b1e08a0b0fd65754419ab ""
   "ba.bbl" 1408479616 6819 e1ad0dba3a69510e3f13c4b1237b00ee "bibtex ba"
-  "ba.tex" 1408479609 42280 1793da16964ac5a93e56efad0674962f ""
-  "ba.toc" 1408479621 1090 6b128ed08c512230e8f406a69bf52449 ""
+  "ba.tex" 1408480175 42280 1793da16964ac5a93e56efad0674962f ""
+  "ba.toc" 1408480192 1090 6b128ed08c512230e8f406a69bf52449 ""
   "here.sty" 1282150722 8528 5bb9106badb0ced5731e7cb55f84e6ab ""
   "subtypes_dev2.png" 1404020032 31185 adee37e18552a059cdca6dcab1675085 ""
   "title.tex" 1407333377 1012 6006fc8fa9516b63d7105d5c87ed0b76 ""
