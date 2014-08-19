@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  19 AUG 2014 01:13
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  19 AUG 2014 10:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1076,7 +1076,7 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
 Here is how much of TeX's memory you used:
  20249 strings out of 493488
  334614 string characters out of 3141326
- 474342 words of memory out of 3000000
+ 474343 words of memory out of 3000000
  23096 multiletter control sequences out of 15000+200000
  11897 words of font info for 48 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
@@ -1097,7 +1097,7 @@ cmsy10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mti10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cm
 ti12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
 t10.pfb>
-Output written on ba.pdf (16 pages, 588244 bytes).
+Output written on ba.pdf (16 pages, 588573 bytes).
 PDF statistics:
  126 PDF objects out of 1000 (max. 8388607)
  86 compressed objects within 1 object stream
