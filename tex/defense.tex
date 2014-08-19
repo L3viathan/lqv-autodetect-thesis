@@ -10,6 +10,7 @@
 \setbeamertemplate{headline}{} %Hide section stuff
 \usepackage{natbib} %schönere Zitate
 \usepackage{color}
+\usepackage{fixltx2e}
 \definecolor{OliveGreen}{RGB}{0,155,85}
 
 \author{Jonathan Oberländer}
@@ -101,7 +102,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Detecting Ungrammaticality (OTHRUNGR)}
+  \frametitle{Ungrammaticality (OTHRUNGR+INCOMPLSN)}
   %Many subtypes of ungrammaticality
   % \begin{itemize}
   %   \item Corpus study: actually many different types of violations
@@ -113,17 +114,38 @@
 
 \begin{frame}
   \frametitle{Detecting missing spaces}
-  foo bar
+  \textit{``A strong earthquake measuring 7.8 magnitude struck \textbf{Wenchuancounty} of Sichuan Province on Monday, leaving at least \textbf{12,000people} died and thousands more injured.''}
+
+  \vspace{0.5cm}
+  \textit{``Virginia Tech reported a campus shooting Monday and told \textbf{studentsto} stay inside their residences and away from windows.''}
+
+  \vspace{0.5cm}
+  \textit{``A gunman opened fire on classrooms at Virginia Tech University \textbf{onMonday} morning, killing at least 30 people before turning his \textbf{gunon} himself in the bloodiest school shooting in US history.''}
 \end{frame}
 
 \begin{frame}
-  \frametitle{detecting ungrammaticality:unknowntokens}
-  foo bar
+  \frametitle{UnknownTokens}
+  \textbf{Idea:}
+
+  Sentence contains violation iff any word $\not\in$ known tokens
+  \pause
+  \vspace{0.6cm}
+
+  \textbf{known tokens?}
+  \begin{itemize}
+    \item Source documents available? $\rightarrow$ all tokens in source documents = \textbf{UnknownTokens\textsubscript{source}}
+    \item Otherwise $\rightarrow$ \textbf{UnknownTokens\textsubscript{general}}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{detecting ungrammaticality:unknowntokens}
-  foo bar
+  \frametitle{\textbf{UnknownTokens\textsubscript{general}}}
+  \begin{itemize}
+    \item Tokens from (parts of) Gigaword = \textbf{UnknownTokens\textsubscript{gw}}
+    \item + Heuristics (Capitalized words) = \textbf{UnknownTokens\textsubscript{gw+heur}}
+    \item + NER \citep{stanfordNER} = \textbf{UnknownTokens\textsubscript{gw+heur+ner}}
+    \item + Wikipedia = \textbf{UnknownTokens\textsubscript{gw+heur+ner+wiki}}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -141,7 +163,6 @@
   foo bar
 \end{frame}
 
-\section{Detecting Datelines}
 \begin{frame}
   \frametitle{detecting datelines}
   foo bar
@@ -157,7 +178,6 @@
   foo bar
 \end{frame}
 
-\section{Detecting Redundancies}
 \begin{frame}
   \frametitle{detecting redundancies}
   foo bar

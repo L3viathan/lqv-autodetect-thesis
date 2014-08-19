@@ -1,5 +1,13 @@
 \begin{thebibliography}{}
 
+\bibitem[Finkel et~al., 2005]{stanfordNER}
+Finkel, J.~R., Grenager, T., and Manning, C. (2005).
+\newblock Incorporating non-local information into information extraction
+  systems by gibbs sampling.
+\newblock In {\em Proceedings of the 43rd Annual Meeting on Association for
+  Computational Linguistics}, pages 363--370. Association for Computational
+  Linguistics.
+
 \bibitem[Friedrich et~al., 2014]{friedrichlqvsumm}
 Friedrich, A., Valeeva, M., and Palmer, A. (2014).
 \newblock Lqvsumm: A corpus of linguistic quality violations in multi-document
