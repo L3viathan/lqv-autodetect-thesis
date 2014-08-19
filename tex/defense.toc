@@ -1,5 +1,4 @@
 \beamer@endinputifotherversion {3.20pt}
 \beamer@sectionintoc {1}{Automatic Summarization}{2}{0}{1}
-\beamer@sectionintoc {2}{Detecting Ungrammaticality}{10}{0}{2}
-\beamer@sectionintoc {3}{Detecting Datelines}{17}{0}{3}
-\beamer@sectionintoc {4}{Detecting Redundancies}{20}{0}{4}
+\beamer@sectionintoc {2}{Detecting Datelines}{20}{0}{2}
+\beamer@sectionintoc {3}{Detecting Redundancies}{23}{0}{3}

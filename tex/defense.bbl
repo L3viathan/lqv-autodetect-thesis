@@ -5,4 +5,11 @@ Friedrich, A., Valeeva, M., and Palmer, A. (2014).
 \newblock Lqvsumm: A corpus of linguistic quality violations in multi-document
   summarization.
 
+\bibitem[Owczarzak and Dang, 2011]{owczarzak2011overview}
+Owczarzak, K. and Dang, H.~T. (2011).
+\newblock Overview of the tac 2011 summarization track: Guided task and aesop
+  task.
+\newblock In {\em Proceedings of the Text Analysis Conference (TAC 2011),
+  Gaithersburg, Maryland, USA, November}.
+
 \end{thebibliography}

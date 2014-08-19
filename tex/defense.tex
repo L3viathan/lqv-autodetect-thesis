@@ -14,7 +14,7 @@
 
 \author{Jonathan Oberländer}
 
-\title[Automatic Detection of LQ Violations\hspace{3em}\insertframenumber]{Automatic Detection of Linguistic Quality Violations} %\insertframenumber/\inserttotalframenumber
+\title[Automatic Detection of LQ Violations\hspace{8em}\insertframenumber]{Automatic Detection of Linguistic Quality Violations} %\insertframenumber/\inserttotalframenumber
 
 \date{}
 
@@ -76,19 +76,43 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{LQVCorpus}
+  \frametitle{LQVCorpus \citep{friedrichlqvsumm}}
   %eckdaten, was wurde annotiert
-
+  Annotated results of TAC 2011 Guided Summarization task \citep{owczarzak2011overview}
+\pause
+  \begin{itemize}
+    \item Entity level:
+    \begin{itemize}
+      \item FM-EXPL, SM+EXPL%first mention without explanation%subsequent mention with explanation
+      \item DNP-REF, INP+REF%definite noun phrase without reference to previous mention%indefinite noun phrase with reference to previous mention
+      \item PRN-ANT, PRN+MISLA%pronoun with missing antecedent%pronoun with misleading antecedent
+      \item ACR-EXPL%acronyms without explanations
+    \end{itemize}\pause
+    \item Clause level:
+    \begin{itemize}
+      \item \textbf{incomplete sentence (INCOMPLSN)}
+      \item \textbf{inclusion of datelines (INCLDATE)}
+      \item \textbf{other ungrammatical form (OTHRUNGR)}
+      \item no semantic relatedness (NOSEMREL)
+      \item \textbf{redundant information (REDUNINF)}
+      \item no discourse relation (NODISREL)
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
-\section{Detecting Ungrammaticality}
 \begin{frame}
-  \frametitle{detecting ungrammaticality}
-  Many subtypes of ungrammaticality
+  \frametitle{Detecting Ungrammaticality (OTHRUNGR)}
+  %Many subtypes of ungrammaticality
+  % \begin{itemize}
+  %   \item Corpus study: actually many different types of violations
+  % \end{itemize}
+  \begin{center}
+    \includegraphics[scale=0.4]{subtypes_dev2.png}
+  \end{center}
 \end{frame}
 
 \begin{frame}
-  \frametitle{detecting ungrammaticality:subtypes}
+  \frametitle{Detecting missing spaces}
   foo bar
 \end{frame}
 
