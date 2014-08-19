@@ -1,0 +1,6 @@
+\beamer@endinputifotherversion {3.20pt}
+\beamer@sectionintoc {1}{Automatic Summarization}{2}{0}{1}
+\beamer@sectionintoc {2}{Linguistic Quality Violations}{5}{0}{2}
+\beamer@sectionintoc {3}{Detecting Ungrammaticality}{6}{0}{3}
+\beamer@sectionintoc {4}{Detecting Datelines}{13}{0}{4}
+\beamer@sectionintoc {5}{Detecting Redundancies}{16}{0}{5}
