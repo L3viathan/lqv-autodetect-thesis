@@ -1,4 +1,5 @@
-\documentclass{beamer}
+\documentclass[table]{beamer}
+%\usepackage[table]{xcolor}
 \usepackage{amsmath, amsfonts, epsfig, xspace}
 \usepackage[utf8]{inputenc}
 \usepackage{algorithm,algorithmic}
@@ -7,16 +8,17 @@
 \usepackage{beamerthemesplit}
 % \usetheme{lankton-keynote}
 \setbeamertemplate{headline}{} %Hide section stuff
+\usepackage{natbib} %schönere Zitate
 \usepackage{color}
 \definecolor{OliveGreen}{RGB}{0,155,85}
 
 \author{Jonathan Oberländer}
 
-\title[Automatic Detection of LQ Violations\hspace{3em}\insertframenumber]{Automatic Detection of Linguistic Quality Violations} % \insertframenumber/\inserttotalframenumber
+\title[Automatic Detection of LQ Violations\hspace{3em}\insertframenumber]{Automatic Detection of Linguistic Quality Violations} %\insertframenumber/\inserttotalframenumber
 
 \date{}
 
-\institute{Jonathan Oberländer\\Universität des Saarlandes\\21.08.2014}
+\institute{Bachelor Thesis Defense\\Universität des Saarlandes\\21.08.2014}
 
 \begin{document}
 
@@ -26,23 +28,38 @@
 
 \begin{frame}
   \frametitle{Automatic Summarization}
-  foo bar
+  \quad \quad \includegraphics[scale=0.1]{pics/documents.png} \includegraphics[scale=1]{pics/arrowlr.png} \includegraphics[scale=0.1]{pics/document.png}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Automatic Summarization - types}
-  foo bar
-\end{frame}
+  \frametitle{Automatic Summarization}
+  %types
+  \begin{itemize}
+    \item \textbf{Single-Document:} One document
+    \item \textbf{Multi-Document:} Multiple documents on the same topic
+  \end{itemize}
+  \pause
+  \begin{itemize}
+    \item \textbf{Abstractive:} Internal semantic representation + generation
+    \item \textbf{Extractive:} New summary from source sentences
+  \end{itemize}
+  \pause
+  \vspace{1cm}
 
-\begin{frame}
-  \frametitle{Automatic Summarization - problems}
-  foo bar
+  \quad \quad \quad \begin{tabular}{r|c|c|}
+    & Single-document & Multi-document\\
+    \hline
+    Abstractive & \cellcolor{red!25} & \cellcolor{red!25}\\
+    \hline
+    Extractive & \cellcolor{red!25} & \cellcolor{green!25}\\
+    \hline
+  \end{tabular}
 \end{frame}
 
 \section{Linguistic Quality Violations}
 \begin{frame}
-  \frametitle{LQ violations}
-  foo bar
+  \frametitle{Linguistic Quality Violations}
+  LQVCorpus \citep{friedrichlqvsumm}
 \end{frame}
 
 \section{Detecting Ungrammaticality}
@@ -67,7 +84,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{detecting ungrammaticality:UT_evaluation}
+  \frametitle{detecting ungrammaticality:UT\_evaluation}
   foo bar
 \end{frame}
 
@@ -112,4 +129,7 @@
   \frametitle{detecting redundancies:eval}
   foo bar
 \end{frame}
+
+\bibliographystyle{apalike}
+\bibliography{referenzen}
 \end{document}
