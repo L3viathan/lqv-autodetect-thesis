@@ -1,5 +1,10 @@
 \begin{thebibliography}{}
 
+\bibitem[Breiman, 2001]{breiman2001random}
+Breiman, L. (2001).
+\newblock Random forests.
+\newblock {\em Machine learning}, 45(1):5--32.
+
 \bibitem[Finkel et~al., 2005]{stanfordNER}
 Finkel, J.~R., Grenager, T., and Manning, C. (2005).
 \newblock Incorporating non-local information into information extraction

@@ -245,6 +245,7 @@ We conduct a number of experiments to find reliable ways to detect different kin
 
 \subsection{Detecting Ungrammaticality}
 \label{sec_unknowntokens}
+%TODO: ace-parser. didn't work well enough, worked okay for just unparsables.
 Perhaps the most noticeable result is the large portion of \textit{missing spaces} violations, meaning clauses that include tokens which aren't correct words. Almost all of these cases come from a missing space between two words forming tokens such as \texttt{reportsreaching} or \texttt{Wenchuancounty}. As there is such a large amount of this type, finding a reliable detection method for this subtype would significantly boost detection of ungrammaticality in general.
 
 \subsubsection{The UnknownTokens method}
@@ -404,7 +405,6 @@ We performed 10-fold cross-validation, which lead to a weighted F-score of 86.3\
 
 \subsection{Datelines}
 % Regex foo, explanation plus evaluation(?)
-%TODO: Beispiel am Anfang.
 Source texts from news articles, like the ones in the TAC dataset, often contain datelines, which sometimes make it into the generated summary. While in the context of the article datelines made sense (often displayed smaller or otherwise visually distinctive), they are not needed, distracting and confusing in the summaries:
 
 \textit{\textbf{BLACKSBURG, Virginia 2007-04-16 18:34: 44 UTC} A gunman opened fire in a dorm and classroom at Virginia Tech on Monday, killing at least 30 people in the deadliest shooting rampage in U.S. history.}
@@ -434,7 +434,6 @@ which our system doesn't match.
 \subsection{Redundancy}
 \label{redundancy}
 % token overlap
-%TODO: segment based
 % threshold auf dev-Set perfekt machen, auf test-set testen
 % gegen Ende: wordnet most-frequent-sense
 

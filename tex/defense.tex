@@ -11,6 +11,7 @@
 \usepackage{natbib} %schönere Zitate
 \usepackage{color}
 \usepackage{fixltx2e}
+
 \definecolor{OliveGreen}{RGB}{0,155,85}
 
 \author{Jonathan Oberländer}
@@ -170,23 +171,47 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{RandomForest}
-  General
+  \frametitle{\textbf{RandomForest}}
+  RandomForest \citep{breiman2001random} to train decision trees
+  \vspace{0.6cm}
+
+  \textbf{Features:}
+  \begin{itemize}
+    \item classification from \textbf{UnknownTokens}\pause
+    \item perplexity scores from language model trained on Gigaword\pause
+    \item number of words
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{detecting ungrammaticality:evaluation}
-  foo bar
+  \frametitle{\textbf{RandomForest}: Evaluation}
+  \quad\quad\begin{tabular}{r|c|c|c|}
+  & \textbf{Precision} & \textbf{Recall} & \textbf{F-Score}\\
+  \hline
+  Ungrammatical & 59.6 & 29.3 & 39.3\\
+  \hline
+  Not ungrammatical & 90.1 & 97.0 & 93.4\\
+  \hline
+  Weighted Average & 86.1 & 88.1 & 86.3\\
+  \hline
+  \end{tabular}
 \end{frame}
 
 \begin{frame}
-  \frametitle{detecting datelines}
-  foo bar
+  \frametitle{Datelines}
+  \textit{\textbf{BLACKSBURG, Virginia 2007-04-16 18:34: 44 UTC} A gunman opened fire in a dorm and classroom at Virginia Tech on Monday, killing at least 30 people in the deadliest shooting rampage in U.S. history.}
+  \vspace{0.5cm}
+
+  \textit{\textbf{BERLIN, May 13( Xinhua)} The German government announced on Tuesday that it is to provide 500, 000 euros( around 770, 000 U.S. dollars) in aid for earthquake victims in Sichuan Province of China.}
+  \vspace{0.5cm}
+
+  \textit{\textbf{00 a.m.}People are panicking.}
 \end{frame}
 
 \begin{frame}
-  \frametitle{detecting datelines:method}
-  foo bar
+  \frametitle{Detecting Datelines}
+  Simple problem $\rightarrow$ simple solution
+  \includegraphics[scale=0.4]{regex.png}
 \end{frame}
 
 \begin{frame}
