@@ -198,7 +198,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Datelines}
+  \frametitle{Datelines (INCLDATE)}
   \textit{\textbf{BLACKSBURG, Virginia 2007-04-16 18:34: 44 UTC} A gunman opened fire in a dorm and classroom at Virginia Tech on Monday, killing at least 30 people in the deadliest shooting rampage in U.S. history.}
   \vspace{0.5cm}
 
@@ -226,23 +226,56 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Datelines Evaluation}
-  foo bar
+  \frametitle{Redundancy (REDUNINF)}
+  \textit{According to a survey by the State Food and Drug Administration, 65 percent of the respondents worried about the food safety situation in China. Food and drug safety has become a major concern of Chinese people.}
+  \vspace{0.5cm}
+
+  \textit{Cyclone Sidr, described as the worst storm in years to hit low-lying and disaster-prone Bangladesh, crashed into the southwestern coast Thursday night before sweeping north over the capital Dhaka. The cyclone hit the southwestern coast of Bangladesh on Thursday before sweeping north to the capital Dhaka.}
 \end{frame}
 
 \begin{frame}
-  \frametitle{detecting redundancies}
-  foo bar
+  \frametitle{\textbf{Unigrams}}
+  \begin{itemize}
+    \item Remove non-alphanumeric characters and split into set of words\pause
+    \item Cardinality of intersection between sets\pause
+    \item Normalize by sentence length\pause
+    \item Classify with threshold\pause
+  \end{itemize}
+
+  Variations: \textbf{Bigrams}, \textbf{Combined}
+
+  \vspace{0.5cm}
+  Threshold?
 \end{frame}
 
 \begin{frame}
-  \frametitle{detecting redundancies:method}
-  foo bar
+  \frametitle{Finding a threshold}
+  \includegraphics[scale=0.1]{a.png}
 \end{frame}
 
 \begin{frame}
-  \frametitle{detecting redundancies:eval}
-  foo bar
+  \frametitle{Evaluation of \textbf{Unigrams}, ...}
+  \begin{tabular}{r|c|c|c|}
+    & \textbf{Unigrams} & \textbf{Bigrams} & \textbf{Combined}\\
+  \hline
+  Threshold & 0.5 & 0.4 & 0.4
+  \end{tabular}
+  \vspace{1cm}
+  
+  \begin{tabular}{r|c|c|c|}
+  & Precision & Recall & F-Score \\
+  \hline
+  \textbf{Baseline} & 4.5\% & \textbf{100\%} & 8.7\% \\
+  \hline
+  \textbf{Levenshtein} & 15.8\% & 17.3\% & 3.1\% \\
+  \hline
+  \textbf{Unigrams} & \textbf{58.0\%} & 28.2\% & \textbf{37.0\%} \\
+  \hline
+  \textbf{Bigrams} & 55.6\% & 14.5\% & 22.9\% \\
+  \hline
+  \textbf{Combined} & 56.8\% & 24.3\% & 34.0\% \\
+  \hline
+  \end{tabular}
 \end{frame}
 
 \begin{frame}
