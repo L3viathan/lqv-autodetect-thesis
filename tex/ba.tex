@@ -157,13 +157,13 @@ We are only concerned with extractive, multi-document summarization.
 
 Evaluation of automatic summarization systems has largely been done on content coverage, which is why generated summaries often lack linguistic quality \citep{nenkova2011foundations}, meaning that they contain many errors of various kinds. A new focus on linguistic quality (LQ) evaluation would presumably help decrease these issues and produce overall better summarization systems.
 
-As a first step in this direction, \cite{friedrichlqvsumm} created the \textit{LQVCorpus}, which consists of multi-document summaries from the TAC 2011 shared task on Guided Summarization \citep{owczarzak2011overview}, annotated manually with LQ violations on entity, clause and discourse level.
+As a first step in this direction, \cite{friedrichlqvsumm} created the \textit{LQVSumm} corpus, which consists of multi-document summaries from the TAC 2011 shared task on Guided Summarization \citep{owczarzak2011overview}, annotated manually with LQ violations on entity, clause and discourse level.
 
-Manual annotation is an expensive and time-consuming process, for which an automatic system could be an alternative. Our work deals with creating such a system that manages at least part of the annotation automatically. We develop and evaluate our system on top of the \textit{LQVCorpus}. We also limit ourselves to the clause-level violations listed in \cite{friedrichlqvsumm}, except for \texttt{no\_semantic\_relation}.
+Manual annotation is an expensive and time-consuming process, for which an automatic system could be an alternative. Our work deals with creating such a system that manages at least part of the annotation automatically. We develop and evaluate our system on top of the \textit{LQVSumm} corpus. We also limit ourselves to the clause-level violations listed in \cite{friedrichlqvsumm}, except for \texttt{no\_semantic\_relation}.
 
 The rest of this paper is organized as follows:
 
-The next section discusses related work. In Section~\ref{corpus_study}, we take a look at the \textit{LQVCorpus} and the challenges it poses for our experiments and methods, which are discussed in Section~\ref{experiments}, where we also evaluate our experiments. We discuss our results in Section~\ref{discussion}. In Section~\ref{conclusion}, we discuss future work and conclude.
+The next section discusses related work. In Section~\ref{corpus_study}, we take a look at the \textit{LQVSumm} corpus and the challenges it poses for our experiments and methods, which are discussed in Section~\ref{experiments}, where we also evaluate our experiments. We discuss our results in Section~\ref{discussion}. In Section~\ref{conclusion}, we discuss future work and conclude.
 
 \section{Related Work}
 \label{related_work}
@@ -186,14 +186,14 @@ There also has been work in the area of assessing grammaticality of automaticall
 
 The BLEU score \citep{papineni2002bleu} is a method for evaluating the effectiveness of a machine translation system, which uses a number of (human) reference translations to score an automatic translation. They showed that their score correlates highly with human evaluation, which has lead to the BLEU score having become the standard evaluation metric for machine translation.
 
-\section{LQVCorpus \& Corpus Study}
+\section{LQVSumm \& Corpus Study}
 \label{corpus_study}
 % describe the corpus and its flaws
 %TODO more reasoning?
 %TODO describe the corpus itself (like defense)
 %TODO typen erklären, die ich benutze
 
-As a first step, we inspect the corpus. We find that the type system of the LQVCorpus~\citep{valeeva} is not detailed enough for our purposes and has a few shortcomings: Especially under the label of \texttt{other\_ungrammatical\_form} many different types of errors are combined. For this reason, we define a number of subtypes for this violation:
+As a first step, we inspect the corpus. We find that the type system of the LQVSumm corpus \citep{valeeva} is not detailed enough for our purposes and has a few shortcomings: Especially under the label of \texttt{other\_ungrammatical\_form} many different types of errors are combined. For this reason, we define a number of subtypes for this violation:
 
 \begin{description}
 \item[missing spaces] \hfill \\
@@ -228,7 +228,7 @@ As a first step, we inspect the corpus. We find that the type system of the LQVC
 	Example: \textit{THE CURRENT FIX: Internet applications such as firewalls and spam filters attempt to control security threats.}
 
 \item[incomplete sentence] \hfill \\
-	The type system of the LQVCorpus~\citep{valeeva} defines an \texttt{incomplete\_sentence} violation as words being cut off at the end of a sentence. A couple of times though, this also occurs at the beginning of a sentence. We restructure the type system by treating all types of incomplete sentences as this subtype of \texttt{other\_ungrammatical\_form}.
+	The type system of the LQVSumm corpus \citep{valeeva} defines an \texttt{incomplete\_sentence} violation as words being cut off at the end of a sentence. A couple of times though, this also occurs at the beginning of a sentence. We restructure the type system by treating all types of incomplete sentences as this subtype of \texttt{other\_ungrammatical\_form}.
 
 	Example: \textit{A Palestinian suicide bomber detonated an explosive belt at a \\commercial center in Dimona on}.
 \item[should be other type] \hfill \\
@@ -448,7 +448,7 @@ UTC|^\d{4}-\d{2}-\d{2}|^[A-Z]{3,}|^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|
 The expression has four parts, of which only one has to match to make the system classify a sentence as containing datelines: The first part matches the string ``UTC'' (Coordinated Universal Time, a common fragment in datelines), the second one numeric dates like \texttt{2014-04-13}, the third one capitalized words that are longer than 4 letters and are therefore expected not to be abbreviations (an example would be \texttt{LONDON, Feb. 4 (Xinhua)}), and the final part matches abbreviated names of months. Only ``UTC'' can occur anywhere, everything else needs to occur at the beginning of a sentence to be counted.
 
 \subsubsection{Evaluation}
-This very simple approach was evaluated on \textit{dev-2} and leads to good results: The F-score of the class of dateline-containing sentences is 90.7\% (precision: 90.3\%, recall: 91.1\%). When looking into the inaccurately detected instances, the inconsistencies of the LQVCorpus make up most of the misses:
+This very simple approach was evaluated on \textit{dev-2} and leads to good results: The F-score of the class of dateline-containing sentences is 90.7\% (precision: 90.3\%, recall: 91.1\%). When looking into the inaccurately detected instances, the inconsistencies of the LQVSumm corpus make up most of the misses:
 
 %PRF = 86.0\% & 89.7\% & 87.8\%\\ %TODO on test-345
 
@@ -471,7 +471,7 @@ Automatic summaries constructed from multiple source texts on the same topic oft
 
 While --- in contrast to many other linguistic quality violations --- this also has an impact on traditional evaluation scores for automatic summarization systems (because the information density is lower than it could be), it is also considered to be a problem of our domain.
 
-In the LQVCorpus, different degrees of redundant sentence pairs occur. Some sentence pairs annotated as redundant contain similar information, but using completely different phrasing and focus:
+In the LQVSumm corpus, different degrees of redundant sentence pairs occur. Some sentence pairs annotated as redundant contain similar information, but using completely different phrasing and focus:
 
 %low example
 \textit{According to a survey by the State Food and Drug Administration, 65 percent of the respondents worried about the food safety situation in China.}
@@ -579,7 +579,7 @@ Sometimes, however, the easier methods outperformed the more sophisticated appro
 %TODO: no.
 The corpus we used was not an optimal choice either.
 
-The LQVCorpus that we used for all of our experiments is, unfortunately, not large enough to have a wide coverage of all violations. This can be seen most prominently when trying to detect redundancy (Section~\ref{redundancy}).
+The LQVSumm corpus that we used for all of our experiments is, unfortunately, not large enough to have a wide coverage of all violations. This can be seen most prominently when trying to detect redundancy (Section~\ref{redundancy}).
 
 %TODO inappropriate->challenges
 Apart from its size, the corpus is also often annotated inconsistently or at least inappropriate for our purposes. In general, annotations are done on the clause level, where clauses are arbitrary substrings of the summary. As we classify and evaluate on sentences produced by Stanford CoreNLP \citep{manning-EtAl:2014:P14-5}, this introduces noise.
@@ -590,7 +590,7 @@ Annotations aren't done consistently throughout the corpus, and often very diffe
 %show example
 However, there's little to no alternatives available.
 
-A legitimate criticism of our work is that our methods, experiments, and results are tailored to the LQVCorpus or to the summarization systems that participated in the TAC 2011 Guided Summarization task \citep{owczarzak2011overview}.
+A legitimate criticism of our work is that our methods, experiments, and results are tailored to the LQVSumm corpus or to the summarization systems that participated in the TAC 2011 Guided Summarization task \citep{owczarzak2011overview}.
 
 %TODO what could be done better?
 

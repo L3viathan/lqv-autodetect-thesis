@@ -69,14 +69,14 @@
   \end{itemize}
   \vspace{1cm}
   \pause
-  $\Rightarrow$ LQVCorpus \citep{friedrichlqvsumm}
+  $\Rightarrow$ LQVSumm \citep{friedrichlqvsumm}
 
   %doesn't always work. Why?
 
 \end{frame}
 
 \begin{frame}
-  \frametitle{LQVCorpus \citep{friedrichlqvsumm}}
+  \frametitle{LQVSumm \citep{friedrichlqvsumm}}
   %eckdaten, was wurde annotiert
   Annotated results of TAC 2011 Guided Summarization task \citep{owczarzak2011overview}
 \pause
@@ -102,7 +102,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{LQVCorpus \citep{friedrichlqvsumm}}
+  \frametitle{LQVSumm \citep{friedrichlqvsumm}}
   \begin{itemize}
     \item small %coverage of some types
     \item partially inconsistent\pause %ranges
@@ -155,19 +155,21 @@
 
   \textbf{known tokens?}
   \begin{itemize}
-    \item Source documents available? $\rightarrow$ all tokens in source documents = \textbf{UnknownTokens\textsubscript{source}}
-    \item Otherwise $\rightarrow$ \textbf{UnknownTokens\textsubscript{general}}
+    \item Source documents available? $\rightarrow$ all tokens in source documents = \textbf{UnknownTokens-source}
+    \item Otherwise $\rightarrow$ \textbf{UnknownTokens-general}
   \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{\textbf{UnknownTokens\textsubscript{general}}}
+  \frametitle{\textbf{UnknownTokens-general}}
   \begin{itemize}
-    \item Tokens from (parts of) Gigaword = \textbf{UnknownTokens\textsubscript{gw}}\pause
-    \item + Heuristics (Capitalized words) = \textbf{UnknownTokens\textsubscript{gw+heur}}\pause
-    \item + NER \citep{stanfordNER} = \textbf{UnknownTokens\textsubscript{gw+heur+ner}}\pause
-    \item + Wikipedia = \textbf{UnknownTokens\textsubscript{gw+heur+ner+wiki}}
+    \item Tokens from (parts of) Gigaword = \textbf{UnknownTokens-gw}\pause
+    \item + Heuristics (Capitalized words) = \textbf{UnknownTokens-gw+heur}\pause
+    \item + NER \citep{stanfordNER} = \textbf{UnknownTokens-gw+heur+ner}\pause
+    \item + Wikipedia = \textbf{UnknownTokens-gw+heur+ner+wiki}
   \end{itemize}
+
+  = \textbf{UnknownTokens-general}
 \end{frame}
 
 \begin{frame}
@@ -178,15 +180,15 @@
   \hline
   % \textbf{Baseline} & 0.0 & 0.0 & 0.0\\
   % \hline\hline
-  \textbf{UT\textsubscript{source}} & 95.9 & 94.6 & 95.2\\
+  \textbf{UT-source} & 95.9 & 94.6 & 95.2\\
   \hline\hline\pause
-  \textbf{UT\textsubscript{gw}} & 15.0 & \textbf{98.7} & 26.0\\
+  \textbf{UT-gw} & 15.0 & \textbf{98.7} & 26.0\\
   \hline\pause
-  \textbf{UT\textsubscript{gw+heur}} & 30.5 & 97.3 & 46.5\\
+  \textbf{UT-gw+heur} & 30.5 & 97.3 & 46.5\\
   \hline\pause
-  \textbf{UT\textsubscript{gw+heur+ner}} & 35.5 & 97.3 & 52.0\\
+  \textbf{UT-gw+heur+ner} & 35.5 & 97.3 & 52.0\\
   \hline\pause
-  \textbf{UT\textsubscript{gw+heur+ner+wiki}} & \textbf{70.3} & 96.0 & \textbf{81.2}\\
+  \textbf{UT-gw+heur+ner+wiki} & \textbf{70.3} & 96.0 & \textbf{81.2}\\
   \hline
   \end{tabular}
 \end{frame}
@@ -218,7 +220,7 @@
   Ungrammatical & 72.8 & 49.1 & 58.6\\
   \hline
   \end{tabular}
-  \vspace{0.5cm}
+  \vspace{0.5cm}\pause
 
   \quad\quad\textbf{Ablation Study:}
 
@@ -320,7 +322,7 @@
 
   Variations: \textbf{Bigrams}, \textbf{Combined}
 
-  \vspace{0.5cm}
+  \vspace{0.5cm}\pause
   Threshold?
 \end{frame}
 
@@ -461,6 +463,10 @@
   Weighted Average & 83.5 & 84.5 & 83.4\\
   \hline
   \end{tabular}
+\end{frame}
+
+\begin{frame}
+  \quad\quad\includegraphics[scale=0.6]{thesis_defense.png}
 \end{frame}
 
 \end{document}

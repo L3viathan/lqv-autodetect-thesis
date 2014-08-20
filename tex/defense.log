@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  20 AUG 2014 23:17
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  21 AUG 2014 01:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1321,43 +1321,43 @@ LaTeX Font Warning: Font shape `OT1/cmss/bx/it' undefined
 
 ] [36
 
-] <regex.png, id=985, 796.9775pt x 151.56625pt>
+] [37
+
+] <regex.png, id=1012, 796.9775pt x 151.56625pt>
 File: regex.png Graphic file (type png)
 
 <use regex.png>
-Package pdftex.def Info: regex.png used on input line 286.
+Package pdftex.def Info: regex.png used on input line 288.
 (pdftex.def)             Requested size: 318.78534pt x 60.62541pt.
 
-Overfull \hbox (11.49547pt too wide) in paragraph at lines 286--286
-[][]  
- []
-
-[37
-
- <./regex.png>]
-File: regex.png Graphic file (type png)
- <use regex.png>
-Package pdftex.def Info: regex.png used on input line 286.
-(pdftex.def)             Requested size: 318.78534pt x 60.62541pt.
-
-Overfull \hbox (11.49547pt too wide) in paragraph at lines 286--286
+Overfull \hbox (11.49547pt too wide) in paragraph at lines 288--288
 [][]  
  []
 
 [38
 
+ <./regex.png>]
+File: regex.png Graphic file (type png)
+ <use regex.png>
+Package pdftex.def Info: regex.png used on input line 288.
+(pdftex.def)             Requested size: 318.78534pt x 60.62541pt.
+
+Overfull \hbox (11.49547pt too wide) in paragraph at lines 288--288
+[][]  
+ []
+
+[39
+
 ]
 ! Misplaced \noalign.
 \hline ->\noalign 
                   {\ifnum 0=`}\fi \let \hskip \vskip \let \vrule \hrule \let...
-l.302 \end{frame}
+l.304 \end{frame}
                  
 I expect to see \noalign only after the \cr of
 an alignment. Proceed, and I'll ignore this case.
 
-[39
-
-] [40
+[40
 
 ] [41
 
@@ -1369,20 +1369,20 @@ an alignment. Proceed, and I'll ignore this case.
 
 ] [45
 
+] [46
+
+] [47
+
 ]
-<a.png, id=1229, 3140.73375pt x 2145.01375pt>
+<a.png, id=1281, 3140.73375pt x 2145.01375pt>
 File: a.png Graphic file (type png)
  <use a.png>
-Package pdftex.def Info: a.png used on input line 332.
+Package pdftex.def Info: a.png used on input line 334.
 (pdftex.def)             Requested size: 282.65384pt x 193.04291pt.
- [46
+ [48
 
  <./a.png>]
-[47
-
-] [48
-
-] [49
+[49
 
 ] [50
 
@@ -1394,15 +1394,28 @@ Package pdftex.def Info: a.png used on input line 332.
 
 ] [54
 
-] (./defense.bbl) [55
+] [55
 
 ] [56
 
-] [57
+] (./defense.bbl) [57
 
 ] [58
 
+] [59
+
+] [60
+
 ]
+<thesis_defense.png, id=1631, 441.75038pt x 316.18124pt>
+File: thesis_defense.png Graphic file (type png)
+
+<use thesis_defense.png>
+Package pdftex.def Info: thesis_defense.png used on input line 470.
+(pdftex.def)             Requested size: 265.05226pt x 189.7102pt.
+ [61
+
+ <./thesis_defense.png>]
 \tf@nav=\write6
 \openout6 = `defense.nav'.
 
@@ -1412,12 +1425,11 @@ Package pdftex.def Info: a.png used on input line 332.
 \tf@snm=\write8
 \openout8 = `defense.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 466.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 466.
-
-(./defense.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 466.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 466.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 472.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 472.
+ (./defense.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 472.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 472.
 Package rerunfilecheck Info: File `defense.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
@@ -1428,14 +1440,14 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 466.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 472.
  ) 
 Here is how much of TeX's memory you used:
- 16868 strings out of 493488
- 309242 string characters out of 3141326
- 389045 words of memory out of 3000000
- 19603 multiletter control sequences out of 15000+200000
- 20490 words of font info for 74 fonts, out of 3000000 for 9000
+ 16865 strings out of 493488
+ 309177 string characters out of 3141326
+ 389044 words of memory out of 3000000
+ 19595 multiletter control sequences out of 15000+200000
+ 16691 words of font info for 60 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
  55i,16n,53p,452b,556s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
@@ -1454,10 +1466,10 @@ al/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local
 /texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb></usr/local/t
 exlive/2012/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/loc
 al/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb>
-Output written on defense.pdf (58 pages, 661853 bytes).
+Output written on defense.pdf (61 pages, 692475 bytes).
 PDF statistics:
- 1658 PDF objects out of 1728 (max. 8388607)
- 1548 compressed objects within 16 object streams
- 118 named destinations out of 1000 (max. 500000)
- 73 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1740 PDF objects out of 2073 (max. 8388607)
+ 1625 compressed objects within 17 object streams
+ 124 named destinations out of 1000 (max. 500000)
+ 78 words of extra memory for PDF output out of 10000 (max. 10000000)
 
