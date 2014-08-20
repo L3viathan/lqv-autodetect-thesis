@@ -26,9 +26,6 @@
 
 \maketitle
 
-%TODO alle evaluation auf testset
-%TODO immer auf was entwickelt, trainiert, getestet (auf slides)
-
 \begin{frame}
   \frametitle{Automatic Summarization}
   \quad \quad \includegraphics[scale=0.1]{pics/documents.png} \includegraphics[scale=1]{pics/arrowlr.png} \includegraphics[scale=0.1]{pics/document.png}
@@ -131,10 +128,8 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Ungrammaticality (OTHRUNGR+INCOMPLSN)}
+  \frametitle{Ungrammaticality (OTHRUNGR+INCOMPLSN) on \textit{dev-2}}
   \begin{center}
-    \textit{dev-2}
-
     \includegraphics[scale=0.4]{subtypes_dev2.png}
   \end{center}
 \end{frame}
@@ -176,7 +171,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{\textbf{UnknownTokens}: Evaluation}
+  \frametitle{\textbf{UnknownTokens}: Evaluation on \textit{dev-2}}
   \begin{tabular}{r|c|c|c|c|c|c|c|c|}
   & \multicolumn{3}{c|}{Missing spaces}\\
   & \textbf{P} & \textbf{R} & \textbf{F}\\
@@ -194,9 +189,6 @@
   \textbf{UT\textsubscript{gw+heur+ner+wiki}} & \textbf{70.3} & 96.0 & \textbf{81.2}\\
   \hline
   \end{tabular}
-
-  \vspace{0.5cm}
-  (on \textit{dev-2})
 \end{frame}
 
 \begin{frame}
@@ -214,30 +206,34 @@
 \end{frame}
 
 \begin{frame}
-  %TODO neue Tabelle: jeweils ohne feature, nur ungrammatical. "ablation study"
-  \frametitle{\textbf{RandomForest}: Evaluation}
+  \frametitle{\textbf{RandomForest}: Evaluation on \textit{test}}
   \quad\quad\begin{tabular}{r|c|c|c|}
   & \textbf{Precision} & \textbf{Recall} & \textbf{F-Score}\\
   \hline
   Ungrammatical & 72.8 & 49.1 & 58.6\\
   \hline
   \end{tabular}
+  \vspace{0.5cm}
 
-  \textbf{Ablation Study:}
-  \begin{tabular}{c|c}
+  \quad\quad\textbf{Ablation Study:}
+
+  \vspace{0.25cm}
+  \quad\quad\begin{tabular}{c|c}
   \hline\hline
   Feature & Decrease in Accuracy\\%84.5391
   \hline
-  \textbf{UnknownTokens} & 0.3369\\
+  UnknownTokens Output & 0.3369\\
   Language Model Perplexity & 1.2091\\
-  
+  Number of Words & 0.7334\\
+  ACE RAM & 1.0901\\
+  ACE Readings & 1.3478\\
+  ACE Status & 0.1982\\
   \hline\hline
   \end{tabular}
 
 \end{frame}
 
 % \begin{frame}
-%   %TODO neue Tabelle: jeweils ohne feature, nur ungrammatical. "ablation study"
 %   \frametitle{\textbf{RandomForest}: Evaluation}
 %   \quad\quad\begin{tabular}{r|c|c|c|}
 %   & \textbf{Precision} & \textbf{Recall} & \textbf{F-Score}\\
@@ -269,6 +265,10 @@
   \includegraphics[scale=0.4]{regex.png}
 
   \vspace{1cm}\pause
+
+  \textbf{Evaluation on} \textit{test}:
+
+  \vspace{0.5cm}
 
   \begin{tabular}{|c|c|c|}
   \hline
@@ -327,7 +327,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Evaluation of \textbf{Unigrams}, ...}
+  \frametitle{Evaluation of \textbf{Unigrams}, ... on \textit{test}}
   \begin{tabular}{r|c|c|c|}
     & \textbf{Unigrams} & \textbf{Bigrams} & \textbf{Combined}\\
   \hline
@@ -350,8 +350,6 @@
   \hline
   \end{tabular}
   \vspace{0.5cm}
-
-  (on \textit{test})
 \end{frame}
 
 \begin{frame}
