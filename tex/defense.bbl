@@ -18,6 +18,13 @@ Friedrich, A., Valeeva, M., and Palmer, A. (2014).
 \newblock Lqvsumm: A corpus of linguistic quality violations in multi-document
   summarization.
 
+\bibitem[Manning et~al., 2014]{manning-EtAl:2014:P14-5}
+Manning, C.~D., Surdeanu, M., Bauer, J., Finkel, J., Bethard, S.~J., and
+  McClosky, D. (2014).
+\newblock The {Stanford} {CoreNLP} natural language processing toolkit.
+\newblock In {\em Proceedings of 52nd Annual Meeting of the Association for
+  Computational Linguistics: System Demonstrations}, pages 55--60.
+
 \bibitem[Owczarzak and Dang, 2011]{owczarzak2011overview}
 Owczarzak, K. and Dang, H.~T. (2011).
 \newblock Overview of the tac 2011 summarization track: Guided task and aesop

@@ -1,0 +1,50 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.RandomForest -I 10 -K 0 -S 1 -num-slots 1
+Relation:     ungrammaticality-weka.filters.unsupervised.attribute.Remove-R3
+Instances:    5045
+Attributes:   6
+              language_model
+              nonwords
+              acereadings
+              acestatus
+              numberofwords
+              class
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+Random forest of 10 trees, each constructed while considering 3 random features.
+Out of bag error: 0.1709
+
+
+
+Time taken to build model: 0.48 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        4210               83.449  %
+Incorrectly Classified Instances       835               16.551  %
+Kappa statistic                          0.4735
+Mean absolute error                      0.199 
+Root mean squared error                  0.3564
+Relative absolute error                 57.3873 %
+Root relative squared error             85.5829 %
+Coverage of cases (0.95 level)          96.115  %
+Mean rel. region size (0.95 level)      72.1011 %
+Total Number of Instances             5045     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.931    0.502    0.866      0.931    0.897      0.482    0.827     0.921     ungrammaticality-no
+                 0.498    0.069    0.675      0.498    0.573      0.482    0.827     0.591     ungrammaticality-yes
+Weighted Avg.    0.834    0.405    0.823      0.834    0.825      0.482    0.827     0.848     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 3649  270 |    a = ungrammaticality-no
+  565  561 |    b = ungrammaticality-yes
+

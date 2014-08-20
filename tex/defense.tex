@@ -26,7 +26,8 @@
 
 \maketitle
 
-\section{Automatic Summarization}
+%TODO alle evaluation auf testset
+%TODO immer auf was entwickelt, trainiert, getestet (auf slides)
 
 \begin{frame}
   \frametitle{Automatic Summarization}
@@ -85,10 +86,11 @@
   \begin{itemize}
     \item Entity level:
     \begin{itemize}
-      \item FM-EXPL, SM+EXPL%first mention without explanation%subsequent mention with explanation
-      \item DNP-REF, INP+REF%definite noun phrase without reference to previous mention%indefinite noun phrase with reference to previous mention
-      \item PRN-ANT, PRN+MISLA%pronoun with missing antecedent%pronoun with misleading antecedent
-      \item ACR-EXPL%acronyms without explanations
+     % \item first mention without explanation%subsequent mention with explanationFM-EXPL, SM+EXPL%
+      \item definite noun phrase without reference to previous mention%DNP-REF, INP+REF%definite noun phrase without reference to previous mention%indefinite noun phrase with reference to previous mention
+      \item pronoun with missing antecedent%PRN-ANT, PRN+MISLA%%pronoun with misleading antecedent
+      \item acronym without explanations%ACR-EXPL%acronyms without explanations
+      \item ...
     \end{itemize}\pause
     \item Clause level:
     \begin{itemize}
@@ -103,12 +105,36 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{LQVCorpus \citep{friedrichlqvsumm}}
+  \begin{itemize}
+    \item small %coverage of some types
+    \item partially inconsistent\pause %ranges
+    \item corpus preprocessing with CoreNLP \citep{manning-EtAl:2014:P14-5}
+    \item unit of annotation (clauses vs. sentences)\pause
+    \item OTHRUNGR has different violation subtypes%TODO
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Development and Test Sets}
+  2 development sets:
+  \begin{itemize}
+    \item \textit{dev-1}: 20\% (D1101-D1108)
+    \item \textit{dev-2}: 20\% (D1109-D1116)
+  \end{itemize}
+
+  \vspace{1cm}
+  1 test set: 
+  \begin{itemize}
+    \item \textit{test}: 60\% (D1117-D1144)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
   \frametitle{Ungrammaticality (OTHRUNGR+INCOMPLSN)}
-  %Many subtypes of ungrammaticality
-  % \begin{itemize}
-  %   \item Corpus study: actually many different types of violations
-  % \end{itemize}
   \begin{center}
+    \textit{dev-2}
+
     \includegraphics[scale=0.4]{subtypes_dev2.png}
   \end{center}
 \end{frame}
@@ -152,22 +178,25 @@
 \begin{frame}
   \frametitle{\textbf{UnknownTokens}: Evaluation}
   \begin{tabular}{r|c|c|c|c|c|c|c|c|}
-  & \multicolumn{3}{c|}{Missing spaces} & \multicolumn{3}{c|}{No missing spaces}\\
-  & \textbf{P} & \textbf{R} & \textbf{F} & \textbf{P} & \textbf{R} & \textbf{F}\\
+  & \multicolumn{3}{c|}{Missing spaces}\\
+  & \textbf{P} & \textbf{R} & \textbf{F}\\
   \hline
-  \textbf{Baseline} & 0.0 & 0.0 & 0.0 & 94.8 & \textbf{100} & 97.3\\
-  \hline
-  \textbf{UT\textsubscript{gw}} & 15.0 & \textbf{98.7} & 26.0 & \textbf{99.9} & 69.1 & 81.7\\
-  \hline
-  \textbf{UT\textsubscript{gw+heur}} & 30.5 & 97.3 & 46.5 & 99.8 & 87.8 & 93.4\\
-  \hline
-  \textbf{UT\textsubscript{gw+heur+ner}} & 35.5 & 97.3 & 52.0 & 99.8 & 90.3 & 94.8\\
-  \hline
-  \textbf{UT\textsubscript{gw+heur+ner+wiki}} & 70.3 & 96.0 & 81.2 & 99.8 & 97.8 & 98.8\\
-  \hline
-  \textbf{UT\textsubscript{source}} & \textbf{95.9} & 94.6 & \textbf{95.2} & 99.7 & 99.7 & \textbf{99.7}\\
+  % \textbf{Baseline} & 0.0 & 0.0 & 0.0\\
+  % \hline\hline
+  \textbf{UT\textsubscript{source}} & 95.9 & 94.6 & 95.2\\
+  \hline\hline\pause
+  \textbf{UT\textsubscript{gw}} & 15.0 & \textbf{98.7} & 26.0\\
+  \hline\pause
+  \textbf{UT\textsubscript{gw+heur}} & 30.5 & 97.3 & 46.5\\
+  \hline\pause
+  \textbf{UT\textsubscript{gw+heur+ner}} & 35.5 & 97.3 & 52.0\\
+  \hline\pause
+  \textbf{UT\textsubscript{gw+heur+ner+wiki}} & \textbf{70.3} & 96.0 & \textbf{81.2}\\
   \hline
   \end{tabular}
+
+  \vspace{0.5cm}
+  (on \textit{dev-2})
 \end{frame}
 
 \begin{frame}
@@ -180,22 +209,47 @@
     \item classification from \textbf{UnknownTokens}\pause
     \item perplexity scores from language model trained on Gigaword\pause
     \item number of words
+    \item 3 features from ACE parser output %TODO
   \end{itemize}
 \end{frame}
 
 \begin{frame}
+  %TODO neue Tabelle: jeweils ohne feature, nur ungrammatical. "ablation study"
   \frametitle{\textbf{RandomForest}: Evaluation}
   \quad\quad\begin{tabular}{r|c|c|c|}
   & \textbf{Precision} & \textbf{Recall} & \textbf{F-Score}\\
   \hline
-  Ungrammatical & 59.6 & 29.3 & 39.3\\
-  \hline
-  Not ungrammatical & 90.1 & 97.0 & 93.4\\
-  \hline
-  Weighted Average & 86.1 & 88.1 & 86.3\\
+  Ungrammatical & 72.8 & 49.1 & 58.6\\
   \hline
   \end{tabular}
+
+  \textbf{Ablation Study:}
+  \begin{tabular}{c|c}
+  \hline\hline
+  Feature & Decrease in Accuracy\\%84.5391
+  \hline
+  \textbf{UnknownTokens} & 0.3369\\
+  Language Model Perplexity & 1.2091\\
+  
+  \hline\hline
+  \end{tabular}
+
 \end{frame}
+
+% \begin{frame}
+%   %TODO neue Tabelle: jeweils ohne feature, nur ungrammatical. "ablation study"
+%   \frametitle{\textbf{RandomForest}: Evaluation}
+%   \quad\quad\begin{tabular}{r|c|c|c|}
+%   & \textbf{Precision} & \textbf{Recall} & \textbf{F-Score}\\
+%   \hline
+%   Ungrammatical & 59.6 & 29.3 & 39.3\\
+%   \hline\pause
+%   Not ungrammatical & 90.1 & 97.0 & 93.4\\
+%   \hline
+%   Weighted Average & 86.1 & 88.1 & 86.3\\
+%   \hline
+%   \end{tabular}
+% \end{frame}
 
 \begin{frame}
   \frametitle{Datelines (INCLDATE)}
@@ -220,21 +274,38 @@
   \hline
   \textbf{Precision} & \textbf{Recall} & \textbf{F-Score}\\
   \hline
-  90.3\% & 91.1 \% & 90.7\%\\
+  %90.3\% & 91.1 \% & 90.7\%\\
+  86.0\% & 89.7\% & 87.8\%\\
   \hline
   \end{tabular}
 \end{frame}
 
 \begin{frame}
   \frametitle{Redundancy (REDUNINF)}
-  \textit{According to a survey by the State Food and Drug Administration, 65 percent of the respondents worried about the food safety situation in China. Food and drug safety has become a major concern of Chinese people.}
-  \vspace{0.5cm}
+  \textit{According to a survey by the State \textbf{Food and Drug} Administration, 65 percent of the respondents worried about the food \textbf{safety} situation in China.}
+  \vspace{0.1cm}
 
-  \textit{Cyclone Sidr, described as the worst storm in years to hit low-lying and disaster-prone Bangladesh, crashed into the southwestern coast Thursday night before sweeping north over the capital Dhaka. The cyclone hit the southwestern coast of Bangladesh on Thursday before sweeping north to the capital Dhaka.}
+  \textit{\textbf{Food and drug safety} has become a major concern of Chinese people.}
+  \vspace{0.25cm}
+  \hline
+  \vspace{0.25cm}
+
+  \textit{\textbf{Cyclone} Sidr, described as the worst storm in years to hit low-lying and disaster-prone \textbf{Bangladesh}, crashed into the southwestern coast \textbf{Thursday} night \textbf{before sweeping north} over \textbf{the capital Dhaka.}}
+  \vspace{0.1cm}
+
+  \textit{The \textbf{cyclone} hit the southwestern coast of \textbf{Bangladesh} on \textbf{Thursday before sweeping north} to \textbf{the capital Dhaka.}}
 \end{frame}
 
 \begin{frame}
   \frametitle{\textbf{Unigrams}}
+  \begin{center}
+    \only<1>{\textit{Mary saw the 5 ``elephants''. She saw the horses.}}
+    \only<2>{$\{Mary, saw, the, 5, elephants\},\{She, saw, the, horses\}$}
+    \only<3>{$|\{saw, the\}| = 2$}
+    \only<4>{$score = \frac{2}{|\{She, saw, the, horses\}|} = 0.5$}
+    \only<5->{$0.5 > threshold$ ?}
+  \end{center}\pause
+
   \begin{itemize}
     \item Remove non-alphanumeric characters and split into set of words\pause
     \item Cardinality of intersection between sets\pause
@@ -250,7 +321,9 @@
 
 \begin{frame}
   \frametitle{Finding a threshold}
-  \includegraphics[scale=0.1]{a.png}
+  \center\textit{dev-1+2}
+
+  \quad\includegraphics[scale=0.09]{a.png}
 \end{frame}
 
 \begin{frame}
@@ -276,23 +349,26 @@
   \textbf{Combined} & 56.8\% & 24.3\% & 34.0\% \\
   \hline
   \end{tabular}
+  \vspace{0.5cm}
+
+  (on \textit{test})
 \end{frame}
 
 \begin{frame}
-  \frametitle{Discussion}
-  \textbf{LQVCorpus}
+  %TODO slide mit evaluation von für jeden tyyp beste methode
+  \frametitle{Conclusion}
+  \textbf{Methods for:}
   \begin{itemize}
-    \item small %coverage of some types
-    \item inconsistent %ranges
-    \item clause-level annotation
-    \item same annotation for different violations
+    \item detecting ungrammaticality
+    \item detecting datelines
+    \item detecting redundancies
   \end{itemize}\pause
+
   \vspace{0.5cm}
-  \textbf{Methods}
-  \begin{itemize}
-    \item tailored to corpus
-    \item room for improvement
-  \end{itemize}
+  Adapted annotation scheme, better for automatic processing\pause
+
+  \vspace{0.5cm}
+  Tool will be made available to annotate with our methods
 \end{frame}
 
 \begin{frame}
@@ -323,29 +399,51 @@
   \vspace{0.5cm}
   \textbf{Corpus}
   \begin{itemize}
-    \item annotate a corpus with our type system
+    \item annotate a corpus with subtypes, sentence based
+    \item evaluate methods on other data sets/corpora/domains
   \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Conclusion}
-  \textbf{Methods for:}
-  \begin{itemize}
-    \item detecting ungrammaticality
-    \item detecting datelines
-    \item detecting redundancies
-  \end{itemize}\pause
-
-  \vspace{0.5cm}
-  Adapted annotation scheme, better for automatic processing\pause
-
-  \vspace{0.5cm}
-  Tool will be made available to annotate with our methods
 \end{frame}
 
 \begin{frame}
   \frametitle{References}
   \bibliographystyle{apalike}
-  \bibliography{referenzen}
+  \footnotesize\bibliography{referenzen}
 \end{frame}
+
+%----------------------------------------------------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Bonus Slide: Full \textbf{UnknownTokens} Evaluation}
+  \begin{tabular}{r|c|c|c|c|c|c|c|c|}
+  & \multicolumn{3}{c|}{Missing spaces} & \multicolumn{3}{c|}{No missing spaces}\\
+  & \textbf{P} & \textbf{R} & \textbf{F} & \textbf{P} & \textbf{R} & \textbf{F}\\
+  \hline
+  \textbf{Baseline} & 0.0 & 0.0 & 0.0 & 94.8 & \textbf{100} & 97.3\\
+  \hline\hline
+  \textbf{UT\textsubscript{gw}} & 15.0 & \textbf{98.7} & 26.0 & \textbf{99.9} & 69.1 & 81.7\\
+  \hline
+  \textbf{UT\textsubscript{gw+heur}} & 30.5 & 97.3 & 46.5 & 99.8 & 87.8 & 93.4\\
+  \hline
+  \textbf{UT\textsubscript{gw+heur+ner}} & 35.5 & 97.3 & 52.0 & 99.8 & 90.3 & 94.8\\
+  \hline
+  \textbf{UT\textsubscript{gw+heur+ner+wiki}} & 70.3 & 96.0 & 81.2 & 99.8 & 97.8 & 98.8\\
+  \hline\hline
+  \textbf{UT\textsubscript{source}} & \textbf{95.9} & 94.6 & \textbf{95.2} & 99.7 & 99.7 & \textbf{99.7}\\
+  \hline
+  \end{tabular}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Bonus Slide: \textbf{RandomForest}: Evaluation of all classes}
+  \quad\quad\begin{tabular}{r|c|c|c|}
+  & \textbf{Precision} & \textbf{Recall} & \textbf{F-Score}\\
+  \hline
+  Ungrammatical & 72.8 & 49.1 & 58.6\\
+  \hline\pause
+  Not ungrammatical & 86.6 & 94.7 & 90.5\\
+  \hline
+  Weighted Average & 83.5 & 84.5 & 83.4\\
+  \hline
+  \end{tabular}
+\end{frame}
+
 \end{document}

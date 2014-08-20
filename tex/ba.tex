@@ -129,9 +129,22 @@
 % Levenshtein auf Wortebene (?)
 
 \maketableofcontents
+%general TODOs:
+%explain tables and figures more
+% - statt _?
+%was auf welchen sets. dev-sets in corpus study erklären
+%liste von collection ids in set in appendix
+%dev-1, dev-2, testset
+%warum hab ich 2 dev sets?
+%failed experiments (nicht LM?)
+%LM: scores alone did not work (in RandomForest)
+% was macht RandomForest
 
 \section{Introduction}
 % Motivation, What am I trying to do
+
+%TODO: more explanation, what is a summary, examples
+%TODO grobe ergebnisse, alles, beispiele, experimente schon kurz beschreiben inkl. ergebnisse
 With an ever-growing amount of information, it is becoming increasingly important to reduce that information to a processible amount, by summarizing it. Most of the time, it is infeasible to do this by hand, and there is thus a need for automating the process.
 
 \textit{Automatic summarization systems} take one or more documents and produce a summary that contains the most important information from these documents. Such systems can be divided in \textit{extractive} and \textit{abstractive}, and in \textit{single-document} and \textit{multi-document} summarization systems.
@@ -156,6 +169,8 @@ The next section discusses related work. In Section~\ref{corpus_study}, we take 
 \label{related_work}
 % other works on grammaticality and so on
 
+%TODO viel mehr, mehr andere, und bei wichtigem (Wagner) viel mehr
+
 Most work in the field of automatic grammar checking seems to have been done in the area of second language learning.
 \cite{bender2004arboretum} use the LKB parser and generator \cite{copestake2002implementing} with the English Resource Grammar \citep{flickinger2000building} to build \textit{Arboretum}, a system that, when given an erroneous input sentence, detects that error and outputs a corrected version of the sentence. Their method uses manually selected mal-rules \citep{schneider1998recognizing} to detect error types specific to second language learners of English.
 
@@ -171,9 +186,12 @@ There also has been work in the area of assessing grammaticality of automaticall
 
 The BLEU score \citep{papineni2002bleu} is a method for evaluating the effectiveness of a machine translation system, which uses a number of (human) reference translations to score an automatic translation. They showed that their score correlates highly with human evaluation, which has lead to the BLEU score having become the standard evaluation metric for machine translation.
 
-\section{Corpus Study}
+\section{LQVCorpus \& Corpus Study}
 \label{corpus_study}
 % describe the corpus and its flaws
+%TODO more reasoning?
+%TODO describe the corpus itself (like defense)
+%TODO typen erklären, die ich benutze
 
 As a first step, we inspect the corpus. We find that the type system of the LQVCorpus~\citep{valeeva} is not detailed enough for our purposes and has a few shortcomings: Especially under the label of \texttt{other\_ungrammatical\_form} many different types of errors are combined. For this reason, we define a number of subtypes for this violation:
 
@@ -241,19 +259,18 @@ After manually counting and investigating these subtypes on \textit{dev-1} we th
 \section{Experiments}
 \label{experiments}
 % All experiments, intermixed with small discussion segments
+%TODO more intro
 We conduct a number of experiments to find reliable ways to detect different kinds of ungrammaticality. The annotation, our experiments and the evaluation are all done on sentence basis. We use Stanford CoreNLP \citep{manning-EtAl:2014:P14-5} for sentence splitting.
 
 \subsection{Detecting Ungrammaticality}
 \label{sec_unknowntokens}
-%TODO: ace-parser. didn't work well enough, worked okay for just unparsables.
 Perhaps the most noticeable result is the large portion of \textit{missing spaces} violations, meaning clauses that include tokens which aren't correct words. Almost all of these cases come from a missing space between two words forming tokens such as \texttt{reportsreaching} or \texttt{Wenchuancounty}. As there is such a large amount of this type, finding a reliable detection method for this subtype would significantly boost detection of ungrammaticality in general.
 
 \subsubsection{The UnknownTokens method}
-%.Being the biggest amount of cases of ungrammaticality, \textit{missing spaces} violations seem to have a straightforward solution which we call the \textbf{UnknownTokens} approach
-We call our approach to identifying missing spaces \textbf{UnknownTokens}: Tagging a sentence as containing a \textit{missing spaces} ungrammaticality if and only if there is a token in the sentence that isn't a ``known'' token, i.e. one that doesn't exist in a list of known words. In our setting, we can easily deduce such a list from the source documents of the automatic summarization process. If the source document is available and used as a base for our vocabulary, we call that approach \textbf{UnknownTokens\textsubscript{source}}.
+We call our straightforward approach to identifying missing spaces \textbf{UnknownTokens}: Tagging a sentence as containing a \textit{missing spaces} ungrammaticality if and only if there is a token in the sentence that isn't a ``known'' token, i.e. one that doesn't exist in a list of known words. In our setting, we can easily deduce such a list from the source documents of the automatic summarization process. If the source document is available and used as a base for our vocabulary, we call that approach \textbf{UnknownTokens\textsubscript{source}}.
 
 In case the original documents aren't available or this method should be used in a different setting, we also investigate how to adapt our approach to that. This approach has a few steps, which we will all evaluate individually:
-First, an initial list of words is created from a large text corpus (\textbf{UnknownTokens\textsubscript{gw}}); we use the first 20\% of the AFE part of the gigaword corpus \citep{gigaword}. If the corpus is large and general enough, this will probably cover a large vocabulary.%contain every common (and uncommon) word.
+First, an initial list of words is created from a large text corpus (\textbf{UnknownTokens\textsubscript{gw}}); we use the first 20\% of the AFE part of the gigaword corpus \citep{gigaword}. If the corpus is large and general enough, this will probably cover a large vocabulary.
 
 Because this will not include words for named entities yet, we only consider a token to be an unknown token, if it is not tagged as a Named Entity by a Named Entity Recognizer (\textbf{UnknownTokens\textsubscript{ner}}). We employ the Stanford Named Entity Recognizer \citep{stanfordNER}, which is a widely used, state-of-the-art NER that comes with a model for the English language.
 
@@ -265,8 +282,7 @@ We automatically label any tokens that are neither on our list of known tokens f
 We evaluate how effective \textbf{UnknownTokens} is in detecting \texttt{missing spaces} violations, both with (\textbf{UnknownTokens\textsubscript{source}}) and without (\textbf{UnknownTokens\textsubscript{general}}) access to the source documents, and compare it to a \textbf{baseline}, which always assumes the most common case (no \texttt{missing spaces} violation).
 The standard metrics precision, recall and F-score are used for evaluation.
 
-Table~\ref{eval_unknowntokens} shows the results of the evaluation. %The values for \textit{positive\comment{unsure about the naming. ``target class'' and ``inverted class''?} set} are the evaluation where the target class is the one of sentences containing a \texttt{missing spaces} violation, in the \textit{negative set}, the target class is the sentences \textit{not} containing such a violation. 
-Because the amount of sentences not containing a missing spaces violation is much larger than the ones that do, several weighted metrics are provided, too:
+Table~\ref{eval_unknowntokens} shows the results of the evaluation. Because the amount of sentences not containing a missing spaces violation is much larger than the ones that do, several weighted metrics are provided, too:
 
 The micro-average method consists of summing up the individual values from the confusion matrix (True Positive, False Positive, True Negative and False Negative) and calculating new metrics based on the results. We only display the F-score here, since F-score, recall and precision are identical for a 2-class scenario: Since the true positives of the missing spaces class are identical with the true negatives of the no missing spaces class (and vice versa), the new number of true positives and true negatives (for the micro average) is $tp + tn$ of any of the two classes. The same goes for false negatives and false positives. That means that when only dealing with two classes, in the micro-average method, the terms \textit{positive} and \textit{negative} can be used interchangeably. As precision is defined as $\frac{tp}{tp+fp}$ and recall as $\frac{tp}{tp+fn}$; as the equations only differ in whether they use $fp$ or $fn$ (which are exactly the same here) in the divisor, precision and recall (and therefore F-score, too, since the F-score is simply the harmonic mean of precision and recall) are identical.
 
@@ -330,6 +346,8 @@ Both \textbf{UnknownTokens\textsubscript{general}} and \textbf{UnknownTokens\tex
 
 \subsubsection{The RandomForest\textsubscript{UT} method}
 % previous tries with LMs(?), unknown_tokens, unknown_tokens+LM+weka->decision trees
+%TODO mention previous tries with LMS?
+%TODO Tabelle
 To detect more general forms of ungrammaticality, several other methods were investigated. Following \cite{wagner2007comparative}, we learn decision trees from outputs of several systems that on their own have not proven sufficient for this task. For this experiment, the development set \textit{dev-1} was used.
 
 We train a language model on parts (the same parts we used as a word source in \textbf{UnknownTokens\textsubscript{general}} (section~\ref{sec_unknowntokens})) of the Gigaword corpus\citep{gigaword}, extract perplexity scores for the sentences in our test set, and annotate them automatically. For the language model generation and the extraction of perplexity scores, we employ SRILM~\citep{stolcke2002srilm}, a language modeling toolkit.
@@ -413,7 +431,7 @@ We then added these three features to \textbf{RandomForest\textsubscript{UT}}.
 When evaluating the emerging decision tree on general ungrammaticality using the same method as in Section~\ref{S_eval_randomforest}, it yielded worse results than \textbf{RandomForest\textsubscript{UT}} alone. We therefore inspected whether it could instead be used to find instances of the subtype \textit{unparsable}. This lead to a precision of 86.6\%, a recall of 87.9\%, and an F-Score of 86.3\%. A total of 87.9\% of the instances was classified correctly.
 
 \subsection{Datelines}
-% Regex foo, explanation plus evaluation(?)
+%TODO more examples (see defense.tex).
 Source texts from news articles, like the ones in the TAC dataset, often contain datelines, which sometimes make it into the generated summary. While in the context of the article datelines made sense (often displayed smaller or otherwise visually distinctive), they are not needed, distracting and confusing in the summaries:
 
 \textit{\textbf{BLACKSBURG, Virginia 2007-04-16 18:34: 44 UTC} A gunman opened fire in a dorm and classroom at Virginia Tech on Monday, killing at least 30 people in the deadliest shooting rampage in U.S. history.}
@@ -432,6 +450,8 @@ The expression has four parts, of which only one has to match to make the system
 \subsubsection{Evaluation}
 This very simple approach was evaluated on \textit{dev-2} and leads to good results: The F-score of the class of dateline-containing sentences is 90.7\% (precision: 90.3\%, recall: 91.1\%). When looking into the inaccurately detected instances, the inconsistencies of the LQVCorpus make up most of the misses:
 
+%PRF = 86.0\% & 89.7\% & 87.8\%\\ %TODO on test-345
+
 \textit{IVORY TUSKS}
 
 is classified as containing a dateline by the regular expression, but is not annotated as such in the corpus. An example of a false negative would be:
@@ -445,6 +465,7 @@ which our system doesn't match.
 % token overlap
 % threshold auf dev-Set perfekt machen, auf test-set testen
 % gegen Ende: wordnet most-frequent-sense
+%TODO other experiments?
 
 Automatic summaries constructed from multiple source texts on the same topic often suffer from redundancy, as sentences that contain the same or largely the same information are occasionally included in the summary. As a consequence, reading fluency is impaired.
 
@@ -473,6 +494,7 @@ Finally, sometimes subsequent sentences have marginal differences:
 We are seeking to find all of these sentences, but concentrate on the latter two cases where the redundancy is obvious for humans.
 
 \subsubsection{Method}
+%TODO bigrams stemmed vs. unstemmed in table?
 
 Our method (\textbf{Unigrams}) consists of a simple unigram overlap score, which we found to outperform more sophisticated approaches:
 
@@ -546,33 +568,38 @@ The results can be seen in Table~\ref{eval_redundancy}. Evidently, the \textbf{U
 \section{Discussion}
 \label{discussion}
 % What seem to be the best methods for the various tasks and why?
-% Why does what works work and not that which doesn't?
+% TODO Why does what works work and not that which doesn't? inkl examples !!
 Detecting linguistic quality violations automatically is not a trivial task. It is not always easy for humans to produce consistent annotations and annotations aren't necessarily highly consistent across humans, as can be seen in the inter-annotator agreement in \cite{friedrichlqvsumm}.
 
 Sometimes, however, the easier methods outperformed the more sophisticated approaches. This can be the case because...
 
-%einzelne Experimente..
+%TODO einzelne Experimente..
 
-%KRITIK!!
+%TODO mehr KRITIK!!
+%TODO: no.
 The corpus we used was not an optimal choice either.
 
 The LQVCorpus that we used for all of our experiments is, unfortunately, not large enough to have a wide coverage of all violations. This can be seen most prominently when trying to detect redundancy (Section~\ref{redundancy}).
 
+%TODO inappropriate->challenges
 Apart from its size, the corpus is also often annotated inconsistently or at least inappropriate for our purposes. In general, annotations are done on the clause level, where clauses are arbitrary substrings of the summary. As we classify and evaluate on sentences produced by Stanford CoreNLP \citep{manning-EtAl:2014:P14-5}, this introduces noise.
 
 Annotations aren't done consistently throughout the corpus, and often very different violations are annotated with the same label, the most obvious example of this being shown in Section~\ref{corpus_study}. This is not automatically a weakness of the corpus itself, but rather an unfitness for our purposes.
+%TODO besser wenn vorher segmentierung (vor annotation), problem annotation vs automatic
+
 %show example
 However, there's little to no alternatives available.
 
 A legitimate criticism of our work is that our methods, experiments, and results are tailored to the LQVCorpus or to the summarization systems that participated in the TAC 2011 Guided Summarization task \citep{owczarzak2011overview}.
 
-%what could be done better?
+%TODO what could be done better?
 
 
 \section{Conclusion} % & Future Work
 \label{conclusion}
-% What can my results be used for? What should be investigated later?
-% What could possibly be needed to work on the types not looked at here? (entity, semrel, …)
+% TODO What can my results be used for? What should be investigated later?
+% TODO What could possibly be needed to work on the types not looked at here? (semrel, …)
+%TODO other genres
 
 In this paper, we have presented a solid method to detect the kind of ungrammaticality that occurs in automatically generated extractive multi-document summarizations. While the results are good, they do rely on a certain type of ungrammaticality occuring often (missing spaces). Future work could concentrate on improving other grammaticality violations, so that not only the accuracy rises, but also the generality. Such a system could potentially detect ungrammaticality in a much broader domain.
 
