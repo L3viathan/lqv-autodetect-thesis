@@ -108,7 +108,7 @@
     \item partially inconsistent\pause %ranges
     \item corpus preprocessing with CoreNLP \citep{manning-EtAl:2014:P14-5}
     \item unit of annotation (clauses vs. sentences)\pause
-    \item OTHRUNGR has different violation subtypes%TODO
+    \item OTHRUNGR has different violation subtypes
   \end{itemize}
 \end{frame}
 
@@ -196,12 +196,17 @@
   RandomForest \citep{breiman2001random} to train decision trees
   \vspace{0.6cm}
 
-  \textbf{Features:}
+  \textbf{Features:}\pause
   \begin{itemize}
     \item classification from \textbf{UnknownTokens}\pause
     \item perplexity scores from language model trained on Gigaword\pause
-    \item number of words
-    \item 3 features from ACE parser output %TODO
+    \item number of words\pause
+    \item 3 features from ACE \citep{ace} output:
+    \begin{itemize}
+      \item number of readings
+      \item RAM usage
+      \item status
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -353,14 +358,28 @@
 \end{frame}
 
 \begin{frame}
-  %TODO slide mit evaluation von für jeden tyyp beste methode
   \frametitle{Conclusion}
-  \textbf{Methods for:}
-  \begin{itemize}
-    \item detecting ungrammaticality
-    \item detecting datelines
-    \item detecting redundancies
-  \end{itemize}\pause
+  % \textbf{Methods for:}
+  % \begin{itemize}
+  %   \item detecting ungrammaticality
+  %   \item detecting datelines
+  %   \item detecting redundancies
+  % \end{itemize}\pause
+
+  \textbf{Best methods:}
+  \vspace{0.5cm}
+
+  \begin{tabular}{l|c|c|c|}
+  \hline
+   & Precision & Recall & F-Score\\
+  \hline
+  Ungrammaticality & 72.8 & 49.1 & 58.6\\
+  \hline
+  Datelines & 86.0 & 89.7 & 87.8\\
+  \hline
+  Redundancy & 58.0 & 28.2 & 37.0\\
+  \hline
+  \end{tabular}\pause
 
   \vspace{0.5cm}
   Adapted annotation scheme, better for automatic processing\pause

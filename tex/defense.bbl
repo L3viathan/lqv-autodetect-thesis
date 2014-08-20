@@ -32,4 +32,10 @@ Owczarzak, K. and Dang, H.~T. (2011).
 \newblock In {\em Proceedings of the Text Analysis Conference (TAC 2011),
   Gaithersburg, Maryland, USA, November}.
 
+\bibitem[Packart, 2011]{ace}
+Packart, W. (2011).
+\newblock {ACE}: the {A}nswer {C}onstraint {E}ngine.
+\newblock \url{http://sweaglesw.org/linguistics/ace/}.
+\newblock Accessed: 2014-08-20.
+
 \end{thebibliography}
