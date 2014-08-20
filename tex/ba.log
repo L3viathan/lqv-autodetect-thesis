@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  19 AUG 2014 22:29
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  20 AUG 2014 10:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1044,63 +1044,73 @@ File: subtypes_dev2.png Graphic file (type png)
 Package pdftex.def Info: subtypes_dev2.png used on input line 235.
 (pdftex.def)             Requested size: 294.50252pt x 336.66034pt.
  [4 <./subtypes_dev2.png>]
-Overfull \hbox (42.31111pt too wide) in paragraph at lines 259--260
+Overfull \hbox (42.31111pt too wide) in paragraph at lines 260--261
 []\OT1/cmr/m/n/10 In or-der to im-prove upon the NER and fur-ther in-crease re-
 call, we use two sim-ple heuris-tics (\OT1/cmr/bx/n/10 UnknownTokens$[]$\OT1/cm
 r/m/n/10 ):
  []
 
 [5]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 343.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 344.
 
  (/usr/local/texlive/2012/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 343.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 344.
  [6] [7]
 [8] [9] <a.png, id=63, 3140.73375pt x 2145.01375pt>
 File: a.png Graphic file (type png)
  <use a.png>
-Package pdftex.def Info: a.png used on input line 491.
+Package pdftex.def Info: a.png used on input line 499.
 (pdftex.def)             Requested size: 471.08974pt x 321.73817pt.
 
-Overfull \hbox (15.84563pt too wide) in paragraph at lines 491--492
+Overfull \hbox (15.84563pt too wide) in paragraph at lines 499--500
  [] 
  []
 
-[10 <./a.png>] [11] [12] (./ba.bbl
+[10] [11 <./a.png>] [12] [13] (./ba.bbl
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 96.
- [13]) [14] (./ba.aux) ) 
+ [14]
+! Undefined control sequence.
+l.109 \newblock \url
+                    {http://sweaglesw.org/linguistics/ace/}.
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+) [15] (./ba.aux) ) 
 Here is how much of TeX's memory you used:
- 20255 strings out of 493488
- 334752 string characters out of 3141326
- 474407 words of memory out of 3000000
- 23102 multiletter control sequences out of 15000+200000
- 11897 words of font info for 48 fonts, out of 3000000 for 9000
+ 20260 strings out of 493488
+ 334821 string characters out of 3141326
+ 474446 words of memory out of 3000000
+ 23107 multiletter control sequences out of 15000+200000
+ 12191 words of font info for 49 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
  74i,14n,77p,1153b,1003s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/local/texlive/2012/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmbx10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmbx12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmbx7.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmbxti10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmcsc10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmi10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmmi7.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmr10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr7.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mssbx10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmsy10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mti10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-ti12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
-t10.pfb>
-Output written on ba.pdf (17 pages, 591610 bytes).
+</usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmbx10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmbx12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmbx7.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmbxti10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmcsc10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmmi10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi7.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+7.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx
+10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
+0.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10
+.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.
+pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.p
+fb>
+Output written on ba.pdf (18 pages, 594936 bytes).
 PDF statistics:
- 129 PDF objects out of 1000 (max. 8388607)
- 88 compressed objects within 1 object stream
+ 132 PDF objects out of 1000 (max. 8388607)
+ 90 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  28 words of extra memory for PDF output out of 10000 (max. 10000000)
 

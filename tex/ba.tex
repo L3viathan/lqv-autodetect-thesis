@@ -328,7 +328,7 @@ Both \textbf{UnknownTokens\textsubscript{general}} and \textbf{UnknownTokens\tex
 %%%END BACKUP WITH WEIGHTED MEAN
 
 
-\subsubsection{The RandomForest method}
+\subsubsection{The RandomForest\textsubscript{UT} method}
 % previous tries with LMs(?), unknown_tokens, unknown_tokens+LM+weka->decision trees
 To detect more general forms of ungrammaticality, several other methods were investigated. Following \cite{wagner2007comparative}, we learn decision trees from outputs of several systems that on their own have not proven sufficient for this task. For this experiment, the development set \textit{dev-1} was used.
 
@@ -350,7 +350,8 @@ We use three features for our decision tree:
 		\textit{The report of a}
 \end{itemize}
 
-\subsubsection{Evaluation of RandomForest}
+\subsubsection{Evaluation of RandomForest\textsubscript{UT}}
+\label{S_eval_randomforest}
 
 We performed 10-fold cross-validation, which lead to a weighted F-score of 86.3\%. A total of 1215 (88.1\%) instances was classified correctly, 164 (11.9\%) incorrectly.
 
@@ -402,6 +403,14 @@ We performed 10-fold cross-validation, which lead to a weighted F-score of 86.3\
 %  1162   36 |    a = ungrammaticality-no
 %   128   53 |    b = ungrammaticality-yes
 
+\subsubsection{The RandomForest\textsubscript{parser} method}
+We also investigated whether parser output would improve the results. For this task, we utilized the Answer Constraint Engine \citep{ace} with the English Resource Grammar \citep{copestake2002implementing} to parse the entire corpus and annotate it with output statistics of the parser: Following \cite{wagner2007comparative} loosely, we extracted the number of readings/parses, the amount of memory the parser used for the parse and the success status, which could be either ``ok'' or ``ignored'', the latter appearing when the parsing failed entirely for some reason.
+
+We then added these three features to \textbf{RandomForest\textsubscript{UT}}.
+
+\subsubsection{Evaluation of RandomForest\textsubscript{parser}}
+
+When evaluating the emerging decision tree on general ungrammaticality using the same method as in Section~\ref{S_eval_randomforest}, it yielded worse results than \textbf{RandomForest\textsubscript{UT}} alone. We therefore inspected whether it could instead be used to find instances of the subtype \textit{unparsable}. This lead to a precision of 86.6\%, a recall of 87.9\%, and an F-Score of 86.3\%. A total of 87.9\% of the instances was classified correctly.
 
 \subsection{Datelines}
 % Regex foo, explanation plus evaluation(?)
@@ -540,7 +549,7 @@ The results can be seen in Table~\ref{eval_redundancy}. Evidently, the \textbf{U
 % Why does what works work and not that which doesn't?
 Detecting linguistic quality violations automatically is not a trivial task. It is not always easy for humans to produce consistent annotations and annotations aren't necessarily highly consistent across humans, as can be seen in the inter-annotator agreement in \cite{friedrichlqvsumm}.
 
-Sometimes, however, the easier methods outperformed the more sophisticated approaches. This can be the case because
+Sometimes, however, the easier methods outperformed the more sophisticated approaches. This can be the case because...
 
 %einzelne Experimente..
 
@@ -580,6 +589,9 @@ Along with this paper, the authors will provide a toolchain that can be used to 
 \section*{Acknowledgments}
 
 ?
+%Annemarie Friedrich
+%Manfred Pinkal, Alexis Palmer
+%Lukas Burk, Diana Asimi(?)
 
 \newpage
 \bibliographystyle{apalike}
