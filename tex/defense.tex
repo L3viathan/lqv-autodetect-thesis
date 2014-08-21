@@ -65,7 +65,7 @@
   \textbf{Why?}
   \begin{itemize}
     \item It's hard.\pause
-    \item Evaluation: content, information density
+    \item Evaluation: content coverage
   \end{itemize}
   \vspace{1cm}
   \pause
@@ -78,7 +78,7 @@
 \begin{frame}
   \frametitle{LQVSumm \citep{friedrichlqvsumm}}
   %eckdaten, was wurde annotiert
-  Annotated results of TAC 2011 Guided Summarization task \citep{owczarzak2011overview}
+  Annotated automatically created summaries from TAC 2011 Guided Summarization task \citep{owczarzak2011overview}
 \pause
   \begin{itemize}
     \item Entity level:
@@ -104,11 +104,11 @@
 \begin{frame}
   \frametitle{LQVSumm \citep{friedrichlqvsumm}}
   \begin{itemize}
-    \item small %coverage of some types
-    \item partially inconsistent\pause %ranges
+    \item 1935 summaries (TAC part)
+    \item few occurences of some types\pause
     \item corpus preprocessing with CoreNLP \citep{manning-EtAl:2014:P14-5}
     \item unit of annotation (clauses vs. sentences)\pause
-    \item OTHRUNGR has different violation subtypes
+    \item OTHRUNGR has different violation subtypes (annotated by us)
   \end{itemize}
 \end{frame}
 
@@ -116,14 +116,14 @@
   \frametitle{Development and Test Sets}
   2 development sets:
   \begin{itemize}
-    \item \textit{dev-1}: 20\% (D1101-D1108)
-    \item \textit{dev-2}: 20\% (D1109-D1116)
+    \item \textit{dev-1}: 20\% (D1101-D1108, 351 summaries)
+    \item \textit{dev-2}: 20\% (D1109-D1116, 352 summaries)
   \end{itemize}
 
   \vspace{1cm}
   1 test set: 
   \begin{itemize}
-    \item \textit{test}: 60\% (D1117-D1144)
+    \item \textit{test}: 60\% (D1117-D1144, 1232 summaries)
   \end{itemize}
 \end{frame}
 
@@ -194,7 +194,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{\textbf{RandomForest}}
+  \frametitle{Learning  a classifier to detect ungrammatical sentences}
   RandomForest \citep{breiman2001random} to train decision trees
   \vspace{0.6cm}
 
@@ -203,7 +203,7 @@
     \item classification from \textbf{UnknownTokens}\pause
     \item perplexity scores from language model trained on Gigaword\pause
     \item number of words\pause
-    \item 3 features from ACE \citep{ace} output:
+    \item 3 features from HPSG parser output \citep{ace,copestake2002implementing}:
     \begin{itemize}
       \item number of readings
       \item RAM usage
@@ -214,6 +214,9 @@
 
 \begin{frame}
   \frametitle{\textbf{RandomForest}: Evaluation on \textit{test}}
+  \quad\quad\textbf{10-fold cross validation:}
+
+  \vspace{0.25cm}
   \quad\quad\begin{tabular}{r|c|c|c|}
   & \textbf{Precision} & \textbf{Recall} & \textbf{F-Score}\\
   \hline
@@ -227,18 +230,48 @@
   \vspace{0.25cm}
   \quad\quad\begin{tabular}{c|c}
   \hline\hline
-  Feature & Decrease in Accuracy\\%84.5391
+  Feature & Decrease in F-Score\\%84.5391%0.586
   \hline
-  UnknownTokens Output & 0.3369\\
-  Language Model Perplexity & 1.2091\\
-  Number of Words & 0.7334\\
-  ACE RAM & 1.0901\\
-  ACE Readings & 1.3478\\
-  ACE Status & 0.1982\\
+  UnknownTokens Output & 0.8\\%0.3369\\0.586-0.578
+  Language Model Perplexity & 1.4\\%1.2091\\0.586-0.572
+  Number of Words & 2.2\\%34\\0.586-0.564
+  Parser RAM & 1.3\\%01\\0.586-0.573
+  Parser Readings & 5.7\\%478\\0.586-0.529
+  Parser Status & 0.4\\%1982\\0.586-0.582
   \hline\hline
   \end{tabular}
 
 \end{frame}
+
+% \begin{frame}%backup with accuracy ablation
+%   \frametitle{\textbf{RandomForest}: Evaluation on \textit{test}}
+%   10-fold cross validation
+
+%   \quad\quad\begin{tabular}{r|c|c|c|}
+%   & \textbf{Precision} & \textbf{Recall} & \textbf{F-Score}\\
+%   \hline
+%   Ungrammatical & 72.8 & 49.1 & 58.6\\
+%   \hline
+%   \end{tabular}
+%   \vspace{0.5cm}\pause
+
+%   \quad\quad\textbf{Ablation Study:}
+
+%   \vspace{0.25cm}
+%   \quad\quad\begin{tabular}{c|c}
+%   \hline\hline
+%   Feature & Decrease in F-Score\\%84.5391%0.586
+%   \hline
+%   UnknownTokens Output & 0.34\\%0.3369\\0.586-0.578
+%   Language Model Perplexity & 1.21\\%1.2091\\0.586-0.572
+%   Number of Words & 0.73\\%34\\0.586-0.564
+%   Parser RAM & 1.09\\%01\\0.586-0.573
+%   Parser Readings & 1.35\\%478\\0.586-0.529
+%   Parser Status & 0.20\\%1982\\0.586-0.582
+%   \hline\hline
+%   \end{tabular}
+
+% \end{frame}
 
 % \begin{frame}
 %   \frametitle{\textbf{RandomForest}: Evaluation}
@@ -289,14 +322,6 @@
 
 \begin{frame}
   \frametitle{Redundancy (REDUNINF)}
-  \textit{According to a survey by the State \textbf{Food and Drug} Administration, 65 percent of the respondents worried about the food \textbf{safety} situation in China.}
-  \vspace{0.1cm}
-
-  \textit{\textbf{Food and drug safety} has become a major concern of Chinese people.}
-  \vspace{0.25cm}
-  \hline
-  \vspace{0.25cm}
-
   \textit{\textbf{Cyclone} Sidr, described as the worst storm in years to hit low-lying and disaster-prone \textbf{Bangladesh}, crashed into the southwestern coast \textbf{Thursday} night \textbf{before sweeping north} over \textbf{the capital Dhaka.}}
   \vspace{0.1cm}
 
@@ -316,7 +341,7 @@
   \begin{itemize}
     \item Remove non-alphanumeric characters and split into set of words\pause
     \item Cardinality of intersection between sets\pause
-    \item Normalize by sentence length\pause
+    \item Normalize by maximum overlap\pause
     \item Classify with threshold\pause
   \end{itemize}
 
@@ -357,6 +382,14 @@
   \hline
   \end{tabular}
   \vspace{0.5cm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Redundancy: False Negatives}
+  \textit{According to a survey by the State \textbf{Food and Drug} Administration, 65 percent of the respondents worried about the food \textbf{safety} situation in China.}
+  \vspace{0.1cm}
+
+  \textit{\textbf{Food and drug safety} has become a major concern of Chinese people.}
 \end{frame}
 
 \begin{frame}
@@ -465,8 +498,8 @@
   \end{tabular}
 \end{frame}
 
-\begin{frame}
-  \quad\quad\includegraphics[scale=0.6]{thesis_defense.png}
-\end{frame}
+% \begin{frame}
+%   \quad\quad\includegraphics[scale=0.6]{thesis_defense.png}
+% \end{frame}
 
 \end{document}

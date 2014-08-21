@@ -4,45 +4,45 @@ The top-level auxiliary file: defense.aux
 The style file: apalike.bst
 Database file #1: referenzen.bib
 Warning--empty journal in friedrichlqvsumm
-You've used 6 entries,
+You've used 7 entries,
             1935 wiz_defined-function locations,
-            507 strings with 4915 characters,
-and the built_in function-call counts, 2443 in all, are:
-= -- 242
-> -- 96
-< -- 5
-+ -- 34
-- -- 32
-* -- 184
-:= -- 417
-add.period$ -- 19
-call.type$ -- 6
-change.case$ -- 46
-chr.to.int$ -- 6
-cite$ -- 7
-duplicate$ -- 107
-empty$ -- 173
-format.name$ -- 40
-if$ -- 491
+            513 strings with 5042 characters,
+and the built_in function-call counts, 2729 in all, are:
+= -- 268
+> -- 103
+< -- 7
++ -- 36
+- -- 34
+* -- 204
+:= -- 469
+add.period$ -- 22
+call.type$ -- 7
+change.case$ -- 51
+chr.to.int$ -- 7
+cite$ -- 8
+duplicate$ -- 121
+empty$ -- 196
+format.name$ -- 43
+if$ -- 547
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 5
-newline$ -- 33
-num.names$ -- 18
-pop$ -- 52
+missing$ -- 7
+newline$ -- 38
+num.names$ -- 21
+pop$ -- 59
 preamble$ -- 1
-purify$ -- 46
+purify$ -- 52
 quote$ -- 0
-skip$ -- 79
+skip$ -- 90
 stack$ -- 0
-substring$ -- 146
-swap$ -- 20
-text.length$ -- 2
+substring$ -- 158
+swap$ -- 22
+text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 36
+type$ -- 40
 warning$ -- 1
-while$ -- 20
+while$ -- 22
 width$ -- 0
-write$ -- 78
+write$ -- 91
 (There was 1 warning)

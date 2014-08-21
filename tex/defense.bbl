@@ -5,6 +5,11 @@ Breiman, L. (2001).
 \newblock Random forests.
 \newblock {\em Machine learning}, 45(1):5--32.
 
+\bibitem[Copestake, 2002]{copestake2002implementing}
+Copestake, A. (2002).
+\newblock {\em Implementing typed feature structure grammars}, volume 110.
+\newblock CSLI publications Stanford.
+
 \bibitem[Finkel et~al., 2005]{stanfordNER}
 Finkel, J.~R., Grenager, T., and Manning, C. (2005).
 \newblock Incorporating non-local information into information extraction
@@ -15,8 +20,8 @@ Finkel, J.~R., Grenager, T., and Manning, C. (2005).
 
 \bibitem[Friedrich et~al., 2014]{friedrichlqvsumm}
 Friedrich, A., Valeeva, M., and Palmer, A. (2014).
-\newblock Lqvsumm: A corpus of linguistic quality violations in multi-document
-  summarization.
+\newblock {LQVS}umm: A corpus of linguistic quality violations in
+  multi-document summarization.
 
 \bibitem[Manning et~al., 2014]{manning-EtAl:2014:P14-5}
 Manning, C.~D., Surdeanu, M., Bauer, J., Finkel, J., Bethard, S.~J., and
@@ -27,10 +32,10 @@ Manning, C.~D., Surdeanu, M., Bauer, J., Finkel, J., Bethard, S.~J., and
 
 \bibitem[Owczarzak and Dang, 2011]{owczarzak2011overview}
 Owczarzak, K. and Dang, H.~T. (2011).
-\newblock Overview of the tac 2011 summarization track: Guided task and aesop
-  task.
-\newblock In {\em Proceedings of the Text Analysis Conference (TAC 2011),
-  Gaithersburg, Maryland, USA, November}.
+\newblock Overview of the {TAC} 2011 summarization track: Guided task and
+  {AESOP} task.
+\newblock In {\em Proceedings of the Text Analysis Conference ({TAC} 2011),
+  Gaithersburg, Maryland, {USA}, November}.
 
 \bibitem[Packart, 2011]{ace}
 Packart, W. (2011).
