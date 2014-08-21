@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  22 AUG 2014 00:53
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  22 AUG 2014 01:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1046,51 +1046,57 @@ and I'll forget about whatever was undefined.
 File: subtypes_dev2.png Graphic file (type png)
 
 <use subtypes_dev2.png>
-Package pdftex.def Info: subtypes_dev2.png used on input line 323.
+Package pdftex.def Info: subtypes_dev2.png used on input line 343.
 (pdftex.def)             Requested size: 294.50252pt x 336.66034pt.
  [5] [6 <./subtypes_dev2.png>]
-Overfull \hbox (21.03401pt too wide) in paragraph at lines 347--348
+Overfull \hbox (21.03401pt too wide) in paragraph at lines 367--368
 []\OT1/cmr/m/n/10 In or-der to im-prove upon the NER and fur-ther in-crease re-
 call, we use two sim-ple heuris-tics (\OT1/cmr/bx/n/10 UnknownTokens-
  []
 
 
-Overfull \hbox (49.20082pt too wide) in paragraph at lines 352--354
+Overfull \hbox (49.20082pt too wide) in paragraph at lines 372--374
 \OT1/cmr/m/n/10 We eval-u-ate how ef-fec-tive \OT1/cmr/bx/n/10 Un-known-To-kens
  \OT1/cmr/m/n/10 is in de-tect-ing \OT1/cmr/m/it/10 miss-ing spaces \OT1/cmr/m/
 n/10 vi-o-la-tions, both with (\OT1/cmr/bx/n/10 UnknownTokens-
  []
 
-[7] [8]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 431.
+[7]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 448.
 
  (/usr/local/texlive/2012/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 431.
-
-Overfull \hbox (5.19563pt too wide) in paragraph at lines 519--520
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 448.
+ [8] [9]
+Overfull \hbox (2.41785pt too wide) in paragraph at lines 536--537
 \OT1/cmr/m/n/10 We per-formed 10-fold cross-validation with both \OT1/cmr/bx/n/
-10 RandomForest-UT \OT1/cmr/m/n/10 and \OT1/cmr/bx/n/10 RandomForest-UT+parser\
-OT1/cmr/m/n/10 ,
+10 RandomForest-UT \OT1/cmr/m/n/10 and \OT1/cmr/bx/n/10 RandomForest-UT+parser
  []
 
 
-LaTeX Warning: Reference `S_eval_randomforest' on page 9 undefined on input lin
-e 545.
+Overfull \hbox (7.2307pt too wide) in paragraph at lines 538--539
+[]\OT1/cmr/m/n/10 As ev-i-dent from the ta-ble, in-clud-ing the parser out-put 
+statis-tics as fea-tures (\OT1/cmr/bx/n/10 RandomForest-UT+parser\OT1/cmr/m/n/1
+0 )
+ []
 
-[9] [10] [11] [12] <a.png, id=74, 3140.73375pt x 2145.01375pt>
+
+LaTeX Warning: Reference `S_eval_randomforest' on page 10 undefined on input li
+ne 562.
+
+[10] [11] [12] <a.png, id=74, 3140.73375pt x 2145.01375pt>
 File: a.png Graphic file (type png)
  <use a.png>
-Package pdftex.def Info: a.png used on input line 655.
+Package pdftex.def Info: a.png used on input line 672.
 (pdftex.def)             Requested size: 471.08974pt x 321.73817pt.
 
-Overfull \hbox (15.84563pt too wide) in paragraph at lines 655--656
+Overfull \hbox (15.84563pt too wide) in paragraph at lines 672--673
  [] 
  []
 
-[13 <./a.png>] [14] [15] [16] (./ba.bbl [17]
+[13] [14 <./a.png>] [15] [16] [17] (./ba.bbl [18]
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 111.
 
@@ -1103,16 +1109,16 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-) [18] (./ba.aux)
+) [19] (./ba.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 20310 strings out of 493488
- 335652 string characters out of 3141326
- 477108 words of memory out of 3000000
- 23155 multiletter control sequences out of 15000+200000
+ 20311 strings out of 493488
+ 335662 string characters out of 3141326
+ 475116 words of memory out of 3000000
+ 23156 multiletter control sequences out of 15000+200000
  11419 words of font info for 46 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
  74i,11n,77p,1153b,1003s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1129,10 +1135,10 @@ al/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/lo
 cal/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
 al/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/loca
 l/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on ba.pdf (22 pages, 588586 bytes).
+Output written on ba.pdf (23 pages, 590396 bytes).
 PDF statistics:
- 137 PDF objects out of 1000 (max. 8388607)
- 93 compressed objects within 1 object stream
+ 140 PDF objects out of 1000 (max. 8388607)
+ 95 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  28 words of extra memory for PDF output out of 10000 (max. 10000000)
 

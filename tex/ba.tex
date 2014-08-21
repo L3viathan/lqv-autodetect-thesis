@@ -184,9 +184,9 @@ A \textit{single-document} system takes only one document as an input and produc
 
 An \textit{abstractive} system is one which infers knowledge from its input into an internal semantic representation and generates a new text based on that knowledge. The task of constructing an abstractive summarization system is very complex, which is why most systems used today are \textit{extractive}, which means they work by taking phrases from their input and glue them together to produce an output.
 
-We are only concerned with extractive, multi-document summarization.
+We are only concerned with extractive, multi-document summarization, because our data consists of summaries produced by extractive multi-document summarization systems.
 
-Evaluation of automatic summarization systems has largely been done on content coverage, which is why generated summaries often lack linguistic quality \citep{nenkova2011foundations}, meaning that they contain many errors of various kinds. A new focus on linguistic quality (LQ) evaluation would presumably help decrease these issues and produce overall better summarization systems.
+Evaluation of automatic summarization systems has largely been done on content coverage. Along with the task being hard in general, this is one reason why generated summaries often lack linguistic quality \citep{nenkova2011foundations}, meaning that they contain many errors of various kinds. A new focus on linguistic quality (LQ) evaluation would presumably help decrease these issues and produce overall better summarization systems.
 
 As a first step in this direction, \cite{friedrichlqvsumm} created the \textit{LQVSumm} corpus, which consists of multi-document summaries from the TAC 2011 shared task on Guided Summarization \citep{owczarzak2011overview}, annotated manually with LQ violations on entity, clause and discourse level. The corpus also includes annotations on 50 summaries produced by G-Flow \citep{gflow}, which we disregard, because the linguistic quality is much higher than in the rest of the corpus, along with the fact that the size of the annotated G-Flow summaries is much smaller.
 
@@ -194,7 +194,7 @@ Manual annotation is an expensive and time-consuming process, for which an autom
 
 The rest of this paper is organized as follows:
 
-The next section discusses related work. In Section~\ref{corpus_study}, we take a look at the \textit{LQVSumm} corpus and the challenges it poses for our experiments and methods, which are discussed in Section~\ref{experiments}, where we also evaluate our experiments. We discuss our results in Section~\ref{discussion}. In Section~\ref{conclusion}, we discuss future work and conclude.
+The next section discusses related work. In Section~\ref{corpus_study}, we take a look at the \textit{LQVSumm} corpus and the challenges it poses for our experiments and methods. We also demonstrate our subtype system in that section, to prepare for the experiments, which are discussed in Section~\ref{experiments}, where they are also evaluated. We discuss our results in Section~\ref{discussion}. In Section~\ref{conclusion}, we discuss future work and conclude.
 
 \section{Related Work}
 \label{related_work}
@@ -224,8 +224,28 @@ The BLEU score \citep{papineni2002bleu} is a method for evaluating the effective
 %TODO describe the corpus itself (like defense)
 The LQVSumm corpus consists of annotations on summaries produced by systems participating in the TAC 2011 Guided Summarization Task \citep{owczarzak2011overview}.
 
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+Set & Number of summaries & Topics\\
+\hline
+\textit{dev-1} & 351 & D1101 -- D1108\\
+\hline
+\textit{dev-2} & 352 & D1109 -- D1116\\
+\hline
+\textit{test} & 1232 & D1117 -- D1144\\
+\hline\hline
+Overall & 1935 & (D1101 -- D1144)\\
+\hline
+\end{tabular}
+\end{center}
+\label{testsets}
+\caption{Distribution and count of summaries across development and test sets}
+\end{table}
+
 We split the corpus into three parts, while making sure that topics weren't spread across sets: \textit{dev-1} and \textit{dev-2} are development sets, \textit{test} is our test set.
-\textit{dev-1} contains 351 summaries, \textit{dev-2} contains 352, that is 8 topics per development set and about 20\% of the corpus each.
+\textit{dev-1} contains 351 summaries, \textit{dev-2} contains 352, that is 8 topics per development set and about 20\% of the corpus each. The breakdown of the distribution of topics across development and test sets is shown in Table~\ref{testsets}.
 The test set \textit{test} contains the other 60\%, making up 1232 summaries and 28 topics.
 
 The annotation, our experiments and the evaluation are all done on sentence basis. We use Stanford CoreNLP \citep{manning-EtAl:2014:P14-5} for sentence splitting. This is necessary to have classifiable entities, but introduces inaccuracies, because LQVSumm is annotated on clause level, clause meaning an arbitrary substring of a summary, which is often a sentence, but also sometimes spanning over sentence bounds.
@@ -334,7 +354,7 @@ We conduct a number of experiments to find reliable ways to detect different kin
 
 \subsection{Detecting Ungrammaticality}
 \label{sec_unknowntokens}
-Perhaps the most noticeable result is the large portion of \textit{missing spaces} violations, meaning clauses that include tokens which aren't correct words. Almost all of these cases come from a missing space between two words forming tokens such as \textit{reportsreaching} or \textit{Wenchuancounty}. As there is such a large amount of this type, finding a reliable detection method for this subtype would significantly boost detection of ungrammaticality in general.
+Perhaps the most noticeable result of our corpus study is the large portion of \textit{missing spaces} violations, meaning clauses that include tokens which aren't correct words. Almost all of these cases come from a missing space between two words forming tokens such as \textit{reportsreaching} or \textit{Wenchuancounty}. As there is such a large amount of this type, finding a reliable detection method for this subtype would presumably significantly boost detection of ungrammaticality in general.
 
 \subsubsection{The UnknownTokens method}
 We call our straightforward approach to identifying missing spaces \textbf{UnknownTokens}: Tagging a sentence as containing a \textit{missing spaces} ungrammaticality if and only if there is a token in the sentence that isn't a ``known'' token, i.e. one that doesn't exist in a list of known words. In our setting, we can easily deduce such a list from the source documents of the automatic summarization process. If the source document is available and used as a base for our vocabulary, we call that approach \textbf{UnknownTokens-source}.
@@ -352,7 +372,7 @@ We automatically label any tokens that are neither on our list of known tokens f
 We evaluate how effective \textbf{UnknownTokens} is in detecting \textit{missing spaces} violations, both with (\textbf{UnknownTokens-source}) and without (\textbf{UnknownTokens-general}) access to the source documents, and compare it to a \textbf{baseline}, which always assumes the most common case (no \textit{missing spaces} violation).
 The standard metrics precision, recall and F-score are used for evaluation.
 
-Table~\ref{eval_unknowntokens} shows the results of the evaluation. Because the amount of sentences not containing a missing spaces violation is much larger than the ones that do, several weighted metrics are provided, too:
+Table~\ref{eval_unknowntokens} shows the results of the evaluation of both variations of \textbf{UnknownTokens} on \textit{dev-2}. Because the amount of sentences not containing a missing spaces violation is much larger than the ones that do, several weighted metrics are provided, too:
 
 The micro-average method consists of summing up the individual values from the confusion matrix (True Positive, False Positive, True Negative and False Negative) and calculating new metrics based on the results. We only display the F-score here, since F-score, recall and precision are identical for a 2-class scenario: Since the true positives of the missing spaces class are identical with the true negatives of the no missing spaces class (and vice versa), the new number of true positives and true negatives (for the micro average) is $tp + tn$ of any of the two classes. The same goes for false negatives and false positives. That means that when only dealing with two classes, in the micro-average method, the terms \textit{positive} and \textit{negative} can be used interchangeably. As precision is defined as $\frac{tp}{tp+fp}$ and recall as $\frac{tp}{tp+fn}$; as the equations only differ in whether they use $fp$ or $fn$ (which are exactly the same here) in the divisor, precision and recall (and therefore F-score, too, since the F-score is simply the harmonic mean of precision and recall) are identical.
 
@@ -414,12 +434,9 @@ Both \textbf{UnknownTokens-general} and \textbf{UnknownTokens-source} improve va
 
 
 \subsubsection{The RandomForest-UT method}
-% previous tries with LMs(?), unknown_tokens, unknown_tokens+LM+weka->decision trees
-%TODO mention previous tries with LMS?
-%TODO Tabelle
 To detect more general forms of ungrammaticality, several other methods were investigated. Following \cite{wagner2007comparative}, we learn decision trees from outputs of several systems that on their own have not proven sufficient for this task. For this experiment, the development set \textit{dev-1} was used.
 
-We train a language model on parts (the same parts we used as a word source in \textbf{UnknownTokens-general} (section~\ref{sec_unknowntokens})) of the Gigaword corpus\citep{gigaword}, extract perplexity scores for the sentences in our test set, and annotate them automatically. For the language model generation and the extraction of perplexity scores, we employ SRILM~\citep{stolcke2002srilm}, a language modeling toolkit.
+We train a language model on parts (the same parts we used as a word source in \textbf{UnknownTokens-general} (section~\ref{sec_unknowntokens})) of the Gigaword corpus\citep{gigaword}, extract perplexity scores for the sentences in our test set, and annotate them automatically. For the language model generation and the extraction of perplexity scores, we employ SRILM~\citep{stolcke2002srilm}, a language modeling toolkit. The perplexity scores alone had shown not to be effective in detecting ungrammaticality.
 
 
 %The free WEKA software~\citep{hall2009weka} is an allround machine learning toolkit.
@@ -492,7 +509,7 @@ We use three features for our decision tree:
 %   128   53 |    b = ungrammaticality-yes
 
 \subsubsection{The RandomForest-UT+parser method}
-We also investigated whether parser output would improve the results. For this task, we utilized the Answer Constraint Engine \citep{ace} with the English Resource Grammar \citep{copestake2002implementing} to parse the entire corpus and annotate it with output statistics of the parser: Following \cite{wagner2007comparative} loosely, we extracted the number of readings/parses, the amount of memory the parser used for the parse and the success status, which could be either ``ok'' or ``ignored'', the latter appearing when the parsing failed entirely for some reason.
+We also investigated whether parser output would improve the results. For this task, we utilized the HPSG parser Answer Constraint Engine \citep{ace} with the English Resource Grammar \citep{copestake2002implementing} to parse the entire corpus and annotate it with output statistics of the parser: Following \cite{wagner2007comparative} loosely, we extracted the number of readings/parses, the amount of memory the parser used for the parse and the success status, which could be either ``ok'' or ``ignored'', the latter appearing when the parsing failed entirely for some reason.
 
 We then added these three features to \textbf{RandomForest-UT} and call the new method \textbf{RandomForest-UT+parser}.
 
@@ -516,11 +533,11 @@ We then added these three features to \textbf{RandomForest-UT} and call the new 
 \end{table}
 
 
-We performed 10-fold cross-validation with both \textbf{RandomForest-UT} and \textbf{RandomForest-UT+parser}, the results of which can be seen in Table~\ref{eval_randomforest}. These evaluations are done on the class of ungrammatical sentences, evaluating it on both classes leads to much higher scores (with a weighted F-score of 83.4\% for both ``ungrammatical'' and ``not ungrammatical'').
+We performed 10-fold cross-validation with both \textbf{RandomForest-UT} and \textbf{RandomForest-UT+parser} on \textit{test}, the results of which can be seen in Table~\ref{eval_randomforest}. These evaluations are done on the class of ungrammatical sentences, evaluating it on both classes leads to much higher scores (with a weighted F-score of 83.4\% for both ``ungrammatical'' and ``not ungrammatical'').
+
+As evident from the table, including the parser output statistics as features (\textbf{RandomForest-UT+parser}) significantly improves upon the performance of just \textbf{RandomForest-UT}. We generally value precision more than recall, because we prefer it if our system misses a case of ungrammaticality to it falsely classifying a grammatical sentence as ungrammatical.
 
 An ablation study can be seen in Table~\ref{ablation_study_randomforest}. No number being very high indicates that we have some redundancy of information in the features here.
-%TODO general: explain why numbers so low. also explain why UT-source not perfect.
-%TODO general: include global evaluation on entire data set
 %TODO general: copy stuff from defense here
 \begin{table}
 \begin{center}
@@ -662,7 +679,7 @@ For recall, \textbf{Unigrams} outperforms \textbf{Bigrams}, while for precision 
 
 As is to be expected, higher thresholds correlate with higher precision and lower recall. And while the F-scores are given in Figure~\ref{redundancy_graph} for informational purposes, they are not what we want to optimize; while recall is desirable, we feel that precision is much more important for a system that annotates violations.
 
-We therefore choose a threshold of $0.4$ for the \textbf{Bigrams} and \textbf{Combined}, and one of $0.5$ for \textbf{Unigrams}, because there appear to be local maxima at that point with still some amount of recall.
+We therefore choose a threshold of $0.4$ for the \textbf{Bigrams} and \textbf{Combined}, and one of $0.5$ for \textbf{Unigrams}, because there appear to be local maxima at that point with still some significant amount of recall.
 
 The results can be seen in Table~\ref{eval_redundancy}. Evidently, the \textbf{Unigrams} method outperforms \textbf{Levenshtein} and the \textbf{Baseline} as well as the other n-gram methods.
 
@@ -715,7 +732,7 @@ Neither of these methods had any positive effect on our results.
 % TODO Why does what works work and not that which doesn't? inkl examples !!
 Detecting linguistic quality violations automatically is not a trivial task. It is not always easy for humans to produce consistent annotations and annotations aren't necessarily highly consistent across humans, as can be seen in the inter-annotator agreement in \cite{friedrichlqvsumm}.
 
-Sometimes, however, the easier methods outperformed the more sophisticated approaches. This can be the case because...
+Sometimes, however, the easier methods outperformed the more sophisticated approaches. This can be the case because...%TODO
 
 In theory, \textbf{UnknownTokens-source} should return perfect results, with 100\% recall, precision and F-score. So why doesn't it? Some of this can probably be attributed to annotation mistakes during the annotation process of the subtypes. Manual inspection of the false positives showed that as the datelines (Section~\ref{s_datelines}) are not a part of the text of the source document (which we took the tokens from), geographical names only present in the datelines were wrongly assumed to be unknown tokens. %Some tokens have been considered to be correct, but don't appear in the corpus. Also, some tokens might exist in the corpus and still be wrong in context.%TODO meeh
 
@@ -788,7 +805,7 @@ Finally we developed a basic method of detecting redundancy. With the lowest per
 \caption{The three best methods for detecting Ungrammaticality (\textit{other ungrammatical form} + \textit{incomplete sentence}), Datelines (\textit{inclusion of datelines}) and Redundancy (\textit{redundant information})}
 \end{table}
 
-The best methods for each violation can be seen in Table~\ref{eval_best}.
+The best methods for each violation, evaluated on \textit{test}, can be seen in Table~\ref{eval_best}.
 
 Along with this paper, the authors will publish a toolchain that can be used to annotate given documents with the best methods described in here.
 
@@ -809,6 +826,7 @@ Finally, the straightforward solution for detecting the \textit{no discourse rel
 Future work could also include annotating a corpus after segmenting it, and using the adapted violation type system developed by us for that task.
 
 And finally, since some of the characteristics of the violations our methods were tailored to are specific to the domain and corpus, it is yet to be seen how well our system performs on other corpora, other data sets and other domains.
+Evaluation on anything other than extractive multi-document summarization systems however would probably lead to disappointing results: The violation types for which we have detection methods should not occur at all in abstractive systems, and some of them will likely not or only rarely occur in single-document summaries, for example \textit{redundant information} or some subtypes of \textit{other ungrammaticality}.
 
 \newpage
 \bibliographystyle{apalike}
