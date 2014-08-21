@@ -122,17 +122,17 @@ I hereby confirm that the thesis presented here is my own work, with all assista
 \thispagestyle{empty}
 \begin{abstract}
 \setlength{\parskip}{2ex plus 0.5ex minus 0.2ex}
-\textbf{Abstract} \quad ...Abstract here...
-
+\textbf{Abstract} \quad Automatic summarization systems are usually evaluated on content coverage rather than linguistic quality factors, which leads to summaries containing many linguistic quality violations, like ungrammatical sentences.
+Building on the work of \cite{friedrichlqvsumm}, who annotated automatic summaries with a set of violation types, we first find a number of subtypes of ungrammaticality, and then we develop methods for detecting the clause-level violations ungrammaticality, inclusion of datelines and redundancy automatically.
+We obtain F-Scores of 58.6\% for ungrammaticality, 87.8\% for redundancy and 37.0\% for redundancy.
 \end{abstract}
 
 \section*{Acknowledgements}
-%TODO
-%Anne
-%Pinkal
-%Alexis
-%Marina
-%Jemus
+I would like to thank my supervisors Prof. Manfred Pinkal, Annemarie Friedrich and Alexis Palmer for their continuous support in the process of creating this thesis, and for providing me with helpful comments and guidance whenever I asked for it.
+
+This work couldn't have been done without the work done by Marina Valeeva.
+
+I would also like to thank Lukas Burk for helping me with R \citep{R} and ggplot2 \citep{ggplot2}.
 \newpage
 
 % Table of contents
@@ -190,7 +190,7 @@ Evaluation of automatic summarization systems has largely been done on content c
 
 As a first step in this direction, \cite{friedrichlqvsumm} created the \textit{LQVSumm} corpus, which consists of multi-document summaries from the TAC 2011 shared task on Guided Summarization \citep{owczarzak2011overview}, annotated manually with LQ violations on entity, clause and discourse level. The corpus also includes annotations on 50 summaries produced by G-Flow \citep{gflow}, which we disregard, because the linguistic quality is much higher than in the rest of the corpus, along with the fact that the size of the annotated G-Flow summaries is much smaller.
 
-Manual annotation is an expensive and time-consuming process, for which an automatic system could be an alternative. Our work deals with creating such a system that manages at least part of the annotation automatically. We develop and evaluate our system on top of the \textit{LQVSumm} corpus. We also limit ourselves to the clause-level violations listed in \cite{friedrichlqvsumm}, except for \texttt{no\_semantic\_relation}.
+Manual annotation is an expensive and time-consuming process, for which an automatic system could be an alternative. Our work deals with creating such a system that manages at least part of the annotation automatically. We develop and evaluate our system on top of the \textit{LQVSumm} corpus. We also limit ourselves to the clause-level violations listed in \cite{friedrichlqvsumm}, except for \textit{no semantic relation}.
 
 The rest of this paper is organized as follows:
 
@@ -261,8 +261,9 @@ The remaining three violation types are done on multiple phrases. A \textit{redu
 Because the instance counts for the last remaining violation types (\textit{no semantic relatedness} and \textit{no discourse relation}) were so low, they were disregarded and we didn't try to a develop methods to detect them.
 
 \subsection{Subtype system}
+\label{s_subtypes}
 
-As a first step, we inspect the corpus. We find that the type system of the LQVSumm corpus \citep{valeeva} is not detailed enough for our purposes and has a few shortcomings: Especially under the label of \texttt{other\_ungrammatical\_form} many different types of errors are combined. For this reason, we define a number of subtypes for this violation:
+As a first step, we inspect the corpus. We find that the type system of the LQVSumm corpus \citep{valeeva} is not detailed enough for our purposes and has a few shortcomings: Especially under the label of \textit{other ungrammatical form} many different types of errors are combined. For this reason, we define a number of subtypes for this violation:
 
 \begin{description}
 \item[missing spaces] \hfill \\
@@ -297,11 +298,11 @@ As a first step, we inspect the corpus. We find that the type system of the LQVS
 	Example: \textit{THE CURRENT FIX: Internet applications such as firewalls and spam filters attempt to control security threats.}
 
 \item[incomplete sentence] \hfill \\
-	The type system of the LQVSumm corpus \citep{valeeva} defines an \texttt{incomplete\_sentence} violation as words being cut off at the end of a sentence. A couple of times though, this also occurs at the beginning of a sentence. We restructure the type system by treating all types of incomplete sentences as this subtype of \texttt{other\_ungrammatical\_form}.
+	The type system of the LQVSumm corpus \citep{valeeva} defines an \textit{incomplete sentence} violation as words being cut off at the end of a sentence. A couple of times though, this also occurs at the beginning of a sentence. We restructure the type system by treating all types of incomplete sentences as this subtype of \textit{other ungrammatical form}.
 
 	Example: \textit{A Palestinian suicide bomber detonated an explosive belt at a \\commercial center in Dimona on}.
 \item[should be other type] \hfill \\
-	Sometimes sentences that are tagged as \texttt{other\_ungrammaticality} should (also) be tagged as another type, such as sentences containing datelines. This doesn't necessarily mean that the sentence contains no other ungrammaticalities. This subtype be caused by inconsistencies in the corpus, or from the process of mapping the annotated violations to sentences. While the following example is an \texttt{incomplete sentence}, it also contains a dateline.
+	Sometimes sentences that are tagged as \textit{other ungrammaticality} should (also) be tagged as another type, such as sentences containing datelines. This doesn't necessarily mean that the sentence contains no other ungrammaticalities. This subtype be caused by inconsistencies in the corpus, or from the process of mapping the annotated violations to sentences. While the following example is an \textit{incomplete sentence}, it also contains a dateline.
 
 	Example: \textit{its deepest sympathy to the Israeli people,\textbf{00 a.m. local time (0800 GMT)} as a suicide bomber detonated an explosive belt in the commercial center, according to local media reports.}
 %\item[not ungrammatical] \hfill \\
@@ -313,7 +314,9 @@ As a first step, we inspect the corpus. We find that the type system of the LQVS
 
 \end{description}
 
-After manually counting and investigating these subtypes on \textit{dev-1} we then mark these types in \textit{dev-2} for every sentence that is tagged as \texttt{other\_ungrammatical\_form} in the corpus. We allow sentences to have multiple subtypes and also annotate \texttt{incomplete\_sentence} violations with additional (sub)types, if applicable. The frequency distribution of the subtypes in \textit{dev-2} can be seen in Figure~\ref{subtypes}.
+After manually counting and investigating these subtypes on \textit{dev-1} we then mark these types in \textit{dev-2} for every sentence that is tagged as \textit{other ungrammatical form} in the corpus. We allow sentences to have multiple subtypes and also annotate \textit{incomplete sentence} violations with additional (sub)types, if applicable. The frequency distribution of the subtypes in \textit{dev-2} can be seen in Figure~\ref{subtypes}.
+
+It is to be noted, that from here on, we consider \textit{incomplete sentence} to be a subtype of \textit{other ungrammatical form}.
 
 \begin{figure}
 \begin{center}
@@ -331,7 +334,7 @@ We conduct a number of experiments to find reliable ways to detect different kin
 
 \subsection{Detecting Ungrammaticality}
 \label{sec_unknowntokens}
-Perhaps the most noticeable result is the large portion of \textit{missing spaces} violations, meaning clauses that include tokens which aren't correct words. Almost all of these cases come from a missing space between two words forming tokens such as \texttt{reportsreaching} or \texttt{Wenchuancounty}. As there is such a large amount of this type, finding a reliable detection method for this subtype would significantly boost detection of ungrammaticality in general.
+Perhaps the most noticeable result is the large portion of \textit{missing spaces} violations, meaning clauses that include tokens which aren't correct words. Almost all of these cases come from a missing space between two words forming tokens such as \textit{reportsreaching} or \textit{Wenchuancounty}. As there is such a large amount of this type, finding a reliable detection method for this subtype would significantly boost detection of ungrammaticality in general.
 
 \subsubsection{The UnknownTokens method}
 We call our straightforward approach to identifying missing spaces \textbf{UnknownTokens}: Tagging a sentence as containing a \textit{missing spaces} ungrammaticality if and only if there is a token in the sentence that isn't a ``known'' token, i.e. one that doesn't exist in a list of known words. In our setting, we can easily deduce such a list from the source documents of the automatic summarization process. If the source document is available and used as a base for our vocabulary, we call that approach \textbf{UnknownTokens-source}.
@@ -346,7 +349,7 @@ In order to improve upon the NER and further increase recall, we use two simple 
 We automatically label any tokens that are neither on our list of known tokens from GigaWord, nor tagged as a named entity as ``unknown'' and tag the sentence as containing unknown tokens. The combined method \textbf{UnknownTokens-gw+heur+ner+wiki} is what we call \textbf{UnknownTokens-general}.
 
 \subsubsection{Evaluation of UnknownTokens}
-We evaluate how effective \textbf{UnknownTokens} is in detecting \texttt{missing spaces} violations, both with (\textbf{UnknownTokens-source}) and without (\textbf{UnknownTokens-general}) access to the source documents, and compare it to a \textbf{baseline}, which always assumes the most common case (no \texttt{missing spaces} violation).
+We evaluate how effective \textbf{UnknownTokens} is in detecting \textit{missing spaces} violations, both with (\textbf{UnknownTokens-source}) and without (\textbf{UnknownTokens-general}) access to the source documents, and compare it to a \textbf{baseline}, which always assumes the most common case (no \textit{missing spaces} violation).
 The standard metrics precision, recall and F-score are used for evaluation.
 
 Table~\ref{eval_unknowntokens} shows the results of the evaluation. Because the amount of sentences not containing a missing spaces violation is much larger than the ones that do, several weighted metrics are provided, too:
@@ -560,7 +563,7 @@ The emerging patterns are so regular, that we use regular expressions to detect 
 UTC|^\d{4}-\d{2}-\d{2}|^[A-Z]{3,}|^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)
 \end{lstlisting}
 
-The expression has four parts, of which only one has to match to make the system classify a sentence as containing datelines: The first part matches the string ``UTC'' (Coordinated Universal Time, a common fragment in datelines), the second one numeric dates like \texttt{2014-04-13}, the third one capitalized words that are longer than 4 letters and are therefore expected not to be abbreviations (an example would be \texttt{LONDON, Feb. 4 (Xinhua)}), and the final part matches abbreviated names of months. Only ``UTC'' can occur anywhere, everything else needs to occur at the beginning of a sentence to be counted.
+The expression has four parts, of which only one has to match to make the system classify a sentence as containing datelines: The first part matches the string ``UTC'' (Coordinated Universal Time, a common fragment in datelines), the second one numeric dates like \textit{2014-04-13}, the third one capitalized words that are longer than 4 letters and are therefore expected not to be abbreviations (an example would be \textit{LONDON, Feb. 4 (Xinhua)}), and the final part matches abbreviated names of months. Only ``UTC'' can occur anywhere, everything else needs to occur at the beginning of a sentence to be counted.
 
 \subsubsection{Evaluation}
 This very simple approach was evaluated on \textit{test} and leads to good results that can be seen in Table~\ref{eval_regex}. As a baseline, we again classified all sentences with the most-frequent class: not containing a dateline violation.
@@ -743,10 +746,9 @@ Another cause of a relatively low score is that in the LQVSumm corpus, redundanc
 
 The LQVSumm corpus that we used for all of our experiments is, unfortunately, not large enough to have a wide coverage of all violations. This can be seen most prominently when trying to detect redundancy (Section~\ref{redundancy}): While the corpus itself contains 504 \textit{redundant information} violations \citep[see][]{friedrichlqvsumm}, only 173 of them could be used by us, as we needed redundancies that occured in subsequent sentences and only within the bounds of those.
 
-Apart from its size, the corpus is also sometimes annotated inconsistently or at least challenging for our purposes. In general, annotations are done on the clause level, where clauses are arbitrary substrings of the summary. As we classify and evaluate on sentences produced by the sentence splitter of Stanford CoreNLP \citep{manning-EtAl:2014:P14-5}, this introduces noise.
+Apart from its size, the corpus is also sometimes annotated inconsistently or at least challenging for our purposes. In general, annotations are done on the clause level, where clauses are arbitrary substrings of the summary. As we classify and evaluate on sentences produced by the sentence splitter of Stanford CoreNLP \citep{manning-EtAl:2014:P14-5}, this introduces noise. For our purposes, a corpus that had been segmented before annotation would be preferable.
 
-Annotations aren't done consistently throughout the corpus, and often very different violations are annotated with the same label, the most obvious example of this being shown in Section~\ref{corpus_study}. This is not automatically a weakness of the corpus itself, but rather an unfitness for our purposes.
-%TODO besser wenn vorher segmentierung (vor annotation), problem annotation vs automatic
+As can be seen in Section~\ref{s_subtypes}, the instances of \textit{other ungrammatical form} could have been divided into several types, which would help the automatic classification.
 
 %show example
 However, there's little to no alternatives available.
@@ -756,27 +758,57 @@ A legitimate criticism of our work is that our methods, experiments, and results
 %TODO what could be done better?
 
 
-\section{Conclusion} % & Future Work
+\section{Conclusion \& Future Work}
 \label{conclusion}
 % TODO What can my results be used for? What should be investigated later?
 % TODO What could possibly be needed to work on the types not looked at here? (semrel, …)
 %TODO other genres
 
-In this paper, we have presented a solid method to detect the kind of ungrammaticality that occurs in automatically generated extractive multi-document summarizations. While the results are good, they do rely on a certain type of ungrammaticality occuring often (missing spaces). Future work could concentrate on improving other grammaticality violations, so that not only the accuracy rises, but also the generality. Such a system could potentially detect ungrammaticality in a much broader domain.
+In this paper, we have presented a method to detect the kind of ungrammaticality that occurs in automatically generated extractive multi-document summarizations. While the results are good, they do rely on a certain type of ungrammaticality occuring often (missing spaces). Future work could concentrate on improving other grammaticality violations, so that not only the accuracy rises, but also the generality. Such a system could potentially detect ungrammaticality in a much broader domain.
 
 We have also shown a simple but high-performing method of detecting datelines. We believe our results are close to what a human could achieve and don't see much room for improvement here.
 
 Finally we developed a basic method of detecting redundancy. With the lowest performance of all methods in this paper, redundancy detection is requiring much more work. While we based our approach only on the two subsequent sentences on which redundancy was to be tested, future work could include information available in the context of these sentences or even, as we did in \textbf{UnknownTokens-source}, information from the source documents.
 
-We only looked at a part of the violation types in \cite{friedrichlqvsumm}. Methods for detecting the last clause-level violation (no semantic relation), as well as the entity- and discourse-level violations have yet to be developed.
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|c|c|c|}
+  \hline
+   & Precision & Recall & F-Score\\
+  \hline
+  Ungrammaticality & 72.8 & 49.1 & 58.6\\
+  \hline
+  Datelines & 86.0 & 89.7 & 87.8\\
+  \hline
+  Redundancy & 58.0 & 28.2 & 37.0\\
+  \hline
+  \end{tabular}
+\end{center}
+\label{eval_best}
+\caption{The three best methods for detecting Ungrammaticality (\textit{other ungrammatical form} + \textit{incomplete sentence}), Datelines (\textit{inclusion of datelines}) and Redundancy (\textit{redundant information})}
+\end{table}
 
-For the entity-level violations, one could use the output of a coreference resolution tool such as BART \citep{versley2008bart} or the Stanford coreference resolution system \citep{lee2011stanford} to infer coreferences between entities in the summaries as well as the source documents and compare the originating coreference chains.
+The best methods for each violation can be seen in Table~\ref{eval_best}.
 
-Along with this paper, the authors will provide a toolchain that can be used to annotate given documents with the methods described in here.
+Along with this paper, the authors will publish a toolchain that can be used to annotate given documents with the best methods described in here.
 
-%Annemarie Friedrich
-%Manfred Pinkal, Alexis Palmer
-%Lukas Burk, Diana Asimi(?)
+We only looked at a part of the violation types in \cite{friedrichlqvsumm}. Methods for detecting the last clause-level violation (no semantic relation), as well as the entity- and discourse-level violations have yet to be developed:
+
+For the pronoun violations (\textit{pronoun with missing antecedent} and \textit{pronoun with misleading antecendent}), one could use the output of a coreference resolution tool such as BART \citep{versley2008bart} or the Stanford coreference resolution system \citep{lee2011stanford} to infer coreferences between entities in the summaries as well as the source documents and compare the originating coreference chains.
+
+Finding \textit{acronym without explanation} seems to have a straightforward two-step solution: For every sequence of all-uppercase letters, find out whether those are an acronym that is not in a list of well-known acronyms. If it is, look for the expanded form of the acronym near its first occurence.
+
+It is to be seen whether this method works as well as the author believes.
+
+Going after the mention (\textit{first mention without explanation} and \textit{subsequent mention with explanation}) and noun phrase violations (\textit{definite noun phrase without reference to previous mention} and \textit{indefinite noun phrase with reference to previous mention}) would at least require a named entity recognition system, probably paired with at least some rudimentary form of semantic or discourse parsing.
+
+\textit{no semantic relatedness} also suggests an approach using semantic parsing, but usable results might even be achieved by some method based on the distance between content words in WordNet \citep{fellbaum2005wordnet}.
+
+Finally, the straightforward solution for detecting the \textit{no discourse relation} violation seems to be parsing the two sentences \textit{without} the discourse connective using a discourse parser, and then comparing the derived discourse relation with the relation commonly linked with the connective.
+
+Future work could also include annotating a corpus after segmenting it, and using the adapted violation type system developed by us for that task.
+
+And finally, since some of the characteristics of the violations our methods were tailored to are specific to the domain and corpus, it is yet to be seen how well our system performs on other corpora, other data sets and other domains.
 
 \newpage
 \bibliographystyle{apalike}

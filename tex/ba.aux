@@ -1,4 +1,7 @@
 \relax 
+\citation{friedrichlqvsumm}
+\citation{R}
+\citation{ggplot2}
 \citation{nenkova2011foundations}
 \citation{friedrichlqvsumm}
 \citation{owczarzak2011overview}
@@ -28,6 +31,7 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Violation types}{3}}
 \citation{valeeva}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Subtype system}{4}}
+\newlabel{s_subtypes}{{3.2}{4}}
 \citation{gigaword}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Experiments}{5}}
 \newlabel{experiments}{{4}{5}}
@@ -39,7 +43,6 @@
 \citation{stanfordNER}
 \citation{wagner2007comparative}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Evaluation of UnknownTokens}{7}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.3}The RandomForest-UT method}{7}}
 \newlabel{RF1}{8}
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Evaluation of \textbf  {UnknownTokens} on \textit  {dev-2}, in percent. \textbf  {UT-wordnet+heur+ner+wiki} is equivalent to \textbf  {UnknownTokens-general}. \textbf  {wn} = Wordnet-based dictionary, \textbf  {heur} = title case heuristics, \textbf  {ner} = Stanford NER, \textbf  {wiki} = Wikipedia entry check}}{8}}
 \newlabel{eval_unknowntokens}{{1}{8}}
@@ -52,10 +55,11 @@
 \citation{ace}
 \citation{copestake2002implementing}
 \citation{wagner2007comparative}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Evaluation of \textbf  {RandomForest-UT} and \textbf  {RandomForest-UT+parser} on \textit  {test}, in percent, based on the class of ungrammatical sentences. As Baseline, we classified every sentence with the most-frequent class, ``not ungrammatical''.}}{9}}
-\newlabel{eval_randomforest}{{2}{9}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.3}The RandomForest-UT method}{9}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4}The RandomForest-UT+parser method}{9}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.5}Evaluation of RandomForest}{9}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Evaluation of \textbf  {RandomForest-UT} and \textbf  {RandomForest-UT+parser} on \textit  {test}, in percent, based on the class of ungrammatical sentences. As Baseline, we classified every sentence with the most-frequent class, ``not ungrammatical''.}}{10}}
+\newlabel{eval_randomforest}{{2}{10}}
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Ablation study of \textbf  {RandomForest-UT+parser}. The numbers denote the decrease of the F-Score if that feature were to be taken out.}}{10}}
 \newlabel{ablation_study_randomforest}{{3}{10}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Datelines}{10}}
@@ -83,11 +87,14 @@
 \citation{friedrichlqvsumm}
 \citation{manning-EtAl:2014:P14-5}
 \citation{owczarzak2011overview}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{15}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion \& Future Work}{15}}
 \newlabel{conclusion}{{6}{15}}
 \citation{friedrichlqvsumm}
 \citation{versley2008bart}
 \citation{lee2011stanford}
+\citation{fellbaum2005wordnet}
+\newlabel{eval_best}{{6}{16}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces The three best methods for detecting Ungrammaticality (\textit  {other ungrammatical form} + \textit  {incomplete sentence}), Datelines (\textit  {inclusion of datelines}) and Redundancy (\textit  {redundant information})}}{16}}
 \bibstyle{apalike}
 \bibdata{referenzen}
 \bibcite{bender2004arboretum}{{1}{2004}{{Bender et~al.}}{{}}}
@@ -113,10 +120,12 @@
 \bibcite{ace}{{21}{2011}{{Packart}}{{}}}
 \bibcite{papineni2002bleu}{{22}{2002}{{Papineni et~al.}}{{}}}
 \bibcite{porter1980algorithm}{{23}{1980}{{Porter}}{{}}}
-\bibcite{schneider1998recognizing}{{24}{1998}{{Schneider and McCoy}}{{}}}
-\bibcite{stolcke2002srilm}{{25}{2002}{{Stolcke et~al.}}{{}}}
-\bibcite{sun2007detecting}{{26}{2007}{{Sun et~al.}}{{}}}
-\bibcite{vadlapudi2010automated}{{27}{2010}{{Vadlapudi and Katragadda}}{{}}}
-\bibcite{valeeva}{{28}{2013}{{Valeeva}}{{}}}
-\bibcite{versley2008bart}{{29}{2008}{{Versley et~al.}}{{}}}
-\bibcite{wagner2007comparative}{{30}{2007}{{Wagner et~al.}}{{}}}
+\bibcite{R}{{24}{2013}{{R Core Team}}{{}}}
+\bibcite{schneider1998recognizing}{{25}{1998}{{Schneider and McCoy}}{{}}}
+\bibcite{stolcke2002srilm}{{26}{2002}{{Stolcke et~al.}}{{}}}
+\bibcite{sun2007detecting}{{27}{2007}{{Sun et~al.}}{{}}}
+\bibcite{vadlapudi2010automated}{{28}{2010}{{Vadlapudi and Katragadda}}{{}}}
+\bibcite{valeeva}{{29}{2013}{{Valeeva}}{{}}}
+\bibcite{versley2008bart}{{30}{2008}{{Versley et~al.}}{{}}}
+\bibcite{wagner2007comparative}{{31}{2007}{{Wagner et~al.}}{{}}}
+\bibcite{ggplot2}{{32}{2009}{{Wickham}}{{}}}
