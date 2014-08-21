@@ -341,7 +341,7 @@ First, an initial list of words is created from a large text corpus (\textbf{Unk
 
 Because this will not include words for named entities yet, we only consider a token to be an unknown token, if it is not tagged as a Named Entity by a Named Entity Recognizer (\textbf{UnknownTokens-ner}). We employ the Stanford Named Entity Recognizer \citep{stanfordNER}, which is a widely used, state-of-the-art NER that comes with a model for the English language.
 
-In order to improve upon the NER and further increase recall, we use two simple heuristics (\textbf{UnknownTokens-heur}): Firstly, we assume that words that start with a capital letter and are only followed by lower case letters are named entities and therefore no unknown tokens. Finally, we automatically check whether an unknown token has an entry on the online encyclopedia Wikipedia (\textbf{UnknownTokens-wiki}).
+In order to improve upon the NER and further increase recall, we use two simple heuristics (\textbf{UnknownTokens-heur}): Firstly, we assume that words that start with a capital letter and are only followed by lower case letters are named entities and therefore no unknown tokens and we throw out words containing hypens. Finally, we automatically check whether an unknown token has an entry on the online encyclopedia Wikipedia (\textbf{UnknownTokens-wiki}).
 
 We automatically label any tokens that are neither on our list of known tokens from GigaWord, nor tagged as a named entity as ``unknown'' and tag the sentence as containing unknown tokens. The combined method \textbf{UnknownTokens-gw+heur+ner+wiki} is what we call \textbf{UnknownTokens-general}.
 
@@ -356,7 +356,6 @@ The micro-average method consists of summing up the individual values from the c
 Macro-averages are just arithmetic means of precision and recall. For both micro- and macro-average, the new F-score is calculated from the new scores.
 
 Both \textbf{UnknownTokens-general} and \textbf{UnknownTokens-source} improve vastly over the baseline, but it is clear, that if the source text is available, it should be used to infer known words.
-
 
 %%%BEGIN BACKUP WITHOUT WEIGHTED MEAN:
 \begin{sidewaystable}
@@ -518,6 +517,8 @@ We performed 10-fold cross-validation with both \textbf{RandomForest-UT} and \te
 
 An ablation study can be seen in Table~\ref{ablation_study_randomforest}. No number being very high indicates that we have some redundancy of information in the features here.
 %TODO general: explain why numbers so low. also explain why UT-source not perfect.
+%TODO general: include global evaluation on entire data set
+%TODO general: copy stuff from defense here
 \begin{table}
 \begin{center}
 \begin{tabular}{c|c}
@@ -541,15 +542,19 @@ An ablation study can be seen in Table~\ref{ablation_study_randomforest}. No num
 When evaluating the emerging decision tree on general ungrammaticality using the same method as in Section~\ref{S_eval_randomforest}, it yielded worse results than \textbf{RandomForest-UT} alone. We therefore inspected whether it could instead be used to find instances of the subtype \textit{unparsable}. This lead to a precision of 86.6\%, a recall of 87.9\%, and an F-Score of 86.3\%. A total of 87.9\% of the instances was classified correctly.
 
 \subsection{Datelines}
-%TODO more examples (see defense.tex).
-Source texts from news articles, like the ones in the TAC dataset, often contain datelines, which sometimes make it into the generated summary. While in the context of the article datelines made sense (often displayed smaller or otherwise visually distinctive), they are not needed, distracting and confusing in the summaries:
+\label{s_datelines}
+Source texts from news articles, like the ones in the TAC dataset, often contain datelines, which sometimes make it into the generated summary. While in the context of the article datelines made sense (often displayed smaller or otherwise visually distinctive), they are not needed, distracting and confusing in the summaries.
 
-\textit{\textbf{BLACKSBURG, Virginia 2007-04-16 18:34: 44 UTC} A gunman opened fire in a dorm and classroom at Virginia Tech on Monday, killing at least 30 people in the deadliest shooting rampage in U.S. history.}
+Datelines take many different forms, with some including a location. There is also a variety of appearing time formats:
 
+\quad\textit{\textbf{BLACKSBURG, Virginia 2007-04-16 18:34: 44 UTC} A gunman opened fire in a dorm and classroom at Virginia Tech on Monday, killing at least 30 people in the deadliest shooting rampage in U.S. history.}
 
+\quad\textit{\textbf{BERLIN, May 13( Xinhua)} The German government announced on Tuesday that it is to provide 500, 000 euros( around 770, 000 U.S. dollars) in aid for earthquake victims in Sichuan Province of China.}
 
-\subsubsection{Method}
-The emerging patterns are so regular, that we use regular expressions to detect them. A few iterations of the regex were done, but so far the highest results were achieved using the regular expression
+\quad\textit{\textbf{00 a.m.}People are panicking.}
+
+\subsubsection{The Regex Method}
+The emerging patterns are so regular, that we use regular expressions to detect them. A few iterations of the expression were created, but so far the highest results were achieved using the regular expression
 
 \begin{lstlisting}
 UTC|^\d{4}-\d{2}-\d{2}|^[A-Z]{3,}|^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)
@@ -558,9 +563,26 @@ UTC|^\d{4}-\d{2}-\d{2}|^[A-Z]{3,}|^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|
 The expression has four parts, of which only one has to match to make the system classify a sentence as containing datelines: The first part matches the string ``UTC'' (Coordinated Universal Time, a common fragment in datelines), the second one numeric dates like \texttt{2014-04-13}, the third one capitalized words that are longer than 4 letters and are therefore expected not to be abbreviations (an example would be \texttt{LONDON, Feb. 4 (Xinhua)}), and the final part matches abbreviated names of months. Only ``UTC'' can occur anywhere, everything else needs to occur at the beginning of a sentence to be counted.
 
 \subsubsection{Evaluation}
-This very simple approach was evaluated on \textit{dev-2} and leads to good results: The F-score of the class of dateline-containing sentences is 90.7\% (precision: 90.3\%, recall: 91.1\%). When looking into the inaccurately detected instances, the inconsistencies of the LQVSumm corpus make up most of the misses:
+This very simple approach was evaluated on \textit{test} and leads to good results that can be seen in Table~\ref{eval_regex}. As a baseline, we again classified all sentences with the most-frequent class: not containing a dateline violation.
 
-%PRF = 86.0\% & 89.7\% & 87.8\%\\ %TODO on test-345
+\begin{table}
+\begin{center}
+\begin{tabular}{r|c|c|c|c|}
+  & \textbf{Precision} & \textbf{Recall} & \textbf{F-Score} & \textbf{Accuracy}\\
+  \hline
+  Baseline & - & 0 & - & 89.5\\
+  \hline
+  Regex & 86.0 & 89.7 & 87.8 & 97.4\\
+  \hline
+  \end{tabular}
+\end{center}
+\caption{Evaluation of \textbf{Regex} on \textit{test}.}
+\label{eval_regex}
+\end{table}
+
+%dev2: 90.7\% (precision: 90.3\%, recall: 91.1\%)
+
+When looking into the inaccurately detected instances, the inconsistencies of the LQVSumm corpus make up most of the misses:
 
 \textit{IVORY TUSKS}
 
@@ -575,11 +597,10 @@ which our system doesn't match.
 % token overlap
 % threshold auf dev-Set perfekt machen, auf test-set testen
 % gegen Ende: wordnet most-frequent-sense
-%TODO other experiments?
 
 Automatic summaries constructed from multiple source texts on the same topic often suffer from redundancy, as sentences that contain the same or largely the same information are occasionally included in the summary. As a consequence, reading fluency is impaired.
 
-While --- in contrast to many other linguistic quality violations --- this also has an impact on traditional evaluation scores for automatic summarization systems (because the information density is lower than it could be), it is also considered to be a problem of our domain.
+While --- in contrast to many other linguistic quality violations --- this also has an impact on traditional evaluation scores for automatic summarization systems (because the content coverage will be lower than it could be), it is also considered to be a problem of our domain.
 
 In the LQVSumm corpus, different degrees of redundant sentence pairs occur. Some sentence pairs annotated as redundant contain similar information, but using completely different phrasing and focus:
 
@@ -608,7 +629,7 @@ We are seeking to find all of these sentences, but concentrate on the latter two
 
 Our method (\textbf{Unigrams}) consists of a simple unigram overlap score, which we found to outperform more sophisticated approaches:
 
-First, we remove all non-alphanumeric characters from both sentences and split them into words. We then treat the words as a set and divide the cardinality of the intersection of each sentence's set by the number of words in the smaller sentence. A given threshold is then used to classify instances.
+First, we remove all non-alphanumeric characters from both sentences and split them into words. We then treat the words as a set and divide the cardinality of the intersection of each sentence's set by the number of possible overlaps, which will be the number of unique tokens in the smaller sentence. A given threshold is then used to classify instances.
 
 A number of other methods are also implemented: \textbf{Bigrams} is a variation of the \textbf{Unigrams} method which uses bigrams instead of unigrams. \textbf{Combined} is using a score that the mean of the \textbf{Unigrams} and \textbf{Bigrams} scores.
 
@@ -641,6 +662,16 @@ As is to be expected, higher thresholds correlate with higher precision and lowe
 We therefore choose a threshold of $0.4$ for the \textbf{Bigrams} and \textbf{Combined}, and one of $0.5$ for \textbf{Unigrams}, because there appear to be local maxima at that point with still some amount of recall.
 
 The results can be seen in Table~\ref{eval_redundancy}. Evidently, the \textbf{Unigrams} method outperforms \textbf{Levenshtein} and the \textbf{Baseline} as well as the other n-gram methods.
+
+We unsuccessfully tried to increase our performance by a few means:
+
+\begin{itemize}
+\item stemming the words with the Porter Stemming Algorithm \citep{porter1980algorithm} from NLTK \citep{bird2009natural}
+\item part-of-speech-tagging the tokens with NLTK and only counting overlaps that include a verb (with the motivation of ruling out noun-based false positives)
+\item looking up the first synset of each token in WordNet \citep{fellbaum2005wordnet}, and building the intersections between the sets by considering two tokens to be the same if the first word is included in the second one's synset.
+\end{itemize}
+
+Neither of these methods had any positive effect on our results.
 
 \begin{table}
 \begin{center}
@@ -683,16 +714,36 @@ Detecting linguistic quality violations automatically is not a trivial task. It 
 
 Sometimes, however, the easier methods outperformed the more sophisticated approaches. This can be the case because...
 
-%TODO einzelne Experimente..
+In theory, \textbf{UnknownTokens-source} should return perfect results, with 100\% recall, precision and F-score. So why doesn't it? Some of this can probably be attributed to annotation mistakes during the annotation process of the subtypes. Manual inspection of the false positives showed that as the datelines (Section~\ref{s_datelines}) are not a part of the text of the source document (which we took the tokens from), geographical names only present in the datelines were wrongly assumed to be unknown tokens. %Some tokens have been considered to be correct, but don't appear in the corpus. Also, some tokens might exist in the corpus and still be wrong in context.%TODO meeh
 
-%TODO mehr KRITIK!!
-%TODO: no.
-The corpus we used was not an optimal choice either.
+\textbf{UnknownTokens-general}'s precision is weakened by a few words such as ``predisposes'' that were neither found in our Gigaword tokens, nor detected to be a named entity by either of our methods. The reader should keep in mind that because we are only evaluating this on \textit{dev-2} (as the subtypes are only annotated there) a couple of words can make a difference.
 
-The LQVSumm corpus that we used for all of our experiments is, unfortunately, not large enough to have a wide coverage of all violations. This can be seen most prominently when trying to detect redundancy (Section~\ref{redundancy}).
+We believe our method of detecting datelines is close to the optimum achievable with a regular expression based approach without accidentally detecting times, time ranges or locations that are mentioned in the text as datelines.
+When looking into the false positives, our decision to match abbreviations of month names leads to some sentences being classified as containing a dateline which actually do not contain one:
 
-%TODO inappropriate->challenges
-Apart from its size, the corpus is also often annotated inconsistently or at least inappropriate for our purposes. In general, annotations are done on the clause level, where clauses are arbitrary substrings of the summary. As we classify and evaluate on sentences produced by Stanford CoreNLP \citep{manning-EtAl:2014:P14-5}, this introduces noise.
+\quad\textit{\textbf{Mar}uca-Kovac said he phoned her at about 1 p.m. Wednesday, telling her he had left}
+
+Other false positives could have been annotated as containing datelines in the corpus, but weren't:
+
+\quad\textit{\textbf{Nov}ember 17 itself fired a rocket against the US embassy in 1996}
+
+Our biggest loss in terms of false negatives is that we don't detect datelines of the form:
+
+\quad\textit{14( Xinhua)}
+
+Out of all of our best methods, our \textbf{Unigrams} method for detection of redundancies achieves the lowest scores. Part of that can be attributed to the simplicity of our approach: A token based method can only get so far when a subsequent sentence contains paraphrased content from the previous sentence.
+
+\quad\textit{\textbf{Defense Secretary Robert Gates} named an independent review panel \textbf{Friday} to investigate what he called an unacceptable situation'' in outpatient care at \textbf{Walter Reed Army Medical Center}, \textbf{and he} said that some soldiers most directly involved'' in the problems have been removed from their positions.}
+
+\quad\textit{\textbf{Defense Secretary Robert} M. \textbf{Gates} said \textbf{Friday} that he would move swiftly to improve conditions for wounded soldiers being treated as outpatients at \textbf{Walter Reed Army Medical Center}, \textbf{and he} warned that senior officials would be held accountable for the poor conditions.}
+
+While this example has some token overlap, the paraphrased content fails to be noticed by our system.
+
+Another cause of a relatively low score is that in the LQVSumm corpus, redundancy annotations can be done on a smaller scale than what is classified with using our method. For example, a repeated phrase within two long sentences could be marked in the corpus, but our or similar approaches will either not find these cases, or classify too much.
+
+The LQVSumm corpus that we used for all of our experiments is, unfortunately, not large enough to have a wide coverage of all violations. This can be seen most prominently when trying to detect redundancy (Section~\ref{redundancy}): While the corpus itself contains 504 \textit{redundant information} violations \citep[see][]{friedrichlqvsumm}, only 173 of them could be used by us, as we needed redundancies that occured in subsequent sentences and only within the bounds of those.
+
+Apart from its size, the corpus is also sometimes annotated inconsistently or at least challenging for our purposes. In general, annotations are done on the clause level, where clauses are arbitrary substrings of the summary. As we classify and evaluate on sentences produced by the sentence splitter of Stanford CoreNLP \citep{manning-EtAl:2014:P14-5}, this introduces noise.
 
 Annotations aren't done consistently throughout the corpus, and often very different violations are annotated with the same label, the most obvious example of this being shown in Section~\ref{corpus_study}. This is not automatically a weakness of the corpus itself, but rather an unfitness for our purposes.
 %TODO besser wenn vorher segmentierung (vor annotation), problem annotation vs automatic

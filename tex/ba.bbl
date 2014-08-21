@@ -5,6 +5,11 @@ Bender, E.~M., Flickinger, D., Oepen, S., Walsh, A., and Baldwin, T. (2004).
 \newblock Arboretum: Using a precision grammar for grammar checking in call.
 \newblock In {\em InSTIL/ICALL Symposium 2004}.
 
+\bibitem[Bird et~al., 2009]{bird2009natural}
+Bird, S., Klein, E., and Loper, E. (2009).
+\newblock {\em Natural language processing with Python}.
+\newblock " O'Reilly Media, Inc.".
+
 \bibitem[Breiman, 2001]{breiman2001random}
 Breiman, L. (2001).
 \newblock Random forests.
@@ -27,6 +32,10 @@ Christensen, J., Mausam, Soderland, S., and Etzioni, O. (2013).
 Copestake, A. (2002).
 \newblock {\em Implementing typed feature structure grammars}, volume 110.
 \newblock CSLI publications Stanford.
+
+\bibitem[Fellbaum, 2005]{fellbaum2005wordnet}
+Fellbaum, C. (2005).
+\newblock Wordnet and wordnets.
 
 \bibitem[Finkel et~al., 2005]{stanfordNER}
 Finkel, J.~R., Grenager, T., and Manning, C. (2005).
@@ -121,6 +130,12 @@ Papineni, K., Roukos, S., Ward, T., and Zhu, W.-J. (2002).
 \newblock In {\em Proceedings of the 40th annual meeting on association for
   computational linguistics}, pages 311--318. Association for Computational
   Linguistics.
+
+\bibitem[Porter, 1980]{porter1980algorithm}
+Porter, M.~F. (1980).
+\newblock An algorithm for suffix stripping.
+\newblock {\em Program: electronic library and information systems},
+  14(3):130--137.
 
 \bibitem[Schneider and McCoy, 1998]{schneider1998recognizing}
 Schneider, D. and McCoy, K.~F. (1998).

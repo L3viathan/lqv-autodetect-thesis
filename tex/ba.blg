@@ -5,48 +5,49 @@ The style file: apalike.bst
 Database file #1: referenzen.bib
 Warning--entry type for "valeeva" isn't style-file defined
 --line 1 of file referenzen.bib
+Warning--empty journal in fellbaum2005wordnet
 Warning--empty journal in friedrichlqvsumm
 Warning--can't use both volume and number fields in sun2007detecting
 Warning--empty booktitle in wagner2007comparative
-You've used 27 entries,
+You've used 30 entries,
             1935 wiz_defined-function locations,
-            626 strings with 8989 characters,
-and the built_in function-call counts, 11687 in all, are:
-= -- 1150
-> -- 483
-< -- 30
-+ -- 174
-- -- 164
-* -- 898
-:= -- 1945
-add.period$ -- 88
-call.type$ -- 27
-change.case$ -- 213
-chr.to.int$ -- 27
-cite$ -- 30
-duplicate$ -- 523
-empty$ -- 833
-format.name$ -- 202
-if$ -- 2391
+            641 strings with 9314 characters,
+and the built_in function-call counts, 12659 in all, are:
+= -- 1242
+> -- 515
+< -- 32
++ -- 186
+- -- 174
+* -- 974
+:= -- 2120
+add.period$ -- 96
+call.type$ -- 30
+change.case$ -- 232
+chr.to.int$ -- 30
+cite$ -- 34
+duplicate$ -- 564
+empty$ -- 906
+format.name$ -- 215
+if$ -- 2576
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 27
-newline$ -- 137
-num.names$ -- 81
-pop$ -- 260
+missing$ -- 31
+newline$ -- 151
+num.names$ -- 90
+pop$ -- 281
 preamble$ -- 1
-purify$ -- 215
+purify$ -- 235
 quote$ -- 0
-skip$ -- 375
+skip$ -- 406
 stack$ -- 0
-substring$ -- 675
-swap$ -- 116
+substring$ -- 738
+swap$ -- 118
 text.length$ -- 16
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 158
-warning$ -- 3
-while$ -- 92
+type$ -- 174
+warning$ -- 4
+while$ -- 100
 width$ -- 0
-write$ -- 352
-(There were 4 warnings)
+write$ -- 387
+(There were 5 warnings)
