@@ -12,6 +12,8 @@
 % Math symbols not defined in the usual package, e.g. arrows that are crossed.
 \usepackage{amssymb}
 
+\usepackage{pbox}
+
 % Arrows with text / superscript
 \usepackage{amsmath}
 % Adjust margin of paper.
@@ -20,6 +22,11 @@
 
 % Zeilenabstand 1.25 %
 \linespread{1.2}
+
+\newcommand*{\SignatureAndDate}[2]{%
+    \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
+    \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{#2}%
+}%
 
 % Example Environments
 \usepackage{amsthm}
@@ -96,11 +103,36 @@
 \input{title.tex}
 
 \thispagestyle{empty}
+\section*{Erklärung}
+Hiermit versichere ich, dass ich die vorliegende Arbeit selbstständig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt habe, dass alle Stellen der Arbeit, die wörtlich oder sinngemäß aus anderen Quellen übernommen wurden, als solche kenntlich gemacht und dass die Arbeit in gleicher oder ähnlicher Form noch keiner Prüfungsbehörde vorgelegt wurde.
+\vspace{2cm}
+
+\SignatureAndDate{Ort, Datum}{Unterschrift}
+
+\vspace{5cm}
+
+\section*{Declaration}
+
+I hereby confirm that the thesis presented here is my own work, with all assistance acknowledged.
+\vspace{2cm}
+
+\SignatureAndDate{Place, Date}{Signature}
+\newpage
+
+\thispagestyle{empty}
 \begin{abstract}
 \setlength{\parskip}{2ex plus 0.5ex minus 0.2ex}
 \textbf{Abstract} \quad ...Abstract here...
 
 \end{abstract}
+
+\section*{Acknowledgements}
+%TODO
+%Anne
+%Pinkal
+%Alexis
+%Marina
+%Jemus
 \newpage
 
 % Table of contents
@@ -131,7 +163,6 @@
 \maketableofcontents
 %general TODOs:
 %explain tables and figures more
-% - statt _?
 %was auf welchen sets. dev-sets in corpus study erklären
 %liste von collection ids in set in appendix
 %dev-1, dev-2, testset
@@ -157,7 +188,7 @@ We are only concerned with extractive, multi-document summarization.
 
 Evaluation of automatic summarization systems has largely been done on content coverage, which is why generated summaries often lack linguistic quality \citep{nenkova2011foundations}, meaning that they contain many errors of various kinds. A new focus on linguistic quality (LQ) evaluation would presumably help decrease these issues and produce overall better summarization systems.
 
-As a first step in this direction, \cite{friedrichlqvsumm} created the \textit{LQVSumm} corpus, which consists of multi-document summaries from the TAC 2011 shared task on Guided Summarization \citep{owczarzak2011overview}, annotated manually with LQ violations on entity, clause and discourse level.
+As a first step in this direction, \cite{friedrichlqvsumm} created the \textit{LQVSumm} corpus, which consists of multi-document summaries from the TAC 2011 shared task on Guided Summarization \citep{owczarzak2011overview}, annotated manually with LQ violations on entity, clause and discourse level. The corpus also includes annotations on 50 summaries produced by G-Flow \citep{gflow}, which we disregard, because the linguistic quality is much higher than in the rest of the corpus, along with the fact that the size of the annotated G-Flow summaries is much smaller.
 
 Manual annotation is an expensive and time-consuming process, for which an automatic system could be an alternative. Our work deals with creating such a system that manages at least part of the annotation automatically. We develop and evaluate our system on top of the \textit{LQVSumm} corpus. We also limit ourselves to the clause-level violations listed in \cite{friedrichlqvsumm}, except for \texttt{no\_semantic\_relation}.
 
@@ -186,12 +217,50 @@ There also has been work in the area of assessing grammaticality of automaticall
 
 The BLEU score \citep{papineni2002bleu} is a method for evaluating the effectiveness of a machine translation system, which uses a number of (human) reference translations to score an automatic translation. They showed that their score correlates highly with human evaluation, which has lead to the BLEU score having become the standard evaluation metric for machine translation.
 
-\section{LQVSumm \& Corpus Study}
+\section{LQVSumm}
 \label{corpus_study}
 % describe the corpus and its flaws
-%TODO more reasoning?
+%TODO more reasoning? of subtype-shit
 %TODO describe the corpus itself (like defense)
-%TODO typen erklären, die ich benutze
+The LQVSumm corpus consists of annotations on summaries produced by systems participating in the TAC 2011 Guided Summarization Task \citep{owczarzak2011overview}.
+
+We split the corpus into three parts, while making sure that topics weren't spread across sets: \textit{dev-1} and \textit{dev-2} are development sets, \textit{test} is our test set.
+\textit{dev-1} contains 351 summaries, \textit{dev-2} contains 352, that is 8 topics per development set and about 20\% of the corpus each.
+The test set \textit{test} contains the other 60\%, making up 1232 summaries and 28 topics.
+
+The annotation, our experiments and the evaluation are all done on sentence basis. We use Stanford CoreNLP \citep{manning-EtAl:2014:P14-5} for sentence splitting. This is necessary to have classifiable entities, but introduces inaccuracies, because LQVSumm is annotated on clause level, clause meaning an arbitrary substring of a summary, which is often a sentence, but also sometimes spanning over sentence bounds.
+
+\subsection{Violation types}
+
+Some of these annotations were done on the \textit{entity level}, others on the \textit{clause level}. Our work focusses on four clause-level violations.
+
+When a clause is annotated with an \textit{incomplete sentence} violation (INCOMPLSN), the sentence was cut off, most likely due to a summarization system trying to fit as much in the summary as the limit for the task allowed, or due to sentence compression. An example of such a clause would be:
+
+\quad\textit{Neighbors and family members saw no}
+
+Annotations of the violation type \textit{inclusion of datelines} (INCLDATE) mark timestamps that have ended up in the summary. These fragments are the result of the summaries' domain; news articles. Datelines appear in a couple of different variations, most of the time at the beginning of a sentence:
+
+\quad\textit{MADRID, Feb. 15 (Xinhua) Rabei Ousmane Sayed Ahmed,}
+
+This example also shows that multiple violations can of course happen in the same sentence, as it is also tagged as containing an \textit{incomplete sentence} violation.
+
+The violation type \textit{other ungrammatical form} is used for any other ungrammaticality happening in a single phrase. Therefore, we find the biggest variety of violations in here:
+
+\quad\textit{Valley Veterinary Bismarck, North Dakota, a veterinarian, Carlson, has been worried that pet owners to the Menu Foods on its web site.}
+
+\quad\textit{A Boeing 737-400 plane with 102 people on board crashed into amountain in Indonesia's West Sulawesi province on Monday, killingat least 90 people.}
+
+\quad\textit{//www.menufoods.com/recall -- early Saturday.}
+
+The remaining three violation types are done on multiple phrases. A \textit{redundant information} violation (REDUNINF) means two phrases share a lot or all of their information. There are instances of this violation where the two phrases are exactly the same, and others where the information is rephrased in the second sentence:
+
+\quad\textit{Representatives from the commercial fishing industry, environmental groups and government regulators are discussing ways to strengthen information sharing and cooperation among regional organizations to track and manage tuna stocks.}
+
+\quad\textit{Representatives, including the commercial fishing industry, government regulators and environmental groups, plan to discuss ways to strengthen information sharing and cooperation among regional organizations to better manage tuna stock and adopt an action plan, the Japanese Fisheries Agency said in a statement.}
+
+Because the instance counts for the last remaining violation types (\textit{no semantic relatedness} and \textit{no discourse relation}) were so low, they were disregarded and we didn't try to a develop methods to detect them.
+
+\subsection{Subtype system}
 
 As a first step, we inspect the corpus. We find that the type system of the LQVSumm corpus \citep{valeeva} is not detailed enough for our purposes and has a few shortcomings: Especially under the label of \texttt{other\_ungrammatical\_form} many different types of errors are combined. For this reason, we define a number of subtypes for this violation:
 
@@ -244,8 +313,6 @@ As a first step, we inspect the corpus. We find that the type system of the LQVS
 
 \end{description}
 
-The corpus was split into five parts (\textit{dev-1} through \textit{dev-2}), each containing 8 topics, so that e.g. \textit{dev-1} contains topics D1101 through D1108.
-
 After manually counting and investigating these subtypes on \textit{dev-1} we then mark these types in \textit{dev-2} for every sentence that is tagged as \texttt{other\_ungrammatical\_form} in the corpus. We allow sentences to have multiple subtypes and also annotate \texttt{incomplete\_sentence} violations with additional (sub)types, if applicable. The frequency distribution of the subtypes in \textit{dev-2} can be seen in Figure~\ref{subtypes}.
 
 \begin{figure}
@@ -260,26 +327,26 @@ After manually counting and investigating these subtypes on \textit{dev-1} we th
 \label{experiments}
 % All experiments, intermixed with small discussion segments
 %TODO more intro
-We conduct a number of experiments to find reliable ways to detect different kinds of ungrammaticality. The annotation, our experiments and the evaluation are all done on sentence basis. We use Stanford CoreNLP \citep{manning-EtAl:2014:P14-5} for sentence splitting.
+We conduct a number of experiments to find reliable ways to detect different kinds of linguistic quality violations. If possible, we would like to eventually be able to reproduce the annotations of our types on the LQVSumm corpus as well as annotate violations in other corpora.
 
 \subsection{Detecting Ungrammaticality}
 \label{sec_unknowntokens}
 Perhaps the most noticeable result is the large portion of \textit{missing spaces} violations, meaning clauses that include tokens which aren't correct words. Almost all of these cases come from a missing space between two words forming tokens such as \texttt{reportsreaching} or \texttt{Wenchuancounty}. As there is such a large amount of this type, finding a reliable detection method for this subtype would significantly boost detection of ungrammaticality in general.
 
 \subsubsection{The UnknownTokens method}
-We call our straightforward approach to identifying missing spaces \textbf{UnknownTokens}: Tagging a sentence as containing a \textit{missing spaces} ungrammaticality if and only if there is a token in the sentence that isn't a ``known'' token, i.e. one that doesn't exist in a list of known words. In our setting, we can easily deduce such a list from the source documents of the automatic summarization process. If the source document is available and used as a base for our vocabulary, we call that approach \textbf{UnknownTokens\textsubscript{source}}.
+We call our straightforward approach to identifying missing spaces \textbf{UnknownTokens}: Tagging a sentence as containing a \textit{missing spaces} ungrammaticality if and only if there is a token in the sentence that isn't a ``known'' token, i.e. one that doesn't exist in a list of known words. In our setting, we can easily deduce such a list from the source documents of the automatic summarization process. If the source document is available and used as a base for our vocabulary, we call that approach \textbf{UnknownTokens-source}.
 
 In case the original documents aren't available or this method should be used in a different setting, we also investigate how to adapt our approach to that. This approach has a few steps, which we will all evaluate individually:
-First, an initial list of words is created from a large text corpus (\textbf{UnknownTokens\textsubscript{gw}}); we use the first 20\% of the AFE part of the gigaword corpus \citep{gigaword}. If the corpus is large and general enough, this will probably cover a large vocabulary.
+First, an initial list of words is created from a large text corpus (\textbf{UnknownTokens-gw}); we use the first 20\% of the AFE part of the gigaword corpus \citep{gigaword}. If the corpus is large and general enough, this will probably cover a large vocabulary.
 
-Because this will not include words for named entities yet, we only consider a token to be an unknown token, if it is not tagged as a Named Entity by a Named Entity Recognizer (\textbf{UnknownTokens\textsubscript{ner}}). We employ the Stanford Named Entity Recognizer \citep{stanfordNER}, which is a widely used, state-of-the-art NER that comes with a model for the English language.
+Because this will not include words for named entities yet, we only consider a token to be an unknown token, if it is not tagged as a Named Entity by a Named Entity Recognizer (\textbf{UnknownTokens-ner}). We employ the Stanford Named Entity Recognizer \citep{stanfordNER}, which is a widely used, state-of-the-art NER that comes with a model for the English language.
 
-In order to improve upon the NER and further increase recall, we use two simple heuristics (\textbf{UnknownTokens\textsubscript{heur}}): Firstly, we assume that words that start with a capital letter and are only followed by lower case letters are named entities and therefore no unknown tokens. Finally, we automatically check whether an unknown token has an entry on the online encyclopedia Wikipedia (\textbf{UnknownTokens\textsubscript{wiki}}).
+In order to improve upon the NER and further increase recall, we use two simple heuristics (\textbf{UnknownTokens-heur}): Firstly, we assume that words that start with a capital letter and are only followed by lower case letters are named entities and therefore no unknown tokens. Finally, we automatically check whether an unknown token has an entry on the online encyclopedia Wikipedia (\textbf{UnknownTokens-wiki}).
 
-We automatically label any tokens that are neither on our list of known tokens from GigaWord, nor tagged as a named entity as ``unknown'' and tag the sentence as containing unknown tokens. The combined method \textbf{UnknownTokens\textsubscript{gw+heur+ner+wiki}} is what we call \textbf{UnknownTokens\textsubscript{general}}.
+We automatically label any tokens that are neither on our list of known tokens from GigaWord, nor tagged as a named entity as ``unknown'' and tag the sentence as containing unknown tokens. The combined method \textbf{UnknownTokens-gw+heur+ner+wiki} is what we call \textbf{UnknownTokens-general}.
 
 \subsubsection{Evaluation of UnknownTokens}
-We evaluate how effective \textbf{UnknownTokens} is in detecting \texttt{missing spaces} violations, both with (\textbf{UnknownTokens\textsubscript{source}}) and without (\textbf{UnknownTokens\textsubscript{general}}) access to the source documents, and compare it to a \textbf{baseline}, which always assumes the most common case (no \texttt{missing spaces} violation).
+We evaluate how effective \textbf{UnknownTokens} is in detecting \texttt{missing spaces} violations, both with (\textbf{UnknownTokens-source}) and without (\textbf{UnknownTokens-general}) access to the source documents, and compare it to a \textbf{baseline}, which always assumes the most common case (no \texttt{missing spaces} violation).
 The standard metrics precision, recall and F-score are used for evaluation.
 
 Table~\ref{eval_unknowntokens} shows the results of the evaluation. Because the amount of sentences not containing a missing spaces violation is much larger than the ones that do, several weighted metrics are provided, too:
@@ -288,7 +355,7 @@ The micro-average method consists of summing up the individual values from the c
 
 Macro-averages are just arithmetic means of precision and recall. For both micro- and macro-average, the new F-score is calculated from the new scores.
 
-Both \textbf{UnknownTokens\textsubscript{general}} and \textbf{UnknownTokens\textsubscript{source}} improve vastly over the baseline, but it is clear, that if the source text is available, it should be used to infer known words.
+Both \textbf{UnknownTokens-general} and \textbf{UnknownTokens-source} improve vastly over the baseline, but it is clear, that if the source text is available, it should be used to infer known words.
 
 
 %%%BEGIN BACKUP WITHOUT WEIGHTED MEAN:
@@ -300,18 +367,18 @@ Both \textbf{UnknownTokens\textsubscript{general}} and \textbf{UnknownTokens\tex
 \hline
 \textbf{Baseline} & 0.0 & 0.0 & 0.0 & 94.8 & \textbf{100} & 97.3 & 48.7 & 94.8\\
 \hline
-\textbf{UT\textsubscript{gw}} & 15.0 & \textbf{98.7} & 26.0 & \textbf{99.9} & 69.1 & 81.7 & 68.2 & 70.7\\
+\textbf{UT-gw} & 15.0 & \textbf{98.7} & 26.0 & \textbf{99.9} & 69.1 & 81.7 & 68.2 & 70.7\\
 \hline
-\textbf{UT\textsubscript{gw+heur}} & 30.5 & 97.3 & 46.5 & 99.8 & 87.8 & 93.4 & 76.5 & 88.3\\
+\textbf{UTgw+heur} & 30.5 & 97.3 & 46.5 & 99.8 & 87.8 & 93.4 & 76.5 & 88.3\\
 \hline
-\textbf{UT\textsubscript{gw+heur+ner}} & 35.5 & 97.3 & 52.0 & 99.8 & 90.3 & 94.8 & 78.6 & 90.6\\
+\textbf{UT-gw+heur+ner} & 35.5 & 97.3 & 52.0 & 99.8 & 90.3 & 94.8 & 78.6 & 90.6\\
 \hline
-\textbf{UT\textsubscript{gw+heur+ner+wiki}} & 70.3 & 96.0 & 81.2 & 99.8 & 97.8 & 98.8 & 90.6 & 97.7\\
+\textbf{UT-gw+heur+ner+wiki} & 70.3 & 96.0 & 81.2 & 99.8 & 97.8 & 98.8 & 90.6 & 97.7\\
 \hline
-\textbf{UT\textsubscript{source}} & \textbf{95.9} & 94.6 & \textbf{95.2} & 99.7 & 99.7 & \textbf{99.7} & \textbf{97.5} & \textbf{99.5}\\
+\textbf{UT-source} & \textbf{95.9} & 94.6 & \textbf{95.2} & 99.7 & 99.7 & \textbf{99.7} & \textbf{97.5} & \textbf{99.5}\\
 \end{tabular}
 \end{center}
-\caption{Evaluation of \textbf{UnknownTokens} on \textit{dev-2}, in percent. \textbf{UT\textsubscript{wordnet+heur+ner+wiki}} is equivalent to \textbf{UnknownTokens\textsubscript{general}}. \textbf{\textsubscript{wn}} = Wordnet-based dictionary, \textbf{\textsubscript{heur}} = title case heuristics, \textbf{\textsubscript{ner}} = Stanford NER, \textbf{\textsubscript{wiki}} = Wikipedia entry check}
+\caption{Evaluation of \textbf{UnknownTokens} on \textit{dev-2}, in percent. \textbf{UT-wordnet+heur+ner+wiki} is equivalent to \textbf{UnknownTokens-general}. \textbf{wn} = Wordnet-based dictionary, \textbf{heur} = title case heuristics, \textbf{ner} = Stanford NER, \textbf{wiki} = Wikipedia entry check}
 \label{eval_unknowntokens}
 \end{sidewaystable}
 %%%END BACKUP WITHOUT WEIGHTED MEAN
@@ -344,13 +411,13 @@ Both \textbf{UnknownTokens\textsubscript{general}} and \textbf{UnknownTokens\tex
 %%%END BACKUP WITH WEIGHTED MEAN
 
 
-\subsubsection{The RandomForest\textsubscript{UT} method}
+\subsubsection{The RandomForest-UT method}
 % previous tries with LMs(?), unknown_tokens, unknown_tokens+LM+weka->decision trees
 %TODO mention previous tries with LMS?
 %TODO Tabelle
 To detect more general forms of ungrammaticality, several other methods were investigated. Following \cite{wagner2007comparative}, we learn decision trees from outputs of several systems that on their own have not proven sufficient for this task. For this experiment, the development set \textit{dev-1} was used.
 
-We train a language model on parts (the same parts we used as a word source in \textbf{UnknownTokens\textsubscript{general}} (section~\ref{sec_unknowntokens})) of the Gigaword corpus\citep{gigaword}, extract perplexity scores for the sentences in our test set, and annotate them automatically. For the language model generation and the extraction of perplexity scores, we employ SRILM~\citep{stolcke2002srilm}, a language modeling toolkit.
+We train a language model on parts (the same parts we used as a word source in \textbf{UnknownTokens-general} (section~\ref{sec_unknowntokens})) of the Gigaword corpus\citep{gigaword}, extract perplexity scores for the sentences in our test set, and annotate them automatically. For the language model generation and the extraction of perplexity scores, we employ SRILM~\citep{stolcke2002srilm}, a language modeling toolkit.
 
 
 %The free WEKA software~\citep{hall2009weka} is an allround machine learning toolkit.
@@ -360,7 +427,7 @@ We use three features for our decision tree:
 
 \begin{itemize}
 	\item \textbf{LM\_PP} is the perplexity calculated for a sentence by the language model, following \cite{sun2007detecting}. This is a numeric feature. It proved to not be sufficient for detecting ungrammaticality on its own.
-	\item \textbf{missing spaces} is the classification of \textbf{UnknownTokens\textsubscript{source}} for a given sentence, as described in section~\ref{sec_unknowntokens}. This is a binary feature.
+	\item \textbf{missing spaces} is the classification of \textbf{UnknownTokens-source} for a given sentence, as described in section~\ref{sec_unknowntokens}. This is a binary feature.
 	\item \textbf{numberofwords} is the number of words in the sentence. We follow \cite{wagner2007comparative} here, the intuition is that ungrammatical sentences will often be extraordinarily long, or very short:
 
 		\textit{Former US President George W Bush, Who Will attend a memorial service on Tuesday, Virginia, and the university of at least 33 people Were killed, in the Worst shooting rampage in modern history, the White House said.}
@@ -368,10 +435,11 @@ We use three features for our decision tree:
 		\textit{The report of a}
 \end{itemize}
 
-\subsubsection{Evaluation of RandomForest\textsubscript{UT}}
-\label{S_eval_randomforest}
+%TODO
+% \subsubsection{Evaluation of RandomForest-UT}
+% \label{S_eval_randomforest}
 
-We performed 10-fold cross-validation, which lead to a weighted F-score of 86.3\%. A total of 1215 (88.1\%) instances was classified correctly, 164 (11.9\%) incorrectly.
+% We performed 10-fold cross-validation, which lead to a weighted F-score of 86.3\%. A total of 1215 (88.1\%) instances was classified correctly, 164 (11.9\%) incorrectly.
 
 % === Run information ===
 
@@ -421,14 +489,56 @@ We performed 10-fold cross-validation, which lead to a weighted F-score of 86.3\
 %  1162   36 |    a = ungrammaticality-no
 %   128   53 |    b = ungrammaticality-yes
 
-\subsubsection{The RandomForest\textsubscript{parser} method}
+\subsubsection{The RandomForest-UT+parser method}
 We also investigated whether parser output would improve the results. For this task, we utilized the Answer Constraint Engine \citep{ace} with the English Resource Grammar \citep{copestake2002implementing} to parse the entire corpus and annotate it with output statistics of the parser: Following \cite{wagner2007comparative} loosely, we extracted the number of readings/parses, the amount of memory the parser used for the parse and the success status, which could be either ``ok'' or ``ignored'', the latter appearing when the parsing failed entirely for some reason.
 
-We then added these three features to \textbf{RandomForest\textsubscript{UT}}.
+We then added these three features to \textbf{RandomForest-UT} and call the new method \textbf{RandomForest-UT+parser}.
 
-\subsubsection{Evaluation of RandomForest\textsubscript{parser}}
+\subsubsection{Evaluation of RandomForest}
 
-When evaluating the emerging decision tree on general ungrammaticality using the same method as in Section~\ref{S_eval_randomforest}, it yielded worse results than \textbf{RandomForest\textsubscript{UT}} alone. We therefore inspected whether it could instead be used to find instances of the subtype \textit{unparsable}. This lead to a precision of 86.6\%, a recall of 87.9\%, and an F-Score of 86.3\%. A total of 87.9\% of the instances was classified correctly.
+\begin{table}
+\begin{center}
+\begin{tabular}{r|c|c|c|c|}
+  & \textbf{Precision} & \textbf{Recall} & \textbf{F-Score} & \textbf{Accuracy}\\
+  \hline
+  Baseline & - & 0 & - & 77.7\\
+  \hline
+  RandomForest-UT & 65.5 & 44.2 & 52.8 & 82.3\\
+  \hline
+  RandomForest-UT+parser & \textbf{72.8} & \textbf{49.1} & \textbf{58.6} & \textbf{84.5}\\
+  \hline
+  \end{tabular}
+\end{center}
+\caption{Evaluation of \textbf{RandomForest-UT} and \textbf{RandomForest-UT+parser} on \textit{test}, in percent, based on the class of ungrammatical sentences. As Baseline, we classified every sentence with the most-frequent class, ``not ungrammatical''.}
+\label{eval_randomforest}
+\end{table}
+
+
+We performed 10-fold cross-validation with both \textbf{RandomForest-UT} and \textbf{RandomForest-UT+parser}, the results of which can be seen in Table~\ref{eval_randomforest}. These evaluations are done on the class of ungrammatical sentences, evaluating it on both classes leads to much higher scores (with a weighted F-score of 83.4\% for both ``ungrammatical'' and ``not ungrammatical'').
+
+An ablation study can be seen in Table~\ref{ablation_study_randomforest}. No number being very high indicates that we have some redundancy of information in the features here.
+%TODO general: explain why numbers so low. also explain why UT-source not perfect.
+\begin{table}
+\begin{center}
+\begin{tabular}{c|c}
+  \hline\hline
+  Feature & Decrease in F-Score\\%84.5391%0.586
+  \hline
+  Parser Readings & 5.7\\%478\\0.586-0.529
+  Number of Words & 2.2\\%34\\0.586-0.564
+  Language Model Perplexity & 1.4\\%1.2091\\0.586-0.572
+  Parser RAM & 1.3\\%01\\0.586-0.573
+  UnknownTokens Output & 0.8\\%0.3369\\0.586-0.578
+  Parser Status & 0.4\\%1982\\0.586-0.582
+  \hline\hline
+  \end{tabular}
+  \end{center}
+
+  \caption{Ablation study of \textbf{RandomForest-UT+parser}. The numbers denote the decrease of the F-Score if that feature were to be taken out.}
+  \label{ablation_study_randomforest}
+ \end{table}
+
+When evaluating the emerging decision tree on general ungrammaticality using the same method as in Section~\ref{S_eval_randomforest}, it yielded worse results than \textbf{RandomForest-UT} alone. We therefore inspected whether it could instead be used to find instances of the subtype \textit{unparsable}. This lead to a precision of 86.6\%, a recall of 87.9\%, and an F-Score of 86.3\%. A total of 87.9\% of the instances was classified correctly.
 
 \subsection{Datelines}
 %TODO more examples (see defense.tex).
@@ -605,7 +715,7 @@ In this paper, we have presented a solid method to detect the kind of ungrammati
 
 We have also shown a simple but high-performing method of detecting datelines. We believe our results are close to what a human could achieve and don't see much room for improvement here.
 
-Finally we developed a basic method of detecting redundancy. With the lowest performance of all methods in this paper, redundancy detection is requiring much more work. While we based our approach only on the two subsequent sentences on which redundancy was to be tested, future work could include information available in the context of these sentences or even, as we did in \textbf{UnknownTokens\textsubscript{source}}, information from the source documents.
+Finally we developed a basic method of detecting redundancy. With the lowest performance of all methods in this paper, redundancy detection is requiring much more work. While we based our approach only on the two subsequent sentences on which redundancy was to be tested, future work could include information available in the context of these sentences or even, as we did in \textbf{UnknownTokens-source}, information from the source documents.
 
 We only looked at a part of the violation types in \cite{friedrichlqvsumm}. Methods for detecting the last clause-level violation (no semantic relation), as well as the entity- and discourse-level violations have yet to be developed.
 
@@ -613,9 +723,6 @@ For the entity-level violations, one could use the output of a coreference resol
 
 Along with this paper, the authors will provide a toolchain that can be used to annotate given documents with the methods described in here.
 
-\section*{Acknowledgments}
-
-?
 %Annemarie Friedrich
 %Manfred Pinkal, Alexis Palmer
 %Lukas Burk, Diana Asimi(?)
