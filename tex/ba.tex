@@ -162,13 +162,6 @@ I would also like to thank Lukas Burk for helping me with R \citep{R} and ggplot
 
 \maketableofcontents
 %general TODOs:
-%explain tables and figures more
-%was auf welchen sets. dev-sets in corpus study erklären
-%liste von collection ids in set in appendix
-%dev-1, dev-2, testset
-%warum hab ich 2 dev sets?
-%failed experiments (nicht LM?)
-%LM: scores alone did not work (in RandomForest)
 % was macht RandomForest
 
 \section{Introduction}
@@ -252,9 +245,11 @@ Overall & 1935 & (D1101 -- D1144)\\
 \caption{Distribution and count of summaries across development and test sets}
 \end{table}
 
-We split the corpus into three parts, while making sure that topics weren't spread across sets: \textit{dev-1} and \textit{dev-2} are development sets, \textit{test} is our test set.
-\textit{dev-1} contains 351 summaries, \textit{dev-2} contains 352, that is 8 topics per development set and about 20\% of the corpus each. The breakdown of the distribution of topics across development and test sets is shown in Table~\ref{testsets}.
+We split the corpus into three parts, while making sure that topics weren't spread across sets: \textit{dev-1} and \textit{dev-2} are development sets, \textit{test} is our test set. We have two development sets, because for some methods, we developed on one part and trained on another.
+\textit{dev-1} contains 351 summaries, \textit{dev-2} contains 352, that is 8 topics per development set and about 20\% of the corpus each.
 The test set \textit{test} contains the other 60\%, making up 1232 summaries and 28 topics.
+
+The breakdown of the distribution of topics across development and test sets is shown in Table~\ref{testsets}.
 
 The annotation, our experiments and the evaluation are all done on sentence basis. We use Stanford CoreNLP \citep{manning-EtAl:2014:P14-5} for sentence splitting. This is necessary to have classifiable entities, but introduces inaccuracies, because LQVSumm is annotated on clause level, clause meaning an arbitrary substring of a summary, which is often a sentence, but also sometimes spanning over sentence bounds.
 
@@ -450,7 +445,10 @@ We train a language model on parts (the same parts we used as a word source in \
 
 
 %The free WEKA software~\citep{hall2009weka} is an allround machine learning toolkit.
-We then use a RandomForest \citep{breiman2001random} to learn decision trees. For this task, we use the machine learning toolkit WEKA \citep{hall2009weka}.
+We then use a RandomForest \citep{breiman2001random} to learn decision trees.
+RandomForest works by randomly selecting subsets of training instances along with random subsets of features to train a number of decision trees and then classifying test instances with what the majority of trees are classifying the instance with.
+
+For this task, we use the machine learning toolkit WEKA \citep{hall2009weka}.
 %As an input, WEKA requires an ARFF file, which we created using three features:
 We use three features for our decision tree:
 
@@ -777,24 +775,18 @@ While this example has some token overlap, the paraphrased content fails to be n
 Another cause of a relatively low score is that in the LQVSumm corpus, redundancy annotations can be done on a smaller scale than what is classified with using our method. For example, a repeated phrase within two long sentences could be marked in the corpus, but our or similar approaches will either not find these cases, or classify too much.
 
 The LQVSumm corpus that we used for all of our experiments is, unfortunately, not large enough to have a wide coverage of all violations. This can be seen most prominently when trying to detect redundancy (Section~\ref{redundancy}): While the corpus itself contains 504 \textit{redundant information} violations \citep[see][]{friedrichlqvsumm}, only 173 of them could be used by us, as we needed redundancies that occured in subsequent sentences and only within the bounds of those.
+However, there's little to no alternatives available.
 
 Apart from its size, the corpus is also sometimes annotated inconsistently or at least challenging for our purposes. In general, annotations are done on the clause level, where clauses are arbitrary substrings of the summary. As we classify and evaluate on sentences produced by the sentence splitter of Stanford CoreNLP \citep{manning-EtAl:2014:P14-5}, this introduces noise. For our purposes, a corpus that had been segmented before annotation would be preferable.
 
 As can be seen in Section~\ref{s_subtypes}, the instances of \textit{other ungrammatical form} could have been divided into several types, which would help the automatic classification.
 
 %show example
-However, there's little to no alternatives available.
-
-A legitimate criticism of our work is that our methods, experiments, and results are tailored to the LQVSumm corpus or to the summarization systems that participated in the TAC 2011 Guided Summarization task \citep{owczarzak2011overview}.
-
-%TODO what could be done better?
+A legitimate criticism of our work is that our methods, experiments, and results are tailored to the LQVSumm corpus and to the summarization systems that participated in the TAC 2011 Guided Summarization task \citep{owczarzak2011overview}.
 
 
 \section{Conclusion \& Future Work}
 \label{conclusion}
-% TODO What can my results be used for? What should be investigated later?
-% TODO What could possibly be needed to work on the types not looked at here? (semrel, …)
-%TODO other genres
 
 In this paper, we have presented a method to detect the kind of ungrammaticality that occurs in automatically generated extractive multi-document summarizations. While the results are good, they do rely on a certain type of ungrammaticality occuring often (missing spaces). Future work could concentrate on improving other grammaticality violations, so that not only the accuracy rises, but also the generality. Such a system could potentially detect ungrammaticality in a much broader domain.
 
