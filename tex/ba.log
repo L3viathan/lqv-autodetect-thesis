@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  22 AUG 2014 01:30
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  22 AUG 2014 01:59
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1042,41 +1042,41 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[1] [2] [3] [4] <subtypes_dev2.png, id=45, 490.83376pt x 561.09625pt>
+[1] [2] [3] [4] [5] <subtypes_dev2.png, id=49, 490.83376pt x 561.09625pt>
 File: subtypes_dev2.png Graphic file (type png)
 
 <use subtypes_dev2.png>
-Package pdftex.def Info: subtypes_dev2.png used on input line 343.
+Package pdftex.def Info: subtypes_dev2.png used on input line 355.
 (pdftex.def)             Requested size: 294.50252pt x 336.66034pt.
- [5] [6 <./subtypes_dev2.png>]
-Overfull \hbox (21.03401pt too wide) in paragraph at lines 367--368
+ [6 <./subtypes_dev2.png>]
+Overfull \hbox (21.03401pt too wide) in paragraph at lines 379--380
 []\OT1/cmr/m/n/10 In or-der to im-prove upon the NER and fur-ther in-crease re-
 call, we use two sim-ple heuris-tics (\OT1/cmr/bx/n/10 UnknownTokens-
  []
 
 
-Overfull \hbox (49.20082pt too wide) in paragraph at lines 372--374
+Overfull \hbox (49.20082pt too wide) in paragraph at lines 384--386
 \OT1/cmr/m/n/10 We eval-u-ate how ef-fec-tive \OT1/cmr/bx/n/10 Un-known-To-kens
  \OT1/cmr/m/n/10 is in de-tect-ing \OT1/cmr/m/it/10 miss-ing spaces \OT1/cmr/m/
 n/10 vi-o-la-tions, both with (\OT1/cmr/bx/n/10 UnknownTokens-
  []
 
 [7]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 448.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 460.
 
  (/usr/local/texlive/2012/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 448.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 460.
  [8] [9]
-Overfull \hbox (2.41785pt too wide) in paragraph at lines 536--537
+Overfull \hbox (2.41785pt too wide) in paragraph at lines 548--549
 \OT1/cmr/m/n/10 We per-formed 10-fold cross-validation with both \OT1/cmr/bx/n/
 10 RandomForest-UT \OT1/cmr/m/n/10 and \OT1/cmr/bx/n/10 RandomForest-UT+parser
  []
 
 
-Overfull \hbox (7.2307pt too wide) in paragraph at lines 538--539
+Overfull \hbox (7.2307pt too wide) in paragraph at lines 550--551
 []\OT1/cmr/m/n/10 As ev-i-dent from the ta-ble, in-clud-ing the parser out-put 
 statis-tics as fea-tures (\OT1/cmr/bx/n/10 RandomForest-UT+parser\OT1/cmr/m/n/1
 0 )
@@ -1084,15 +1084,15 @@ statis-tics as fea-tures (\OT1/cmr/bx/n/10 RandomForest-UT+parser\OT1/cmr/m/n/1
 
 
 LaTeX Warning: Reference `S_eval_randomforest' on page 10 undefined on input li
-ne 562.
+ne 574.
 
 [10] [11] [12] <a.png, id=74, 3140.73375pt x 2145.01375pt>
 File: a.png Graphic file (type png)
  <use a.png>
-Package pdftex.def Info: a.png used on input line 672.
+Package pdftex.def Info: a.png used on input line 684.
 (pdftex.def)             Requested size: 471.08974pt x 321.73817pt.
 
-Overfull \hbox (15.84563pt too wide) in paragraph at lines 672--673
+Overfull \hbox (15.84563pt too wide) in paragraph at lines 684--685
  [] 
  []
 
@@ -1135,7 +1135,7 @@ al/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/lo
 cal/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
 al/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/loca
 l/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on ba.pdf (23 pages, 590396 bytes).
+Output written on ba.pdf (23 pages, 592906 bytes).
 PDF statistics:
  140 PDF objects out of 1000 (max. 8388607)
  95 compressed objects within 1 object stream
