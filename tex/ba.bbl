@@ -1,5 +1,12 @@
 \begin{thebibliography}{}
 
+\bibitem[Aberdeen et~al., 1995]{aberdeen1995mitre}
+Aberdeen, J., Burger, J., Day, D., Hirschman, L., Robinson, P., and Vilain, M.
+  (1995).
+\newblock Mitre: description of the alembic system used for muc-6.
+\newblock In {\em Proceedings of the 6th conference on Message understanding},
+  pages 141--155. Association for Computational Linguistics.
+
 \bibitem[Atwell, 1987]{atwell1987detect}
 Atwell, E.~S. (1987).
 \newblock How to detect grammatical errors in a text without parsing it.
@@ -34,6 +41,10 @@ Christensen, J., Mausam, Soderland, S., and Etzioni, O. (2013).
 \newblock Towards coherent multi-document summarization.
 \newblock In {\em Proceedings of the North American Chapter of the Association
   for Computational Linguistics: Human Language Technologies (NAACL 2013)}.
+
+\bibitem[Cohen, 1996]{cohen1996learning}
+Cohen, W.~W. (1996).
+\newblock Learning trees and rules with set-valued features.
 
 \bibitem[Copestake, 2002]{copestake2002implementing}
 Copestake, A. (2002).
@@ -73,6 +84,14 @@ Hall, M., Frank, E., Holmes, G., Pfahringer, B., Reutemann, P., and Witten,
 \newblock The weka data mining software: an update.
 \newblock {\em ACM SIGKDD explorations newsletter}, 11(1):10--18.
 
+\bibitem[Hatzivassiloglou et~al., 1999]{hatzivassiloglou1999detecting}
+Hatzivassiloglou, V., Klavans, J.~L., and Eskin, E. (1999).
+\newblock Detecting text similarity over short passages: Exploring linguistic
+  feature combinations via machine learning.
+\newblock In {\em Proceedings of the 1999 joint sigdat conference on empirical
+  methods in natural language processing and very large corpora}, pages
+  203--212. Citeseer.
+
 \bibitem[Joachims, 2002]{Joachims/02a}
 Joachims, T. (2002).
 \newblock {\em Learning to Classify Text Using Support Vector Machines --
@@ -98,6 +117,12 @@ Levenshtein, V.~I. (1966).
 \newblock Binary codes capable of correcting deletions, insertions and
   reversals.
 \newblock In {\em Soviet physics doklady}, volume~10, page 707.
+
+\bibitem[Levin, 1993]{levin1993english}
+Levin, B. (1993).
+\newblock {\em English verb classes and alternations: A preliminary
+  investigation}.
+\newblock University of Chicago press.
 
 \bibitem[Lin, 2004]{lin2004rouge}
 Lin, C.-Y. (2004).
@@ -194,6 +219,13 @@ Versley, Y., Ponzetto, S.~P., Poesio, M., Eidelman, V., Jern, A., Smith, J.,
 \newblock In {\em Proceedings of the 46th Annual Meeting of the Association for
   Computational Linguistics on Human Language Technologies: Demo Session},
   pages 9--12. Association for Computational Linguistics.
+
+\bibitem[Wacholder, 1998]{wacholder1998simplex}
+Wacholder, N. (1998).
+\newblock Simplex nps clustered by head: a method for identifying significant
+  topics within a document.
+\newblock In {\em The Computational Treatment of Nominals: Proceedings of the
+  Workshop}, pages 70--79.
 
 \bibitem[Wagner et~al., 2007]{wagner2007comparative}
 Wagner, J., Foster, J., and van Genabith, J. (2007).
