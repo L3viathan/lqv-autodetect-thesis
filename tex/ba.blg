@@ -3,8 +3,6 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: ba.aux
 The style file: apalike.bst
 Database file #1: referenzen.bib
-Warning--entry type for "valeeva" isn't style-file defined
---line 1 of file referenzen.bib
 Warning--empty journal in cohen1996learning
 Warning--empty journal in fellbaum2005wordnet
 Warning--empty journal in friedrichlqvsumm
@@ -12,43 +10,43 @@ Warning--can't use both volume and number fields in sun2007detecting
 Warning--empty booktitle in wagner2007comparative
 You've used 39 entries,
             1935 wiz_defined-function locations,
-            689 strings with 10867 characters,
-and the built_in function-call counts, 16260 in all, are:
-= -- 1607
-> -- 626
+            691 strings with 10945 characters,
+and the built_in function-call counts, 16423 in all, are:
+= -- 1625
+> -- 632
 < -- 42
-+ -- 224
-- -- 210
-* -- 1230
-:= -- 2713
-add.period$ -- 125
++ -- 226
+- -- 212
+* -- 1249
+:= -- 2734
+add.period$ -- 126
 call.type$ -- 39
-change.case$ -- 292
+change.case$ -- 293
 chr.to.int$ -- 39
 cite$ -- 44
-duplicate$ -- 736
-empty$ -- 1182
-format.name$ -- 260
-if$ -- 3324
+duplicate$ -- 740
+empty$ -- 1196
+format.name$ -- 264
+if$ -- 3359
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 41
-newline$ -- 195
+missing$ -- 42
+newline$ -- 196
 num.names$ -- 117
 pop$ -- 357
 preamble$ -- 1
-purify$ -- 298
+purify$ -- 299
 quote$ -- 0
-skip$ -- 536
+skip$ -- 538
 stack$ -- 0
-substring$ -- 979
-swap$ -- 159
+substring$ -- 1004
+swap$ -- 160
 text.length$ -- 20
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 224
 warning$ -- 5
-while$ -- 132
+while$ -- 134
 width$ -- 0
-write$ -- 502
-(There were 6 warnings)
+write$ -- 505
+(There were 5 warnings)

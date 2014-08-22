@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex ba"] 1408682186 "ba.aux" "ba.bbl" "ba" 1408682190
+["bibtex ba"] 1408688148 "ba.aux" "ba.bbl" "ba" 1408688152
   "/usr/local/texlive/2012/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "ba.aux" 1408682190 9093 41ebaf9f96992a34d0c234f9e877a266 ""
+  "ba.aux" 1408688151 9157 fd8ed8301dfd5889f9f60dea74400f02 ""
   "ba.bcf" 0 -1 0 ""
-  "referenzen.bib" 1408677354 11732 5d17206f6802aef95b94609ce83146fc ""
+  "referenzen.bib" 1408686814 12016 a8fc799ed2f982831de8e96e8cac4b4d ""
   (generated)
   "ba.bbl"
   "ba.blg"
-["pdflatex"] 1408682187 "ba.tex" "ba.pdf" "ba" 1408682190
+["pdflatex"] 1408688148 "ba.tex" "ba.pdf" "ba" 1408688152
   "./eule.png" 1368526714 13317 044aa032b9ef7b434f87da786908e4ab ""
   "/usr/local/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii" 1337017135 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2012/texmf-dist/tex/generic/babel/babel.def" 1312409092 29228 2fe939254f4b17ac18a8c0fb8aa39dff ""
@@ -167,10 +167,10 @@
   "/usr/local/texlive/2012/texmf-dist/tex/latex/xkeyval/xkeyval.sty" 1218672668 4934 8ea45c150f1216b4eb8e3b63954e4bbf ""
   "/usr/local/texlive/2012/texmf-dist/tex/latex/xyling/xyling.sty" 1155513795 34663 ac631973e5977dd61e72ade3aa4aea8d ""
   "a.png" 1408368844 509059 d778eb5b3f1f2b4d3552365c83f9ed20 ""
-  "ba.aux" 1408682190 9093 41ebaf9f96992a34d0c234f9e877a266 ""
-  "ba.bbl" 1408682187 10061 d491c52f703a6b5f0fb702a36f3f0635 "bibtex ba"
-  "ba.tex" 1408682182 66647 49a9a6cbe95c2c1f8d99614e7c25925a ""
-  "ba.toc" 1408682190 1324 d9f468b3edbed774f73b51110b656d19 ""
+  "ba.aux" 1408688151 9157 fd8ed8301dfd5889f9f60dea74400f02 ""
+  "ba.bbl" 1408688148 10179 1692d216627ff76804e3ab31fcf9032d "bibtex ba"
+  "ba.tex" 1408688143 67788 6f2d0e245714f81f4f7334534a8c5fd1 ""
+  "ba.toc" 1408688151 1325 30f22896d8f270f9eab5422ef188f866 ""
   "here.sty" 1282150722 8528 5bb9106badb0ced5731e7cb55f84e6ab ""
   "subtypes_dev2.png" 1404020032 31185 adee37e18552a059cdca6dcab1675085 ""
   "title.tex" 1407333377 1012 6006fc8fa9516b63d7105d5c87ed0b76 ""
