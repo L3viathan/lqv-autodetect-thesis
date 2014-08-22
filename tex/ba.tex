@@ -127,12 +127,11 @@ Building on the work of \cite{friedrichlqvsumm}, who annotated automatic summari
 We obtain F-Scores of 58.6\% for ungrammaticality, 87.8\% for redundancy and 37.0\% for redundancy.
 \end{abstract}
 
-\section*{Acknowledgements}
-I would like to thank my supervisors Prof. Manfred Pinkal, Annemarie Friedrich and Alexis Palmer for their continuous support in the process of creating this thesis, and for providing me with helpful comments and guidance whenever I asked for it.
+\begin{abstract}
+\setlength{\parskip}{2ex plus 0.5ex minus 0.2ex}
+\textbf{Acknowledgements} \quad I would like to thank my supervisors Prof. Manfred Pinkal, Annemarie Friedrich and Alexis Palmer for their continuous support in the process of creating this thesis, and for providing me with helpful comments and guidance whenever needed. This work couldn't have been done without the work previously done by Marina Valeeva. I also want to thank Lukas Burk for helping me with R \citep{R} and ggplot2 \citep{ggplot2}.
+\end{abstract}
 
-This work couldn't have been done without the work previously done by Marina Valeeva.
-
-I would also like to thank Lukas Burk for helping me with R \citep{R} and ggplot2 \citep{ggplot2}.
 \newpage
 
 % Table of contents
@@ -264,7 +263,7 @@ The LQVSumm corpus consists of annotations on summaries produced by systems part
 \hline
 \textit{test} & 1232 & D1117 -- D1144\\
 \hline\hline
-Overall & 1935 & (D1101 -- D1144)\\
+Overall & 1935 & D1101 -- D1144\\
 \hline
 \end{tabular}
 \end{center}
@@ -568,7 +567,8 @@ We then added these three features to \textbf{RandomForest-UT} and call the new 
 
 \begin{table}
 \begin{center}
-\begin{tabular}{r|c|c|c|c|}
+\begin{tabular}{|r|c|c|c|c|}
+  \hline
   & \textbf{Precision} & \textbf{Recall} & \textbf{F-Score} & \textbf{Accuracy}\\
   \hline
   Baseline & - & 0 & - & 77.7\\
@@ -609,7 +609,7 @@ An ablation study can be seen in Table~\ref{ablation_study_randomforest}. No num
   \label{ablation_study_randomforest}
  \end{table}
 
-When evaluating the emerging decision tree on general ungrammaticality using the same method as in Section~\ref{S_eval_randomforest}, it yielded worse results than \textbf{RandomForest-UT} alone. We therefore inspected whether it could instead be used to find instances of the subtype \textit{unparsable}. This lead to a precision of 86.6\%, a recall of 87.9\%, and an F-Score of 86.3\%. A total of 87.9\% of the instances was classified correctly.
+%When evaluating the emerging decision tree on general ungrammaticality using the same method as in Section~\ref{S_eval_randomforest}, it yielded worse results than \textbf{RandomForest-UT} alone. We therefore inspected whether it could instead be used to find instances of the subtype \textit{unparsable}. This lead to a precision of 86.6\%, a recall of 87.9\%, and an F-Score of 86.3\%. A total of 87.9\% of the instances was classified correctly.
 
 \subsection{Datelines}
 \label{s_datelines}
@@ -637,7 +637,8 @@ This very simple approach was evaluated on \textit{test} and leads to good resul
 
 \begin{table}
 \begin{center}
-\begin{tabular}{r|c|c|c|c|}
+\begin{tabular}{|r|c|c|c|c|}
+  \hline
   & \textbf{Precision} & \textbf{Recall} & \textbf{F-Score} & \textbf{Accuracy}\\
   \hline
   Baseline & - & 0 & - & 89.5\\
@@ -701,7 +702,7 @@ First, we remove all non-alphanumeric characters from both sentences and split t
 
 A number of other methods are also implemented: \textbf{Bigrams} is a variation of the \textbf{Unigrams} method which uses bigrams instead of unigrams. \textbf{Combined} is using a score that the mean of the \textbf{Unigrams} and \textbf{Bigrams} scores.
 
-\textbf{Levenshtein} consists of the standard edit distance\citep{levenshtein1966binary} on word level. A threshold of 2 yielded best results on our development set, meaning that sentences are classified as containing redundancies if their word-level Levenshtein distance is 1 or 0. Prior to computation of the score, non-alphanumeric characters were again pruned from the sentences.
+\textbf{Levenshtein} consists of the standard edit distance \citep{levenshtein1966binary} on word level. A threshold of 2 yielded best results on our development set, meaning that sentences are classified as containing redundancies if their word-level Levenshtein distance is 1 or 0. Prior to computation of the score, non-alphanumeric characters were again pruned from the sentences.
 
 Finally, as a further \textbf{Baseline} we classify all sentence pairs as containing redundancies.
 
@@ -755,7 +756,8 @@ Neither of these methods had any positive effect on our results.
 
 \begin{table}
 \begin{center}
-\begin{tabular}{r|c|c|c|}
+\begin{tabular}{|r|c|c|c|}
+\hline
 & Precision & Recall & F-Score \\
 \hline
 \textbf{Baseline} & 4.5\% & \textbf{100\%} & 8.7\% \\

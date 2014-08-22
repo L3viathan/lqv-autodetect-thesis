@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  22 AUG 2014 05:26
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  22 AUG 2014 05:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1034,7 +1034,7 @@ map/pdftex.map} <./eule.png>]) [2] [3] (./ba.toc)
 
  [4]
 ! Undefined control sequence.
-l.163 \maketableofcontents
+l.162 \maketableofcontents
                           
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1046,7 +1046,7 @@ and I'll forget about whatever was undefined.
 File: subtypes_dev2.png Graphic file (type png)
 
 <use subtypes_dev2.png>
-Package pdftex.def Info: subtypes_dev2.png used on input line 375.
+Package pdftex.def Info: subtypes_dev2.png used on input line 374.
 (pdftex.def)             Requested size: 294.50252pt x 336.66034pt.
  [6] [7 <./subtypes_dev2.png>]
 
@@ -1056,46 +1056,46 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.388 	\begin{subequations*}
+l.387 	\begin{subequations*}
                             
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-! LaTeX Error: \begin{figure} on input line 387 ended by \end{subequations*}.
+! LaTeX Error: \begin{figure} on input line 386 ended by \end{subequations*}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.395 	\end{subequations*}
+l.394 	\end{subequations*}
                           
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (21.03401pt too wide) in paragraph at lines 416--417
+Overfull \hbox (21.03401pt too wide) in paragraph at lines 415--416
 []\OT1/cmr/m/n/10 In or-der to im-prove upon the NER and fur-ther in-crease re-
 call, we use two sim-ple heuris-tics (\OT1/cmr/bx/n/10 UnknownTokens-
  []
 
 [8]
-Overfull \hbox (49.20082pt too wide) in paragraph at lines 421--423
+Overfull \hbox (49.20082pt too wide) in paragraph at lines 420--422
 \OT1/cmr/m/n/10 We eval-u-ate how ef-fec-tive \OT1/cmr/bx/n/10 Un-known-To-kens
  \OT1/cmr/m/n/10 is in de-tect-ing \OT1/cmr/m/it/10 miss-ing spaces \OT1/cmr/m/
 n/10 vi-o-la-tions, both with (\OT1/cmr/bx/n/10 UnknownTokens-
  []
 
 [9] [10]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 500.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 499.
 
  (/usr/local/texlive/2012/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 500.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 499.
 
 Overfull \hbox (2.41785pt too wide) in paragraph at lines 587--588
 \OT1/cmr/m/n/10 We per-formed 10-fold cross-validation with both \OT1/cmr/bx/n/
@@ -1109,22 +1109,17 @@ statis-tics as fea-tures (\OT1/cmr/bx/n/10 RandomForest-UT+parser\OT1/cmr/m/n/1
 0 )
  []
 
-[11]
-
-LaTeX Warning: Reference `S_eval_randomforest' on page 12 undefined on input li
-ne 612.
-
-[12] [13] [14] <a.png, id=80, 3140.73375pt x 2145.01375pt>
+[11] [12] [13] <a.png, id=77, 3140.73375pt x 2145.01375pt>
 File: a.png Graphic file (type png)
  <use a.png>
-Package pdftex.def Info: a.png used on input line 720.
+Package pdftex.def Info: a.png used on input line 721.
 (pdftex.def)             Requested size: 471.08974pt x 321.73817pt.
 
-Overfull \hbox (15.84563pt too wide) in paragraph at lines 720--721
+Overfull \hbox (15.84563pt too wide) in paragraph at lines 721--722
  [] 
  []
 
-[15 <./a.png>] [16] [17] [18] [19] (./ba.bbl [20]
+[14] [15 <./a.png>] [16] [17] [18] [19] (./ba.bbl [20]
 LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 148.
 
@@ -1137,33 +1132,30 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[21]) [22] (./ba.aux)
-
-LaTeX Warning: There were undefined references.
-
- ) 
+[21]) [22] (./ba.aux) ) 
 Here is how much of TeX's memory you used:
- 20337 strings out of 493488
- 336291 string characters out of 3141326
- 476363 words of memory out of 3000000
- 23182 multiletter control sequences out of 15000+200000
+ 20336 strings out of 493488
+ 336270 string characters out of 3141326
+ 475363 words of memory out of 3000000
+ 23181 multiletter control sequences out of 15000+200000
  11419 words of font info for 46 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
  74i,13n,77p,1153b,1003s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
-></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
-</usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb
-></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
-></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
-</usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></
-usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
-r/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/
-local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/loc
-al/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/lo
-cal/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
-al/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/loca
-l/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on ba.pdf (26 pages, 599886 bytes).
+</usr/local/texlive/2012/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmbx10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmbx12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmbxti10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmcsc10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmmi7.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr7.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmssbx10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmsy10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmti10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mti12.pfb>
+Output written on ba.pdf (26 pages, 599026 bytes).
 PDF statistics:
  151 PDF objects out of 1000 (max. 8388607)
  102 compressed objects within 2 object streams
