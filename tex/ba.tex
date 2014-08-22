@@ -67,6 +67,9 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{2ex plus 0.5ex minus 0.2ex}
 
+\clubpenalty = 10000 % schliesst Schusterjungen aus 
+\widowpenalty = 10000 \displaywidowpenalty = 10000% schliesst Hurenkinder aus 
+
 
 \usepackage{color}
 
@@ -145,44 +148,32 @@ We obtain F-Scores of 58.6\% for ungrammaticality, 87.8\% for redundancy and 37.
 \pagenumbering{arabic}
 \newpage
 
-% precision/recall/…: umgekehrt ebenfalls, d.h. 
-% von wie vielen Sätzen sind welche Klassen
-
-% in Tabellen: auf was getestet?
-
-% baseline: random bzw. most-common class
-
-% POS-Tags-threshold, d.h. unseen n-grams -> ungrammatical
-
-% (english resource grammar)
-
-% mapping to source sentences
-% Levenshtein auf Wortebene (?)
-
 \maketableofcontents
 
 \section{Introduction}
-With an ever-growing amount of information, it is becoming increasingly important to reduce that information to a processible amount, by summarizing it. Most of the time, it is infeasible to do this by hand, and there is thus a need for automating the process.
+With an ever-growing amount of information, it is becoming increasingly important to reduce that information to a processible amount, by summarizing it. This is useful for people with time constraints who still want to read news, or for quickly skimming the content of a book, a website, a manual or a research paper. The scientific praxis of writing an abstract and an introduction doesn't just come out of nowhere, but is instead an effort to summarize the content of the paper at hand.
 
-Automatic summarization is the task of taking one or more documents as input and producing a summary that contains the most important information from these documents.
+Most of the time though, at least when it comes to domains where writing a summary is not essential for the author, it is infeasible to do this manually, and there is thus a need for addressing the process with automated means.
+
+Automatic summarization is the task of taking one or more documents as the input and producing a summary that contains the most important information from these documents.
 
 \textit{Automatic summarization systems} can be divided in \textit{extractive} and \textit{abstractive}, and in \textit{single-document} and \textit{multi-document} summarization systems.
 
-A \textit{single-document} system takes only one document as an input and produces a summary of that document, while a \textit{multi-document} system summarizes multiple documents on the same topic.
+A \textit{single-document} system takes only one document as an input and produces a summary of that document, while a \textit{multi-document} system summarizes multiple documents on the same topic, while still producing only one summary.
 
-An \textit{abstractive} system is one which infers knowledge from its input into an internal semantic representation and produces a novel text based on that knowledge, using language generation techniques. The task of constructing an abstractive summarization system is very complex, which is why most systems used today are \textit{extractive}.
+An \textit{abstractive} system is one which infers knowledge from its input into an internal semantic representation and produces a novel text based on that knowledge, using language generation techniques. The task of constructing an abstractive summarization system is very complex, due to the aforementioned semantic representation. This is why most systems used today are \textit{extractive}.
 
-Extractive summarization systems select relevant sentences from the source document(s), reorder them and finally apply sentence fusion and compression to shrink the resulting summary.
+Extractive summarization systems first select relevant sentences from the source document(s). They then reorder them and finally apply sentence fusion (combining multiple sentences into one) and sentence compression (reducing the size of a single sentence by leaving out parts deemed less relevant) to shrink the resulting summary.
 
-We are only concerned with extractive, multi-document summarization, because our data consists of summaries produced by extractive multi-document summarization systems.
+We are only concerned with extractive, multi-document summarization, because our data, as described in Section~\ref{corpus_study}, consists of summaries produced by extractive multi-document summarization systems.
 
-Evaluation of automatic summarization systems has largely been done on content coverage. Along with the task being hard in general, this is one reason why generated summaries often lack linguistic quality \citep{nenkova2011foundations}, meaning that they contain many errors of various kinds. A new focus on linguistic quality (LQ) evaluation would presumably help decrease these issues and produce overall better summarization systems.
+Evaluation of automatic summarization systems has largely been done on content coverage. Along with the task being hard in general, this is one of the reasons generated summaries often lack linguistic quality \citep{nenkova2011foundations}, meaning that they contain errors of various kinds. A new focus on linguistic quality (LQ) evaluation would presumably help decrease these issues and produce overall better summarization systems.
 
-As a first step in this direction, \cite{friedrichlqvsumm} created the \textit{LQVSumm} corpus, which consists of multi-document summaries from the TAC 2011 shared task on Guided Summarization \citep{owczarzak2011overview}, annotated manually with LQ violations on entity, clause and discourse level.
+As a first step in this direction, \cite{friedrichlqvsumm} created the \textit{LQVSumm} corpus, which consists of multi-document summaries from the TAC 2011 shared task on Guided Summarization \citep{owczarzak2011overview}, annotated manually with LQ violations on entity and discourse level.
 
 The corpus also includes annotations on 50 summaries produced by G-Flow \citep{gflow}, which we disregard, because the linguistic quality is much higher than in the rest of the corpus, along with the fact that the size of the annotated G-Flow summaries is much smaller.
 
-Manual annotation is an expensive and time-consuming process, for which an automatic system could be an alternative. Our work deals with creating such a system that manages at least part of the annotation automatically. We develop and evaluate our system on top of the \textit{LQVSumm} corpus. We also limit ourselves to the clause-level violations listed in \cite{friedrichlqvsumm}, except for \textit{no semantic relation}.
+Manual annotation is an expensive and time-consuming process, for which an automatic system could be an alternative. Our work deals with creating such a system that manages at least part of the annotation automatically. We develop and evaluate our system on top of the \textit{LQVSumm} corpus. We also limit ourselves to the clause-level violations listed in \cite{friedrichlqvsumm}, except for \textit{no semantic relatedness} and \textit{no discourse relation}.
 
 The rest of this paper is organized as follows:
 
@@ -190,25 +181,27 @@ The next section discusses related work. In Section~\ref{corpus_study}, we take 
 
 In Section~\ref{experiments} we describe and evaluate methods for annotating ungrammaticality (using decision trees with features extracted from parsing and the high-performing detection of the subtype \textit{missing spaces}), datelines (using regular expressions) and redundancy (using n-gram overlap).
 
-We achieve F-Scores of 58.6\% for ungrammaticality, 87.8\% for datelines and 37.0\% for redundancies. We discuss our results in Section~\ref{discussion}. In Section~\ref{conclusion}, we discuss future work and conclude.
+We achieve F-Scores of 58.6\% for ungrammaticality, 87.8\% for datelines and 37.0\% for redundancies. We discuss our results in Section~\ref{discussion}. Finally, in Section~\ref{conclusion}, we discuss future work and conclude.
 
 \section{Related Work}
 \label{related_work}
 % other works on grammaticality and so on
 
-Pioneer work was done by \cite{atwell1987detect}, who used the part-of-speech tagger CLAWS \citep{leech1983automatic} along learned likelihood of POS tag pairs in grammatical sentences to annotate errors using Markov chains.
-They then added error tags to their tag dictionary --- tags that similarily spelled words have (when different from the word's own tags) --- and used them to make finding likely typing errors easier.
+Pioneer work was done by \cite{atwell1987detect}, who used the part-of-speech (POS) tagger CLAWS \citep{leech1983automatic} alongside learned frequencies/likelihood of POS tag pairs in grammatical sentences to annotate errors using Markov chains.
+
+They then added error tags to words in their tag dictionary --- POS tags of words spelled similar to some word were specially marked on that word, when not in the POS tags of the word itself  --- and used them to make finding likely typing errors easier.
 
 Most work in the field of automatic grammar checking seems to have been done in the area of second language learning.
 \cite{bender2004arboretum} use the LKB parser and generator \cite{copestake2002implementing} with the English Resource Grammar \citep{flickinger2000building} to build \textit{Arboretum}, a system that, when given an erroneous input sentence, detects that error and outputs a corrected version of the sentence. Their method uses manually selected mal-rules \citep{schneider1998recognizing} to detect error types specific to second language learners of English.
 
-While this seems to work for their specific domain, it does not transform well into ours: The mistakes language learners make, and the kind of ungrammaticality summarization systems produce, are very different. Source texts that are being summarized are usually grammatical, and get their ungrammaticality during summarization from being compressed from two formerly grammatical sentences into one ungrammatical one, for example. Mistakes typical for learners of English as a second language either usually do not occur in automatic summarizations (such as misspelt words), or do happen, but due to a different cause (for example agreement).
+While this seems to work for their specific domain, it does not transform well into ours: The mistakes language learners make, and the kind of ungrammaticality summarization systems produce are very different. Source texts that are being summarized are usually grammatical, and get their ungrammaticality during summarization from being compressed from two formerly grammatical sentences into one ungrammatical one, for example. Mistakes typical for learners of English as a second language either usually do not occur in automatic summarizations (such as misspelled words), or do happen, but due to a different cause (for example agreement).
 
-\cite{chodorow2000unsupervised} build \textit{ALEK}, a system to grade TOEFL essays. It does so by viewing the task as an extension of Word Sense Disambiguation, and collecting n-grams of POS-tags and function words, and then classifying using primitive statistical measures like \textit{Mutual Information} and the $\chi^2$ test. However, only the whole essay is classified into one of six possible scores, and this decision is only made by looking at the test subject's understanding of the three words \textit{Concentrate}, \textit{Interest} and \textit{Knowledge} in context.
+\cite{chodorow2000unsupervised} build \textit{ALEK}, a system to grade \textit{TOEFL} essays. It does so by viewing the task as an extension of Word Sense Disambiguation, and collecting n-grams of POS-tags and function words, and then classifying using primitive statistical measures like \textit{Mutual Information} and the $\chi^2$ test. However, only the whole essay is classified into one of six possible scores, and this decision is only made by looking at the test subject's understanding of the correct usage of the three words \textit{Concentrate}, \textit{Interest} and \textit{Knowledge} in context.
+Even more than \cite{bender2004arboretum}, this approach is not applicable to our task.
 
-\cite{sun2007detecting}, while also citing second language learning as their primary application, use a different approach: Instead of manually writing rules, they employ a supervised statistical learning method. They extract what they call \textit{labeled sequential patterns} (ngrams associated with a class) from both erroneous and correct sentences in their training corpus, enrich them with other automatically computed features, and use them as input for classification models; an SVM \citep[SVMlight,][]{Joachims/02a} and a Na\"ive Bayes classification model. The system achieves F-scores of around 80\%, evaluated on second language learning.
+\cite{sun2007detecting}, while also citing second language learning as their primary application, use a different approach: Instead of manually writing rules, they employ a supervised statistical learning method. They extract what they call \textit{labeled sequential patterns} (ngrams associated with a class) from both erroneous and correct sentences in their training corpus, enrich them with other automatically computed features, and use them as input for classification models; an SVM \citep[SVMlight,][]{Joachims/02a} and a Na\"ive Bayes classification model. The system achieves F-scores of around 80\%, evaluated on correct and erroneous corpora of second language learning.
 
-There also has been work in the area of assessing grammaticality of automatically generated summaries, namely \cite{vadlapudi2010automated}. They used n-grams on POS-tag level and evaluated their system by looking at how well their classification correlates to ROGUE scores \citep{lin2004rouge}. \citeauthor{vadlapudi2010automated} achieve a Spearman's $\rho{}$ correlation of up to 77\% to ROGUE scores manually assigned by annotators.
+There also has been work in the area of assessing grammaticality of automatically generated summaries, namely \cite{vadlapudi2010automated}. They used n-grams on POS-tag level and evaluated their system by looking at how well their classification correlates to \textit{ROGUE} scores \citep{lin2004rouge}. \citeauthor{vadlapudi2010automated} achieve a Spearman's $\rho{}$ correlation of up to 77\% to ROGUE scores manually assigned by annotators.
 
 \cite{wagner2007comparative} compare various methods for detecting ungrammaticality:
 
@@ -222,16 +215,16 @@ There also has been work in the area of assessing grammaticality of automaticall
 
 Their error corpus is an artificial one, generated by introducing systematical errors into otherwise grammatical data. Their best method (\textbf{Decision Trees on Combined Feature Sets}) achieves an F-Score of 66.9\%.
 
-The BLEU score \citep{papineni2002bleu} is a method for evaluating the effectiveness of a machine translation system, which uses a number of (human) reference translations to score an automatic translation. They showed that their score correlates highly with human evaluation, which has lead to the BLEU score having become the standard evaluation metric for machine translation.
+The \textit{BLEU} score \citep{papineni2002bleu} is a method for evaluating the effectiveness of a machine translation system, which uses a number of (human) reference translations to score an automatic translation. They showed that their score correlates highly with human evaluation, which has lead to the \textit{BLEU} score having become the standard evaluation metric for machine translation.
 
 \cite{hatzivassiloglou1999detecting} implement a system for redundancy detection on the level of ``text units'' (paragraphs or sentences) using machine learning techniques. As features, they use:
 
 \begin{description}
 	\item[Word co-occurence] A very similar feature to our \textbf{Unigrams} approach in Section~\ref{s_unigrams}.
-	\item[Matching noun phrases] Using LinkIt \citep{wacholder1998simplex}, they detect simplex noun phrases and match those sharing a head
-	\item[WordNet synonyms] Matching words that occur in the same WordNet \citep{fellbaum2005wordnet} synset.
+	\item[Matching noun phrases] Using \textit{LinkIt} \citep{wacholder1998simplex}, they detect simplex noun phrases and match those sharing a head
+	\item[WordNet synonyms] Matching words that occur in the same \textit{WordNet} \citep{fellbaum2005wordnet} synset.
 	\item[Common semantic classes for verbs] Matching verbs that share the same semantic class \citep{levin1993english}
-	\item[Shared proper nouns] Matching shared proper nouns, identified by Alembic \citep{aberdeen1995mitre}
+	\item[Shared proper nouns] Matching shared proper nouns, identified by \textit{Alembic} \citep{aberdeen1995mitre}
 \end{description}
 
 These features were then optionally normalized by sentence length or relative frequency of the feature occurence.
@@ -412,7 +405,7 @@ First, an initial list of words is created from a large text corpus (\textbf{Unk
 
 Because this will not include words for named entities yet, we only consider a token to be an unknown token, if it is not tagged as a Named Entity by a Named Entity Recognizer (\textbf{UnknownTokens-ner}). We employ the Stanford Named Entity Recognizer \citep{stanfordNER}, which is a widely used, state-of-the-art NER that comes with a model for the English language.
 
-In order to improve upon the NER and further increase recall, we use two simple heuristics (\textbf{UnknownTokens-heur}): Firstly, we assume that words that start with a capital letter and are only followed by lower case letters are named entities and therefore no unknown tokens and we throw out words containing hypens. Finally, we automatically check whether an unknown token has an entry on the online encyclopedia Wikipedia (\textbf{UnknownTokens-wiki}).
+In order to improve upon the NER and further increase recall, we use two simple heuristics (\textbf{UnknownTokens-heur}): Firstly, we assume that words that start with a capital letter and are only followed by lower case letters are named entities and therefore no unknown tokens. Next, we throw out words containing hypens. Finally, we automatically check whether an unknown token has an entry in the free online encyclopedia Wikipedia (\textbf{UnknownTokens-wiki}).
 
 We automatically label any tokens that are neither on our list of known tokens from GigaWord, nor tagged as a named entity as ``unknown'' and tag the sentence as containing unknown tokens. The combined method \textbf{UnknownTokens-gw+heur+ner+wiki} is what we call \textbf{UnknownTokens-general}.
 
@@ -422,7 +415,9 @@ The standard metrics precision, recall and F-score are used for evaluation.
 
 Table~\ref{eval_unknowntokens} shows the results of the evaluation of both variations of \textbf{UnknownTokens} on \textit{dev-2}. Because the amount of sentences not containing a missing spaces violation is much larger than the ones that do, several weighted metrics are provided, too:
 
-The micro-average method consists of summing up the individual values from the confusion matrix (True Positive, False Positive, True Negative and False Negative) and calculating new metrics based on the results. We only display the F-score here, since F-score, recall and precision are identical for a 2-class scenario: Since the true positives of the missing spaces class are identical with the true negatives of the no missing spaces class (and vice versa), the new number of true positives and true negatives (for the micro average) is $tp + tn$ of any of the two classes. The same goes for false negatives and false positives. That means that when only dealing with two classes, in the micro-average method, the terms \textit{positive} and \textit{negative} can be used interchangeably. As precision is defined as $\frac{tp}{tp+fp}$ and recall as $\frac{tp}{tp+fn}$; as the equations only differ in whether they use $fp$ or $fn$ (which are exactly the same here) in the divisor, precision and recall (and therefore F-score, too, since the F-score is simply the harmonic mean of precision and recall) are identical.
+The micro-average method consists of summing up the individual values from the confusion matrix (True Positive, False Positive, True Negative and False Negative) and calculating new metrics based on the results. We only display the F-score here, since F-score, recall and precision are identical for a 2-class scenario: Since the true positives of the missing spaces class are identical with the true negatives of the no missing spaces class (and vice versa), the new number of true positives and true negatives (for the micro average) is $tp + tn$ of any of the two classes. 
+
+The same goes for false negatives and false positives. That means that when only dealing with two classes, in the micro-average method, the terms \textit{positive} and \textit{negative} can be used interchangeably. As precision is defined as $\frac{tp}{tp+fp}$ and recall as $\frac{tp}{tp+fn}$; as the equations only differ in whether they use $fp$ or $fn$ (which are exactly the same here) in the divisor, precision and recall (and therefore F-score, too, since the F-score is simply the harmonic mean of precision and recall) are identical.
 
 Macro-averages are just arithmetic means of precision and recall. For both micro- and macro-average, the new F-score is calculated from the new scores.
 
@@ -431,7 +426,8 @@ Both \textbf{UnknownTokens-general} and \textbf{UnknownTokens-source} improve va
 %%%BEGIN BACKUP WITHOUT WEIGHTED MEAN:
 \begin{sidewaystable}
 \begin{center}
-\begin{tabular}{r|c|c|c|c|c|c|c|c|}
+\begin{tabular}{|r|c|c|c|c|c|c|c|c|}
+\hline
 & \multicolumn{3}{c|}{Missing spaces} & \multicolumn{3}{c|}{No missing spaces} & Macro-average & Accuracy\\
 & \textbf{P} & \textbf{R} & \textbf{F} & \textbf{P} & \textbf{R} & \textbf{F} & \textbf{F} & \\
 \hline
@@ -446,6 +442,7 @@ Both \textbf{UnknownTokens-general} and \textbf{UnknownTokens-source} improve va
 \textbf{UT-gw+heur+ner+wiki} & 70.3 & 96.0 & 81.2 & 99.8 & 97.8 & 98.8 & 90.6 & 97.7\\
 \hline
 \textbf{UT-source} & \textbf{95.9} & 94.6 & \textbf{95.2} & 99.7 & 99.7 & \textbf{99.7} & \textbf{97.5} & \textbf{99.5}\\
+\hline
 \end{tabular}
 \end{center}
 \caption{Evaluation of \textbf{UnknownTokens} on \textit{dev-2}, in percent. \textbf{UT-wordnet+heur+ner+wiki} is equivalent to \textbf{UnknownTokens-general}. \textbf{wn} = Wordnet-based dictionary, \textbf{heur} = title case heuristics, \textbf{ner} = Stanford NER, \textbf{wiki} = Wikipedia entry check}
@@ -493,10 +490,10 @@ RandomForest works by randomly selecting subsets of training instances along wit
 
 For this task, we use the machine learning toolkit WEKA \citep{hall2009weka}.
 %As an input, WEKA requires an ARFF file, which we created using three features:
-We use three features for our decision tree:
+We use three features for building our decision trees:
 
 \begin{itemize}
-	\item \textbf{LM\_PP} is the perplexity calculated for a sentence by the language model, following \cite{sun2007detecting}. This is a numeric feature. It proved to not be sufficient for detecting ungrammaticality on its own.
+	\item \textbf{language model perplexity} is the perplexity calculated for a sentence by the language model, following \cite{sun2007detecting}. This is a numeric feature. It proved to not be sufficient for detecting ungrammaticality on its own.
 	\item \textbf{missing spaces} is the classification of \textbf{UnknownTokens-source} for a given sentence, as described in section~\ref{sec_unknowntokens}. This is a binary feature.
 	\item \textbf{numberofwords} is the number of words in the sentence. We follow \cite{wagner2007comparative} here, the intuition is that ungrammatical sentences will often be extraordinarily long, or very short:
 
@@ -737,7 +734,7 @@ We unsuccessfully tried to increase our performance by a few means:
 \begin{itemize}
 \item stemming the words with the Porter Stemming Algorithm \citep{porter1980algorithm} from NLTK \citep{bird2009natural}
 \item part-of-speech-tagging the tokens with NLTK and only counting overlaps that include a verb (with the motivation of ruling out noun-based false positives)
-\item looking up the first synset of each token in WordNet \citep{fellbaum2005wordnet}, and building the intersections between the sets by considering two tokens to be the same if the first word is included in the second one's synset.
+\item looking up the first synset of each token in \textit{WordNet} \citep{fellbaum2005wordnet}, and building the intersections between the sets by considering two tokens to be the same if the first word is included in the second one's synset.
 \end{itemize}
 
 Neither of these methods had any positive effect on our results.
@@ -874,7 +871,7 @@ The best methods for each violation, evaluated on \textit{test}, can be seen in 
 
 Along with this paper, the authors will publish a toolchain that can be used to annotate given documents with the best methods described in here.
 
-We only looked at a part of the violation types in \cite{friedrichlqvsumm}. Methods for detecting the last clause-level violation (no semantic relation), as well as the entity- and discourse-level violations have yet to be developed:
+We only looked at a part of the violation types in \cite{friedrichlqvsumm}. Methods for detecting the last clause-level violation (no semantic relatedness), as well as the entity- and discourse-level violations have yet to be developed:
 
 For the pronoun violations (\textit{pronoun with missing antecedent} and \textit{pronoun with misleading antecendent}), one could use the output of a coreference resolution tool such as BART \citep{versley2008bart} or the Stanford coreference resolution system \citep{lee2011stanford} to infer coreferences between entities in the summaries as well as the source documents and compare the originating coreference chains.
 
@@ -884,7 +881,7 @@ It is to be seen whether this method works as well as the author believes.
 
 Going after the mention (\textit{first mention without explanation} and \textit{subsequent mention with explanation}) and noun phrase violations (\textit{definite noun phrase without reference to previous mention} and \textit{indefinite noun phrase with reference to previous mention}) would at least require a named entity recognition system, probably paired with at least some rudimentary form of semantic or discourse parsing.
 
-\textit{no semantic relatedness} also suggests an approach using semantic parsing, but usable results might even be achieved by some method based on the distance between content words in WordNet \citep{fellbaum2005wordnet}.
+\textit{no semantic relatedness} also suggests an approach using semantic parsing, but usable results might even be achieved by some method based on the distance between content words in \textit{WordNet} \citep{fellbaum2005wordnet}.
 
 Finally, the straightforward solution for detecting the \textit{no discourse relation} violation seems to be parsing the two sentences \textit{without} the discourse connective using a discourse parser, and then comparing the derived discourse relation with the relation commonly linked with the connective.
 

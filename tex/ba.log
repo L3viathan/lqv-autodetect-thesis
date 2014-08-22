@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  22 AUG 2014 05:40
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.6.30)  22 AUG 2014 06:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -821,18 +821,18 @@ File: tikzlibrarypositioning.code.tex 2008/10/06 v2.10 (rcs-revision 1.7)
 ) (./ba.aux)
 \openout1 = `ba.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 101.
-LaTeX Font Info:    ... okay on input line 101.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 104.
+LaTeX Font Info:    ... okay on input line 104.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 104.
+LaTeX Font Info:    ... okay on input line 104.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 104.
+LaTeX Font Info:    ... okay on input line 104.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 104.
+LaTeX Font Info:    ... okay on input line 104.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 104.
+LaTeX Font Info:    ... okay on input line 104.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 104.
+LaTeX Font Info:    ... okay on input line 104.
 
 (/usr/local/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -930,7 +930,7 @@ File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 
 (/usr/local/texlive/2012/texmf-dist/tex/generic/xypic/xyps-ps.tex)
 
-Xy-pic Warning: The produced DVI file is NOT PORTABLE [ba:101]:
+Xy-pic Warning: The produced DVI file is NOT PORTABLE [ba:104]:
  It contains <driver> `dvips' \specials for the `PostScript' extension.
 
 (/usr/local/texlive/2012/texmf-dist/tex/generic/xypic/xyps-pro.tex)
@@ -1034,7 +1034,7 @@ map/pdftex.map} <./eule.png>]) [2] [3] (./ba.toc)
 
  [4]
 ! Undefined control sequence.
-l.162 \maketableofcontents
+l.151 \maketableofcontents
                           
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1042,13 +1042,13 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-[1] [2] [3] [4] [5] <subtypes_dev2.png, id=49, 490.83376pt x 561.09625pt>
+[1] [2] [3] [4] [5] [6] <subtypes_dev2.png, id=52, 490.83376pt x 561.09625pt>
 File: subtypes_dev2.png Graphic file (type png)
 
 <use subtypes_dev2.png>
-Package pdftex.def Info: subtypes_dev2.png used on input line 374.
+Package pdftex.def Info: subtypes_dev2.png used on input line 367.
 (pdftex.def)             Requested size: 294.50252pt x 336.66034pt.
- [6] [7 <./subtypes_dev2.png>]
+
 
 ! LaTeX Error: Environment subequations* undefined.
 
@@ -1056,54 +1056,54 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.387 	\begin{subequations*}
+l.380 	\begin{subequations*}
                             
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-! LaTeX Error: \begin{figure} on input line 386 ended by \end{subequations*}.
+! LaTeX Error: \begin{figure} on input line 379 ended by \end{subequations*}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.394 	\end{subequations*}
+l.387 	\end{subequations*}
                           
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-
-Overfull \hbox (21.03401pt too wide) in paragraph at lines 415--416
+[7 <./subtypes_dev2.png>]
+Overfull \hbox (21.03401pt too wide) in paragraph at lines 408--409
 []\OT1/cmr/m/n/10 In or-der to im-prove upon the NER and fur-ther in-crease re-
 call, we use two sim-ple heuris-tics (\OT1/cmr/bx/n/10 UnknownTokens-
  []
 
 [8]
-Overfull \hbox (49.20082pt too wide) in paragraph at lines 420--422
+Overfull \hbox (49.20082pt too wide) in paragraph at lines 413--415
 \OT1/cmr/m/n/10 We eval-u-ate how ef-fec-tive \OT1/cmr/bx/n/10 Un-known-To-kens
  \OT1/cmr/m/n/10 is in de-tect-ing \OT1/cmr/m/it/10 miss-ing spaces \OT1/cmr/m/
 n/10 vi-o-la-tions, both with (\OT1/cmr/bx/n/10 UnknownTokens-
  []
 
 [9] [10]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 499.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 496.
 
  (/usr/local/texlive/2012/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 499.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 496.
 
-Overfull \hbox (2.41785pt too wide) in paragraph at lines 587--588
+Overfull \hbox (2.41785pt too wide) in paragraph at lines 584--585
 \OT1/cmr/m/n/10 We per-formed 10-fold cross-validation with both \OT1/cmr/bx/n/
 10 RandomForest-UT \OT1/cmr/m/n/10 and \OT1/cmr/bx/n/10 RandomForest-UT+parser
  []
 
 
-Overfull \hbox (7.2307pt too wide) in paragraph at lines 589--590
+Overfull \hbox (7.2307pt too wide) in paragraph at lines 586--587
 []\OT1/cmr/m/n/10 As ev-i-dent from the ta-ble, in-clud-ing the parser out-put 
 statis-tics as fea-tures (\OT1/cmr/bx/n/10 RandomForest-UT+parser\OT1/cmr/m/n/1
 0 )
@@ -1112,10 +1112,10 @@ statis-tics as fea-tures (\OT1/cmr/bx/n/10 RandomForest-UT+parser\OT1/cmr/m/n/1
 [11] [12] [13] <a.png, id=77, 3140.73375pt x 2145.01375pt>
 File: a.png Graphic file (type png)
  <use a.png>
-Package pdftex.def Info: a.png used on input line 721.
+Package pdftex.def Info: a.png used on input line 718.
 (pdftex.def)             Requested size: 471.08974pt x 321.73817pt.
 
-Overfull \hbox (15.84563pt too wide) in paragraph at lines 721--722
+Overfull \hbox (15.84563pt too wide) in paragraph at lines 718--719
  [] 
  []
 
@@ -1136,11 +1136,11 @@ and I'll forget about whatever was undefined.
 Here is how much of TeX's memory you used:
  20336 strings out of 493488
  336270 string characters out of 3141326
- 475363 words of memory out of 3000000
+ 477363 words of memory out of 3000000
  23181 multiletter control sequences out of 15000+200000
  11419 words of font info for 46 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
- 74i,13n,77p,1153b,1003s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 74i,13n,77p,721b,1003s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2012/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmbx10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmbx12.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/ams
@@ -1155,7 +1155,7 @@ cmssbx10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm
 /cmsy10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmti10.pfb></usr/local/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mti12.pfb>
-Output written on ba.pdf (26 pages, 599026 bytes).
+Output written on ba.pdf (26 pages, 600119 bytes).
 PDF statistics:
  151 PDF objects out of 1000 (max. 8388607)
  102 compressed objects within 2 object streams
