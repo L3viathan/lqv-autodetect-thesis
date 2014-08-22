@@ -7,13 +7,13 @@
 \citation{owczarzak2011overview}
 \citation{gflow}
 \citation{friedrichlqvsumm}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}}
+\citation{atwell1987detect}
+\citation{leech1983automatic}
 \citation{bender2004arboretum}
 \citation{copestake2002implementing}
 \citation{flickinger2000building}
 \citation{schneider1998recognizing}
-\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{1}}
-\newlabel{related_work}{{2}{1}}
 \citation{chodorow2000unsupervised}
 \citation{sun2007detecting}
 \citation{Joachims/02a}
@@ -22,6 +22,8 @@
 \citation{vadlapudi2010automated}
 \citation{wagner2007comparative}
 \citation{maxwell1996efficient}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}}
+\newlabel{related_work}{{2}{2}}
 \citation{papineni2002bleu}
 \citation{owczarzak2011overview}
 \citation{manning-EtAl:2014:P14-5}
@@ -29,22 +31,27 @@
 \@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Distribution and count of summaries across development and test sets}}{3}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}LQVSumm}{3}}
 \newlabel{corpus_study}{{3}{3}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Violation types}{3}}
 \citation{friedrichlqvsumm}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Violation types}{4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Subtype system}{4}}
 \newlabel{s_subtypes}{{3.2}{4}}
 \citation{valeeva}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {Subtypes of ungrammaticality in \textit  {dev-2}.} Where the annotator didn't know what subtype to annotate the sentence with, they selected ``other''.}}{6}}
-\newlabel{subtypes}{{1}{6}}
+\citation{gigaword}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Experiments}{6}}
 \newlabel{experiments}{{4}{6}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Detecting Ungrammaticality}{6}}
 \newlabel{sec_unknowntokens}{{4.1}{6}}
-\citation{gigaword}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}The UnknownTokens method}{6}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces \textbf  {Subtypes of ungrammaticality in \textit  {dev-2}.} Where the annotator didn't know what subtype to annotate the sentence with, they selected ``other''.}}{7}}
+\newlabel{subtypes}{{1}{7}}
+\newlabel{metrics}{{4}{7}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Standard metrics Precision, Recall, F-Score and Accuracy}}{7}}
 \citation{stanfordNER}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}The UnknownTokens method}{7}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Evaluation of UnknownTokens}{7}}
 \citation{wagner2007comparative}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Evaluation of UnknownTokens}{8}}
+\newlabel{RF1}{9}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Evaluation of \textbf  {UnknownTokens} on \textit  {dev-2}, in percent. \textbf  {UT-wordnet+heur+ner+wiki} is equivalent to \textbf  {UnknownTokens-general}. \textbf  {wn} = Wordnet-based dictionary, \textbf  {heur} = title case heuristics, \textbf  {ner} = Stanford NER, \textbf  {wiki} = Wikipedia entry check}}{9}}
+\newlabel{eval_unknowntokens}{{2}{9}}
 \citation{gigaword}
 \citation{stolcke2002srilm}
 \citation{breiman2001random}
@@ -54,80 +61,81 @@
 \citation{ace}
 \citation{copestake2002implementing}
 \citation{wagner2007comparative}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.3}The RandomForest-UT method}{8}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4}The RandomForest-UT+parser method}{8}}
-\newlabel{RF1}{9}
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Evaluation of \textbf  {UnknownTokens} on \textit  {dev-2}, in percent. \textbf  {UT-wordnet+heur+ner+wiki} is equivalent to \textbf  {UnknownTokens-general}. \textbf  {wn} = Wordnet-based dictionary, \textbf  {heur} = title case heuristics, \textbf  {ner} = Stanford NER, \textbf  {wiki} = Wikipedia entry check}}{9}}
-\newlabel{eval_unknowntokens}{{2}{9}}
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Evaluation of \textbf  {RandomForest-UT} and \textbf  {RandomForest-UT+parser} on \textit  {test}, in percent, based on the class of ungrammatical sentences. As Baseline, we classified every sentence with the most-frequent class, ``not ungrammatical''.}}{10}}
-\newlabel{eval_randomforest}{{3}{10}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Ablation study of \textbf  {RandomForest-UT+parser}. The numbers denote the decrease of the F-Score if that feature were to be taken out.}}{10}}
-\newlabel{ablation_study_randomforest}{{4}{10}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.3}The RandomForest-UT method}{10}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.4}The RandomForest-UT+parser method}{10}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.5}Evaluation of RandomForest}{10}}
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Evaluation of \textbf  {Regex} on \textit  {test}.}}{11}}
-\newlabel{eval_regex}{{5}{11}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Evaluation of \textbf  {RandomForest-UT} and \textbf  {RandomForest-UT+parser} on \textit  {test}, in percent, based on the class of ungrammatical sentences. As Baseline, we classified every sentence with the most-frequent class, ``not ungrammatical''.}}{11}}
+\newlabel{eval_randomforest}{{3}{11}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Ablation study of \textbf  {RandomForest-UT+parser}. The numbers denote the decrease of the F-Score if that feature were to be taken out.}}{11}}
+\newlabel{ablation_study_randomforest}{{4}{11}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Datelines}{11}}
 \newlabel{s_datelines}{{4.2}{11}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}The Regex Method}{11}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}Evaluation}{11}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Evaluation of \textbf  {Regex} on \textit  {test}.}}{12}}
+\newlabel{eval_regex}{{5}{12}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Method}{12}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}Evaluation}{12}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Redundancy}{12}}
 \newlabel{redundancy}{{4.3}{12}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Method}{12}}
 \citation{levenshtein1966binary}
 \citation{papineni2002bleu}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Method}{13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Performance of various thresholds for \textbf  {Unigrams}, \textbf  {Bigrams}, and \textbf  {Combined} in \textit  {dev-1} and \textit  {dev-2}. Continuous lines are recall, dashed lines are precision and bold lines are F-score.}}{14}}
+\newlabel{redundancy_graph}{{3}{14}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}Evaluation}{14}}
 \citation{porter1980algorithm}
 \citation{bird2009natural}
 \citation{fellbaum2005wordnet}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}Evaluation}{13}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Performance of various thresholds for \textbf  {Unigrams}, \textbf  {Bigrams}, and \textbf  {Combined} in \textit  {dev-1} and \textit  {dev-2}. Continuous lines are recall, dashed lines are precision and bold lines are F-score.}}{14}}
-\newlabel{redundancy_graph}{{2}{14}}
 \citation{friedrichlqvsumm}
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Evaluation of \textbf  {Unigrams}, \textbf  {Bigrams}, and \textbf  {Combined} on everything but \textit  {dev-1} and \textit  {dev-2}}}{15}}
-\newlabel{eval_redundancy}{{6}{15}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Thresholds for \textbf  {Unigrams}, \textbf  {Bigrams}, and \textbf  {Combined} determined on \textit  {dev-1+2}}}{15}}
+\newlabel{thresholds}{{6}{15}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Evaluation of \textbf  {Unigrams}, \textbf  {Bigrams}, and \textbf  {Combined} on everything but \textit  {dev-1} and \textit  {dev-2}}}{15}}
+\newlabel{eval_redundancy}{{7}{15}}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Discussion}{15}}
 \newlabel{discussion}{{5}{15}}
 \citation{friedrichlqvsumm}
 \citation{manning-EtAl:2014:P14-5}
 \citation{owczarzak2011overview}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion \& Future Work}{16}}
-\newlabel{conclusion}{{6}{16}}
 \citation{friedrichlqvsumm}
 \citation{versley2008bart}
 \citation{lee2011stanford}
-\citation{fellbaum2005wordnet}
 \newlabel{eval_best}{{6}{17}}
-\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces The three best methods for detecting Ungrammaticality (\textit  {other ungrammatical form} + \textit  {incomplete sentence}), Datelines (\textit  {inclusion of datelines}) and Redundancy (\textit  {redundant information})}}{17}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces The three best methods for detecting Ungrammaticality (\textit  {other ungrammatical form} + \textit  {incomplete sentence}), Datelines (\textit  {inclusion of datelines}) and Redundancy (\textit  {redundant information})}}{17}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion \& Future Work}{17}}
+\newlabel{conclusion}{{6}{17}}
+\citation{fellbaum2005wordnet}
 \bibstyle{apalike}
 \bibdata{referenzen}
-\bibcite{bender2004arboretum}{{1}{2004}{{Bender et~al.}}{{}}}
-\bibcite{bird2009natural}{{2}{2009}{{Bird et~al.}}{{}}}
-\bibcite{breiman2001random}{{3}{2001}{{Breiman}}{{}}}
-\bibcite{chodorow2000unsupervised}{{4}{2000}{{Chodorow and Leacock}}{{}}}
-\bibcite{gflow}{{5}{2013}{{Christensen et~al.}}{{}}}
-\bibcite{copestake2002implementing}{{6}{2002}{{Copestake}}{{}}}
-\bibcite{fellbaum2005wordnet}{{7}{2005}{{Fellbaum}}{{}}}
-\bibcite{stanfordNER}{{8}{2005}{{Finkel et~al.}}{{}}}
-\bibcite{flickinger2000building}{{9}{2000}{{Flickinger}}{{}}}
-\bibcite{friedrichlqvsumm}{{10}{2014}{{Friedrich et~al.}}{{}}}
-\bibcite{gigaword}{{11}{2003}{{Graff et~al.}}{{}}}
-\bibcite{hall2009weka}{{12}{2009}{{Hall et~al.}}{{}}}
-\bibcite{Joachims/02a}{{13}{2002}{{Joachims}}{{}}}
-\bibcite{lee2011stanford}{{14}{2011}{{Lee et~al.}}{{}}}
-\bibcite{levenshtein1966binary}{{15}{1966}{{Levenshtein}}{{}}}
-\bibcite{lin2004rouge}{{16}{2004}{{Lin}}{{}}}
-\bibcite{manning-EtAl:2014:P14-5}{{17}{2014}{{Manning et~al.}}{{}}}
-\bibcite{maxwell1996efficient}{{18}{1996}{{Maxwell and Kaplan}}{{}}}
-\bibcite{nenkova2011foundations}{{19}{2011}{{Nenkova et~al.}}{{}}}
-\bibcite{owczarzak2011overview}{{20}{2011}{{Owczarzak and Dang}}{{}}}
-\bibcite{ace}{{21}{2011}{{Packart}}{{}}}
-\bibcite{papineni2002bleu}{{22}{2002}{{Papineni et~al.}}{{}}}
-\bibcite{porter1980algorithm}{{23}{1980}{{Porter}}{{}}}
-\bibcite{R}{{24}{2013}{{R Core Team}}{{}}}
-\bibcite{schneider1998recognizing}{{25}{1998}{{Schneider and McCoy}}{{}}}
-\bibcite{stolcke2002srilm}{{26}{2002}{{Stolcke et~al.}}{{}}}
-\bibcite{sun2007detecting}{{27}{2007}{{Sun et~al.}}{{}}}
-\bibcite{vadlapudi2010automated}{{28}{2010}{{Vadlapudi and Katragadda}}{{}}}
-\bibcite{valeeva}{{29}{2013}{{Valeeva}}{{}}}
-\bibcite{versley2008bart}{{30}{2008}{{Versley et~al.}}{{}}}
-\bibcite{wagner2007comparative}{{31}{2007}{{Wagner et~al.}}{{}}}
-\bibcite{ggplot2}{{32}{2009}{{Wickham}}{{}}}
+\bibcite{atwell1987detect}{{1}{1987}{{Atwell}}{{}}}
+\bibcite{bender2004arboretum}{{2}{2004}{{Bender et~al.}}{{}}}
+\bibcite{bird2009natural}{{3}{2009}{{Bird et~al.}}{{}}}
+\bibcite{breiman2001random}{{4}{2001}{{Breiman}}{{}}}
+\bibcite{chodorow2000unsupervised}{{5}{2000}{{Chodorow and Leacock}}{{}}}
+\bibcite{gflow}{{6}{2013}{{Christensen et~al.}}{{}}}
+\bibcite{copestake2002implementing}{{7}{2002}{{Copestake}}{{}}}
+\bibcite{fellbaum2005wordnet}{{8}{2005}{{Fellbaum}}{{}}}
+\bibcite{stanfordNER}{{9}{2005}{{Finkel et~al.}}{{}}}
+\bibcite{flickinger2000building}{{10}{2000}{{Flickinger}}{{}}}
+\bibcite{friedrichlqvsumm}{{11}{2014}{{Friedrich et~al.}}{{}}}
+\bibcite{gigaword}{{12}{2003}{{Graff et~al.}}{{}}}
+\bibcite{hall2009weka}{{13}{2009}{{Hall et~al.}}{{}}}
+\bibcite{Joachims/02a}{{14}{2002}{{Joachims}}{{}}}
+\bibcite{lee2011stanford}{{15}{2011}{{Lee et~al.}}{{}}}
+\bibcite{leech1983automatic}{{16}{1983}{{Leech et~al.}}{{}}}
+\bibcite{levenshtein1966binary}{{17}{1966}{{Levenshtein}}{{}}}
+\bibcite{lin2004rouge}{{18}{2004}{{Lin}}{{}}}
+\bibcite{manning-EtAl:2014:P14-5}{{19}{2014}{{Manning et~al.}}{{}}}
+\bibcite{maxwell1996efficient}{{20}{1996}{{Maxwell and Kaplan}}{{}}}
+\bibcite{nenkova2011foundations}{{21}{2011}{{Nenkova et~al.}}{{}}}
+\bibcite{owczarzak2011overview}{{22}{2011}{{Owczarzak and Dang}}{{}}}
+\bibcite{ace}{{23}{2011}{{Packart}}{{}}}
+\bibcite{papineni2002bleu}{{24}{2002}{{Papineni et~al.}}{{}}}
+\bibcite{porter1980algorithm}{{25}{1980}{{Porter}}{{}}}
+\bibcite{R}{{26}{2013}{{R Core Team}}{{}}}
+\bibcite{schneider1998recognizing}{{27}{1998}{{Schneider and McCoy}}{{}}}
+\bibcite{stolcke2002srilm}{{28}{2002}{{Stolcke et~al.}}{{}}}
+\bibcite{sun2007detecting}{{29}{2007}{{Sun et~al.}}{{}}}
+\bibcite{vadlapudi2010automated}{{30}{2010}{{Vadlapudi and Katragadda}}{{}}}
+\bibcite{valeeva}{{31}{2013}{{Valeeva}}{{}}}
+\bibcite{versley2008bart}{{32}{2008}{{Versley et~al.}}{{}}}
+\bibcite{wagner2007comparative}{{33}{2007}{{Wagner et~al.}}{{}}}
+\bibcite{ggplot2}{{34}{2009}{{Wickham}}{{}}}

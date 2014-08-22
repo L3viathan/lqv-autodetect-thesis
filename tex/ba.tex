@@ -130,7 +130,7 @@ We obtain F-Scores of 58.6\% for ungrammaticality, 87.8\% for redundancy and 37.
 \section*{Acknowledgements}
 I would like to thank my supervisors Prof. Manfred Pinkal, Annemarie Friedrich and Alexis Palmer for their continuous support in the process of creating this thesis, and for providing me with helpful comments and guidance whenever I asked for it.
 
-This work couldn't have been done without the work done by Marina Valeeva.
+This work couldn't have been done without the work previously done by Marina Valeeva.
 
 I would also like to thank Lukas Burk for helping me with R \citep{R} and ggplot2 \citep{ggplot2}.
 \newpage
@@ -161,39 +161,44 @@ I would also like to thank Lukas Burk for helping me with R \citep{R} and ggplot
 % Levenshtein auf Wortebene (?)
 
 \maketableofcontents
-%general TODOs:
-% was macht RandomForest
 
 \section{Introduction}
-% Motivation, What am I trying to do
-
-%TODO: more explanation, what is a summary, examples
-%TODO grobe ergebnisse, alles, beispiele, experimente schon kurz beschreiben inkl. ergebnisse
 With an ever-growing amount of information, it is becoming increasingly important to reduce that information to a processible amount, by summarizing it. Most of the time, it is infeasible to do this by hand, and there is thus a need for automating the process.
 
-\textit{Automatic summarization systems} take one or more documents and produce a summary that contains the most important information from these documents. Such systems can be divided in \textit{extractive} and \textit{abstractive}, and in \textit{single-document} and \textit{multi-document} summarization systems.
+Automatic summarization is the task of taking one or more documents as input and producing a summary that contains the most important information from these documents.
+
+\textit{Automatic summarization systems} can be divided in \textit{extractive} and \textit{abstractive}, and in \textit{single-document} and \textit{multi-document} summarization systems.
 
 A \textit{single-document} system takes only one document as an input and produces a summary of that document, while a \textit{multi-document} system summarizes multiple documents on the same topic.
 
-An \textit{abstractive} system is one which infers knowledge from its input into an internal semantic representation and generates a new text based on that knowledge. The task of constructing an abstractive summarization system is very complex, which is why most systems used today are \textit{extractive}, which means they work by taking phrases from their input and glue them together to produce an output.
+An \textit{abstractive} system is one which infers knowledge from its input into an internal semantic representation and produces a novel text based on that knowledge, using language generation techniques. The task of constructing an abstractive summarization system is very complex, which is why most systems used today are \textit{extractive}.
+
+Extractive summarization systems select relevant sentences from the source document(s), reorder them and finally apply sentence fusion and compression to shrink the resulting summary.
 
 We are only concerned with extractive, multi-document summarization, because our data consists of summaries produced by extractive multi-document summarization systems.
 
 Evaluation of automatic summarization systems has largely been done on content coverage. Along with the task being hard in general, this is one reason why generated summaries often lack linguistic quality \citep{nenkova2011foundations}, meaning that they contain many errors of various kinds. A new focus on linguistic quality (LQ) evaluation would presumably help decrease these issues and produce overall better summarization systems.
 
-As a first step in this direction, \cite{friedrichlqvsumm} created the \textit{LQVSumm} corpus, which consists of multi-document summaries from the TAC 2011 shared task on Guided Summarization \citep{owczarzak2011overview}, annotated manually with LQ violations on entity, clause and discourse level. The corpus also includes annotations on 50 summaries produced by G-Flow \citep{gflow}, which we disregard, because the linguistic quality is much higher than in the rest of the corpus, along with the fact that the size of the annotated G-Flow summaries is much smaller.
+As a first step in this direction, \cite{friedrichlqvsumm} created the \textit{LQVSumm} corpus, which consists of multi-document summaries from the TAC 2011 shared task on Guided Summarization \citep{owczarzak2011overview}, annotated manually with LQ violations on entity, clause and discourse level.
+
+The corpus also includes annotations on 50 summaries produced by G-Flow \citep{gflow}, which we disregard, because the linguistic quality is much higher than in the rest of the corpus, along with the fact that the size of the annotated G-Flow summaries is much smaller.
 
 Manual annotation is an expensive and time-consuming process, for which an automatic system could be an alternative. Our work deals with creating such a system that manages at least part of the annotation automatically. We develop and evaluate our system on top of the \textit{LQVSumm} corpus. We also limit ourselves to the clause-level violations listed in \cite{friedrichlqvsumm}, except for \textit{no semantic relation}.
 
 The rest of this paper is organized as follows:
 
-The next section discusses related work. In Section~\ref{corpus_study}, we take a look at the \textit{LQVSumm} corpus and the challenges it poses for our experiments and methods. We also demonstrate our subtype system in that section, to prepare for the experiments, which are discussed in Section~\ref{experiments}, where they are also evaluated. We discuss our results in Section~\ref{discussion}. In Section~\ref{conclusion}, we discuss future work and conclude.
+The next section discusses related work. In Section~\ref{corpus_study}, we take a look at the \textit{LQVSumm} corpus and the challenges it poses for our experiments and methods. We also demonstrate our subtype system in that section, to prepare for the experiments.
+
+In Section~\ref{experiments} we describe and evaluate methods for annotating ungrammaticality (using decision trees with features extracted from parsing and the high-performing detection of the subtype \textit{missing spaces}), datelines (using regular expressions) and redundancy (using n-gram overlap).
+
+We achieve F-Scores of 58.6\% for ungrammaticality, 87.8\% for datelines and 37.0\% for redundancies. We discuss our results in Section~\ref{discussion}. In Section~\ref{conclusion}, we discuss future work and conclude.
 
 \section{Related Work}
 \label{related_work}
 % other works on grammaticality and so on
 
-%TODO viel mehr, mehr andere, und bei wichtigem (Wagner) viel mehr
+Pioneer work was done by \cite{atwell1987detect}, who used the part-of-speech tagger CLAWS \citep{leech1983automatic} along learned likelihood of POS tag pairs in grammatical sentences to annotate errors using Markov chains.
+They then added error tags to their tag dictionary --- tags that similarily spelled words have (when different from the word's own tags) --- and used them to make finding likely typing errors easier.
 
 Most work in the field of automatic grammar checking seems to have been done in the area of second language learning.
 \cite{bender2004arboretum} use the LKB parser and generator \cite{copestake2002implementing} with the English Resource Grammar \citep{flickinger2000building} to build \textit{Arboretum}, a system that, when given an erroneous input sentence, detects that error and outputs a corrected version of the sentence. Their method uses manually selected mal-rules \citep{schneider1998recognizing} to detect error types specific to second language learners of English.
@@ -202,7 +207,7 @@ While this seems to work for their specific domain, it does not transform well i
 
 \cite{chodorow2000unsupervised} build \textit{ALEK}, a system to grade TOEFL essays. It does so by viewing the task as an extension of Word Sense Disambiguation, and collecting n-grams of POS-tags and function words, and then classifying using primitive statistical measures like \textit{Mutual Information} and the $\chi^2$ test. However, only the whole essay is classified into one of six possible scores, and this decision is only made by looking at the test subject's understanding of the three words \textit{Concentrate}, \textit{Interest} and \textit{Knowledge} in context.
 
-\cite{sun2007detecting}, while also citing second language learning as their primary application, use a different approach: Instead of manually writing rules, they employ a supervised statistical learning method. They extract what they call \textit{labeled sequential patterns} (ngrams associated with a class) from both erroneous and correct sentences in their training corpus, enrich them with other automatically computed features, and use them as input for classification models; an SVM \citep[SVMlight,][]{Joachims/02a} and a Na\"ive Bayes classification model. The system achieves F-scores of around 80\%.
+\cite{sun2007detecting}, while also citing second language learning as their primary application, use a different approach: Instead of manually writing rules, they employ a supervised statistical learning method. They extract what they call \textit{labeled sequential patterns} (ngrams associated with a class) from both erroneous and correct sentences in their training corpus, enrich them with other automatically computed features, and use them as input for classification models; an SVM \citep[SVMlight,][]{Joachims/02a} and a Na\"ive Bayes classification model. The system achieves F-scores of around 80\%, evaluated on second language learning.
 
 There also has been work in the area of assessing grammaticality of automatically generated summaries, namely \cite{vadlapudi2010automated}. They used n-grams on POS-tag level and evaluated their system by looking at how well their classification correlates to ROGUE scores \citep{lin2004rouge}. \citeauthor{vadlapudi2010automated} achieve a Spearman's $\rho{}$ correlation of up to 77\% to ROGUE scores manually assigned by annotators.
 
@@ -357,8 +362,25 @@ It is to be noted, that from here on, we consider \textit{incomplete sentence} t
 %TODO more intro
 We conduct a number of experiments to find reliable ways to detect different kinds of linguistic quality violations. If possible, we would like to eventually be able to reproduce the annotations of our types on the LQVSumm corpus as well as annotate violations in other corpora.
 
+\begin{figure}
+	\begin{subequations*}
+	\begin{align*}
+		\text{Precision} &= \frac{\text{true positives}}{\text{true positives} + \text{false positives}}\\
+		\text{Recall} &= \frac{\text{true positives}}{\text{true positives} + \text{false negatives}}\\
+		\text{F-Score} &= 2*\frac{\text{precision}*\text{recall}}{\text{precision}+\text{recall}}\\
+		\text{Accuracy} &= \frac{\text{true positives}+\text{true negatives}}{\text{all instances}}
+	\end{align*}
+	\end{subequations*}
+	\label{metrics}
+	\caption{Standard metrics Precision, Recall, F-Score and Accuracy}
+\end{figure}
+
+We use the standard metrics of Precision, Recall, F-Score, and Accuracy, which can be seen in Figure~\ref{metrics}.
+
 \subsection{Detecting Ungrammaticality}
 \label{sec_unknowntokens}
+We start with the violation type \textit{other ungrammatical type} (plus \textit{incomplete sentence}, as explained earlier).
+
 Perhaps the most noticeable result of our corpus study is the large portion of \textit{missing spaces} violations, meaning clauses that include tokens which aren't correct words. Almost all of these cases come from a missing space between two words forming tokens such as \textit{reportsreaching} or \textit{Wenchuancounty}. As there is such a large amount of this type, finding a reliable detection method for this subtype would presumably significantly boost detection of ungrammaticality in general.
 
 \subsubsection{The UnknownTokens method}
@@ -579,7 +601,7 @@ Datelines take many different forms, with some including a location. There is al
 
 \quad\textit{\textbf{00 a.m.}People are panicking.}
 
-\subsubsection{The Regex Method}
+\subsubsection{Method}
 The emerging patterns are so regular, that we use regular expressions to detect them. A few iterations of the expression were created, but so far the highest results were achieved using the regular expression
 
 \begin{lstlisting}
@@ -620,9 +642,6 @@ which our system doesn't match.
 
 \subsection{Redundancy}
 \label{redundancy}
-% token overlap
-% threshold auf dev-Set perfekt machen, auf test-set testen
-% gegen Ende: wordnet most-frequent-sense
 
 Automatic summaries constructed from multiple source texts on the same topic often suffer from redundancy, as sentences that contain the same or largely the same information are occasionally included in the summary. As a consequence, reading fluency is impaired.
 
@@ -651,7 +670,7 @@ Finally, sometimes subsequent sentences have marginal differences:
 We are seeking to find all of these sentences, but concentrate on the latter two cases where the redundancy is obvious for humans.
 
 \subsubsection{Method}
-%TODO bigrams stemmed vs. unstemmed in table?
+%bigrams stemmed vs. unstemmed in table? No, no sign. diff.
 
 Our method (\textbf{Unigrams}) consists of a simple unigram overlap score, which we found to outperform more sophisticated approaches:
 
@@ -685,7 +704,7 @@ For recall, \textbf{Unigrams} outperforms \textbf{Bigrams}, while for precision 
 
 As is to be expected, higher thresholds correlate with higher precision and lower recall. And while the F-scores are given in Figure~\ref{redundancy_graph} for informational purposes, they are not what we want to optimize; while recall is desirable, we feel that precision is much more important for a system that annotates violations.
 
-We therefore choose a threshold of $0.4$ for the \textbf{Bigrams} and \textbf{Combined}, and one of $0.5$ for \textbf{Unigrams}, because there appear to be local maxima at that point with still some significant amount of recall.
+As can be seen in Table~\ref{thresholds}, we therefore choose a threshold of $0.4$ for the \textbf{Bigrams} and \textbf{Combined}, and one of $0.5$ for \textbf{Unigrams}, because there appear to be local maxima at that point with still some significant amount of recall.
 
 The results can be seen in Table~\ref{eval_redundancy}. Evidently, the \textbf{Unigrams} method outperforms \textbf{Levenshtein} and the \textbf{Baseline} as well as the other n-gram methods.
 
@@ -698,6 +717,18 @@ We unsuccessfully tried to increase our performance by a few means:
 \end{itemize}
 
 Neither of these methods had any positive effect on our results.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\textbf{Unigrams} & \textbf{Bigrams} & \textbf{Combined} \\
+\hline
+0.5 & 0.4 & 0.4
+\end{tabular}
+\end{center}
+\caption{Thresholds for \textbf{Unigrams}, \textbf{Bigrams}, and \textbf{Combined} determined on \textit{dev-1+2}}
+\label{thresholds}
+\end{table}
 
 \begin{table}
 \begin{center}

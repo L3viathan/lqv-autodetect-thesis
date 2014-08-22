@@ -1,5 +1,12 @@
 \begin{thebibliography}{}
 
+\bibitem[Atwell, 1987]{atwell1987detect}
+Atwell, E.~S. (1987).
+\newblock How to detect grammatical errors in a text without parsing it.
+\newblock In {\em Proceedings of the third conference on European chapter of
+  the Association for Computational Linguistics}, pages 38--45. Association for
+  Computational Linguistics.
+
 \bibitem[Bender et~al., 2004]{bender2004arboretum}
 Bender, E.~M., Flickinger, D., Oepen, S., Walsh, A., and Baldwin, T. (2004).
 \newblock Arboretum: Using a precision grammar for grammar checking in call.
@@ -80,6 +87,11 @@ Lee, H., Peirsman, Y., Chang, A., Chambers, N., Surdeanu, M., and Jurafsky, D.
 \newblock In {\em Proceedings of the Fifteenth Conference on Computational
   Natural Language Learning: Shared Task}, pages 28--34. Association for
   Computational Linguistics.
+
+\bibitem[Leech et~al., 1983]{leech1983automatic}
+Leech, G., Garside, R., and Atwell, E. (1983).
+\newblock The automatic grammatical tagging of the lob corpus.
+\newblock {\em ICAME news}, 7(1983):13--33.
 
 \bibitem[Levenshtein, 1966]{levenshtein1966binary}
 Levenshtein, V.~I. (1966).
