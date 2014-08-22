@@ -426,15 +426,15 @@ We automatically label any tokens that are neither on our list of known tokens f
 
 \subsubsection{Evaluation of UnknownTokens}
 We evaluate how effective \textbf{UnknownTokens} is in detecting \textit{missing spaces} violations, both with (\textbf{UnknownTokens-source}) and without (\textbf{UnknownTokens-general}) access to the source documents, and compare it to a \textbf{baseline}, which always assumes the most common case (no \textit{missing spaces} violation).
-The standard metrics precision, recall and F-score are used for evaluation.
+The standard metrics precision, recall and F-score (see Figure~\ref{metrics}) are used for evaluation.
 
-Table~\ref{eval_unknowntokens} shows the results of the evaluation of both variations of \textbf{UnknownTokens} on \textit{dev-2}. Because the amount of sentences not containing a missing spaces violation is much larger than the ones that do, several weighted metrics are provided, too:
+Table~\ref{eval_unknowntokens} shows the results of the evaluation of both variations of \textbf{UnknownTokens} on \textit{dev-2}. Because the amount of sentences not containing a missing spaces violation is much larger than the ones that do, the weighted metric ``Macro-average'' is provided, too:
 
-The micro-average method consists of summing up the individual values from the confusion matrix (True Positive, False Positive, True Negative and False Negative) and calculating new metrics based on the results. We only display the F-score here, since F-score, recall and precision are identical for a 2-class scenario: Since the true positives of the missing spaces class are identical with the true negatives of the no missing spaces class (and vice versa), the new number of true positives and true negatives (for the micro average) is $tp + tn$ of any of the two classes. 
+% The micro-average method consists of summing up the individual values from the confusion matrix (True Positive, False Positive, True Negative and False Negative) and calculating new metrics based on the results. We only display the F-score here, since F-score, recall and precision are identical for a 2-class scenario: Since the true positives of the missing spaces class are identical with the true negatives of the no missing spaces class (and vice versa), the new number of true positives and true negatives (for the micro average) is $tp + tn$ of any of the two classes. 
 
-The same goes for false negatives and false positives. That means that when only dealing with two classes, in the micro-average method, the terms \textit{positive} and \textit{negative} can be used interchangeably. As precision is defined as $\frac{tp}{tp+fp}$ and recall as $\frac{tp}{tp+fn}$; as the equations only differ in whether they use $fp$ or $fn$ (which are exactly the same here) in the divisor, precision and recall (and therefore F-score, too, since the F-score is simply the harmonic mean of precision and recall) are identical.
+% The same goes for false negatives and false positives. That means that when only dealing with two classes, in the micro-average method, the terms \textit{positive} and \textit{negative} can be used interchangeably. As precision is defined as $\frac{tp}{tp+fp}$ and recall as $\frac{tp}{tp+fn}$; as the equations only differ in whether they use $fp$ or $fn$ (which are exactly the same here) in the divisor, precision and recall (and therefore F-score, too, since the F-score is simply the harmonic mean of precision and recall) are identical.
 
-Macro-averages are just arithmetic means of precision and recall. For both micro- and macro-average, the new F-score is calculated from the new scores.
+Macro-averages are the arithmetic means of precision and recall of both classes. The new F-score is calculated from the new scores.
 
 Both \textbf{UnknownTokens-general} and \textbf{UnknownTokens-source} improve vastly over the baseline, but it is clear, that if the source text is available, it should be used to infer known words.
 
@@ -494,28 +494,32 @@ Both \textbf{UnknownTokens-general} and \textbf{UnknownTokens-source} improve va
 
 
 \subsubsection{The RandomForest-UT method}
-To detect more general forms of ungrammaticality, several other methods were investigated. Following \cite{wagner2007comparative}, we learn decision trees from outputs of several systems that on their own have not proven sufficient for this task. For this experiment, the development set \textit{dev-1} was used.
+To detect more general forms of ungrammaticality, several other methods were investigated. Following \cite{wagner2007comparative}, we train decision trees from outputs of several systems that on their own have not proven sufficient for this task. %or this experiment, the development set \textit{dev-1} was used.
+This experiment was then evaluated on \textit{test}.
 
-We train a language model on parts (the same parts we used as a word source in \textbf{UnknownTokens-general} (section~\ref{sec_unknowntokens})) of the Gigaword corpus\citep{gigaword}, extract perplexity scores for the sentences in our test set, and annotate them automatically. For the language model generation and the extraction of perplexity scores, we employ SRILM~\citep{stolcke2002srilm}, a language modeling toolkit. The perplexity scores alone had shown not to be effective in detecting ungrammaticality.
+We train a language model on parts (the same parts we used as a word source in \textbf{UnknownTokens-general} (section~\ref{sec_unknowntokens})) of the Gigaword corpus\citep{gigaword}, extract perplexity scores for the sentences in our test set, and annotate them automatically. Perplexity scores can be described as how surprised the system is when seeing the end of a test sentence, based on the information in the language model.
 
+For the language model generation and the extraction of perplexity scores, we employ SRILM~\citep{stolcke2002srilm}, a language modeling toolkit. The perplexity scores alone had shown not to be effective in detecting ungrammaticality.
 
 %The free WEKA software~\citep{hall2009weka} is an allround machine learning toolkit.
 We then use a RandomForest \citep{breiman2001random} to learn decision trees.
 RandomForest works by randomly selecting subsets of training instances along with random subsets of features to train a number of decision trees and then classifying test instances with what the majority of trees are classifying the instance with.
 
-For this task, we use the machine learning toolkit WEKA \citep{hall2009weka}.
 %As an input, WEKA requires an ARFF file, which we created using three features:
-We use three features for building our decision trees:
+We first use three features for building our decision trees:
 
 \begin{itemize}
-	\item \textbf{language model perplexity} is the perplexity calculated for a sentence by the language model, following \cite{sun2007detecting}. This is a numeric feature. It proved to not be sufficient for detecting ungrammaticality on its own.
-	\item \textbf{missing spaces} is the classification of \textbf{UnknownTokens-source} for a given sentence, as described in section~\ref{sec_unknowntokens}. This is a binary feature.
+	\item \textbf{language model perplexity} is the perplexity calculated for a sentence by the language model, following \cite{sun2007detecting}. 
+	This is a numeric feature. It proved to not be sufficient for detecting ungrammaticality on its own.
+	\item \textbf{missing spaces} is the classification of \textbf{UnknownTokens-source} for a given sentence, as described in section~\ref{sec_unknowntokens}. This is a binary feature --- either a sentence was classified as containing the violation, or as not containing it.
 	\item \textbf{numberofwords} is the number of words in the sentence. We follow \cite{wagner2007comparative} here, the intuition is that ungrammatical sentences will often be extraordinarily long, or very short:
 
 		\textit{Former US President George W Bush, Who Will attend a memorial service on Tuesday, Virginia, and the university of at least 33 people Were killed, in the Worst shooting rampage in modern history, the White House said.}
 
 		\textit{The report of a}
 \end{itemize}
+
+For implementing this task, we use the machine learning toolkit WEKA \citep{hall2009weka}.
 
 % \subsubsection{Evaluation of RandomForest-UT}
 % \label{S_eval_randomforest}
