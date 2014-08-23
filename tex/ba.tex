@@ -125,8 +125,11 @@ I hereby confirm that the thesis presented here is my own work, with all assista
 \thispagestyle{empty}
 \begin{abstract}
 \setlength{\parskip}{2ex plus 0.5ex minus 0.2ex}
-\textbf{Abstract} \quad Automatic summarization systems are usually evaluated on content coverage rather than linguistic quality factors, which leads to summaries containing many linguistic quality violations, like ungrammatical sentences.
-Building on the work of \cite{friedrichlqvsumm}, who annotated automatic summaries with a set of violation types, we first find a number of subtypes of ungrammaticality, and then we develop methods for detecting the clause-level violations ungrammaticality, inclusion of datelines and redundancy automatically.
+\textbf{Abstract} \quad Automatic summarization systems have in the past been evaluated mainly with regard to content coverage rather than linguistic quality factors, which leads to summaries containing many linguistic quality violations, like ungrammatical sentences.
+Building on the work of \cite{friedrichlqvsumm}, who annotated automatic summaries with a set of violation types, we first identify a number of subtypes of ungrammaticality and annotate a subset of the data with these subtypes, with the following results
+
+
+, and then we develop methods for detecting the clause-level violations ungrammaticality, inclusion of datelines and redundancy automatically.
 We obtain F-Scores of 58.6\% for ungrammaticality, 87.8\% for redundancy and 37.0\% for redundancy.
 \end{abstract}
 
@@ -183,6 +186,7 @@ In Section~\ref{experiments} we describe and evaluate methods for annotating ung
 
 We achieve F-Scores of 58.6\% for ungrammaticality, 87.8\% for datelines and 37.0\% for redundancies. We discuss our results in Section~\ref{discussion}. Finally, in Section~\ref{conclusion}, we discuss future work and conclude.
 
+\newpage
 \section{Related Work}
 \label{related_work}
 % other works on grammaticality and so on
@@ -239,6 +243,7 @@ In addition to these primitive features, they also used three composite features
 
 They then trained a machine learning algorithm \citep{cohen1996learning} and evaluated on a news text corpus, for which they achieved a precision of 60.5\% and a recall of 36.6\%.
 
+\newpage
 \section{LQVSumm}
 \label{corpus_study}
 % describe the corpus and its flaws
@@ -247,7 +252,13 @@ Summaries in the same topic are based on the same source documents.
 
 Because the annotation of LQVSumm was done using MMAX2 \citep{muller2006multi}, the summaries exist in its XML output format. Further annotations done from our side are applied to the existing files, but in seperate tags splitting corpus data from classification or added features.
 
-\begin{table}
+We split the corpus into three parts, while making sure that topics weren't spread across sets: \textit{dev-1} and \textit{dev-2} are development sets, \textit{test} is our test set. We have two development sets, because for some methods, we developed on one part and trained on another.
+\textit{dev-1} contains 351 summaries, \textit{dev-2} contains 352, that is 8 topics per development set and about 20\% of the corpus each.
+The test set \textit{test} contains the other 60\%, making up 1232 summaries and 28 topics.
+
+The breakdown of the distribution of topics across development and test sets is shown in Table~\ref{testsets}.
+
+\begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c|c|}
 \hline
@@ -266,12 +277,6 @@ Overall & 1935 & D1101 -- D1144\\
 \label{testsets}
 \caption{Distribution and count of summaries across development and test sets}
 \end{table}
-
-We split the corpus into three parts, while making sure that topics weren't spread across sets: \textit{dev-1} and \textit{dev-2} are development sets, \textit{test} is our test set. We have two development sets, because for some methods, we developed on one part and trained on another.
-\textit{dev-1} contains 351 summaries, \textit{dev-2} contains 352, that is 8 topics per development set and about 20\% of the corpus each.
-The test set \textit{test} contains the other 60\%, making up 1232 summaries and 28 topics.
-
-The breakdown of the distribution of topics across development and test sets is shown in Table~\ref{testsets}.
 
 Our annotations, experiments and the evaluation are all done on sentence basis. We use Stanford CoreNLP \citep{manning-EtAl:2014:P14-5} for sentence splitting. This is necessary to have classifiable entities, but introduces inaccuracies, because LQVSumm is annotated on clause level, clause meaning an arbitrary substring of a summary, which is often a sentence, but also sometimes spanning over sentence bounds.
 
@@ -377,13 +382,16 @@ It is to be noted, that from here on, we consider \textit{incomplete sentence} t
 \label{subtypes}
 \end{figure}
 
+\newpage
 \section{Experiments}
 \label{experiments}
 % All experiments, intermixed with small discussion segments
 %TODO more intro
-We conduct a number of experiments to find reliable ways to detect different kinds of linguistic quality violations. If possible, we would like to eventually be able to reproduce the annotations of our types on the LQVSumm corpus as well as annotate violations in other corpora.
+We conduct a number of experiments to find ways to detect different kinds of linguistic quality violations. If possible, we would like to eventually be able to reproduce the annotations of our types on the LQVSumm corpus as well as annotate violations in other corpora.
 
-\begin{figure}
+We use the standard metrics of Precision, Recall, F-Score, and Accuracy, which can be seen in Figure~\ref{metrics}.
+
+\begin{figure}[H]
 	\begin{subequations*}
 	\begin{align*}
 		\text{Precision} &= \frac{\text{true positives}}{\text{true positives} + \text{false positives}}\\
@@ -395,8 +403,6 @@ We conduct a number of experiments to find reliable ways to detect different kin
 	\label{metrics}
 	\caption{Standard metrics Precision, Recall, F-Score and Accuracy}
 \end{figure}
-
-We use the standard metrics of Precision, Recall, F-Score, and Accuracy, which can be seen in Figure~\ref{metrics}.
 
 \subsection{Detecting Ungrammaticality}
 \label{sec_unknowntokens}
@@ -604,7 +610,12 @@ We performed 10-fold cross-validation with both \textbf{RandomForest-UT} and \te
 
 As evident from the table, including the parser output statistics as features (\textbf{RandomForest-UT+parser}) significantly improves upon the performance of just \textbf{RandomForest-UT}. We generally value precision more than recall, because we prefer it if our system misses a case of ungrammaticality to it falsely classifying a grammatical sentence as ungrammatical.
 
-An ablation study can be seen in Table~\ref{ablation_study_randomforest}. No number being very high indicates that we have some redundancy of information in the features here.
+An ablation study can be seen in Table~\ref{ablation_study_randomforest}.
+The numbers in the table describe by how much the F-score goes down if we were to remove a specific feature.
+No number being very high indicates that we have some redundancy of information in the features here; none of the features have a lot of \textit{exclusive} information about ungrammaticality.
+
+In this case, we consider redundancy to be a good thing, as it should make the output more stable.
+
 \begin{table}
 \begin{center}
 \begin{tabular}{c|c}
@@ -631,7 +642,7 @@ An ablation study can be seen in Table~\ref{ablation_study_randomforest}. No num
 \label{s_datelines}
 Source texts from news articles, like the ones in the TAC dataset, often contain datelines, which sometimes make it into the generated summary. While in the context of the article datelines made sense (often displayed smaller or otherwise visually distinctive), they are not needed, distracting and confusing in the summaries.
 
-Datelines take many different forms, with some including a location. There is also a variety of appearing time formats:
+Datelines take many different forms, with some including a location. There is also a variety of appearing time formats, and some of them don't include timestamps at all:
 
 \quad\textit{\textbf{BLACKSBURG, Virginia 2007-04-16 18:34: 44 UTC} A gunman opened fire in a dorm and classroom at Virginia Tech on Monday, killing at least 30 people in the deadliest shooting rampage in U.S. history.}
 
@@ -640,16 +651,25 @@ Datelines take many different forms, with some including a location. There is al
 \quad\textit{\textbf{00 a.m.}People are panicking.}
 
 \subsubsection{Method}
-The emerging patterns are so regular, that we use regular expressions to detect them. A few iterations of the expression were created, but so far the highest results were achieved using the regular expression
+The patterns emerging through this violation are so regular, that we use regular expressions to detect them. A few iterations of the expression were created, but so far the highest results were achieved using the regular expression
 
 \begin{lstlisting}
 UTC|^\d{4}-\d{2}-\d{2}|^[A-Z]{3,}|^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)
 \end{lstlisting}
 
-The expression has four parts, of which only one has to match to make the system classify a sentence as containing datelines: The first part matches the string ``UTC'' (Coordinated Universal Time, a common fragment in datelines), the second one numeric dates like \textit{2014-04-13}, the third one capitalized words that are longer than 4 letters and are therefore expected not to be abbreviations (an example would be \textit{LONDON, Feb. 4 (Xinhua)}), and the final part matches abbreviated names of months. Only ``UTC'' can occur anywhere, everything else needs to occur at the beginning of a sentence to be counted.
+The expression has four parts, of which only one has to match to make the system classify a sentence as containing datelines:
+
+\begin{itemize}
+\item The first part matches the string ``UTC'' (Coordinated Universal Time, a common fragment in datelines)
+\item The second one matches numeric dates like \textit{2014-04-13}
+\item The third one matches capitalized words that are longer than 4 letters and are therefore expected not to be abbreviations (an example would be \textit{LONDON, Feb. 4 (Xinhua)})
+\item And the final part matches abbreviated names of months.
+\end{itemize}
+
+Only ``UTC'' can occur anywhere, everything else needs to occur at the beginning of a sentence to be counted.
 
 \subsubsection{Evaluation}
-This very simple approach was evaluated on \textit{test} and leads to good results that can be seen in Table~\ref{eval_regex}. As a baseline, we again classified all sentences with the most-frequent class: not containing a dateline violation.
+This very simple approach was evaluated on \textit{test} and leads to very promising results that can be seen in Table~\ref{eval_regex}. As a baseline, we again classified all sentences with the most-frequent class: not containing a dateline violation.
 
 \begin{table}
 \begin{center}
@@ -700,7 +720,7 @@ Other pairs of sentences are apparently at least partly composed of the same sou
 
 \textit{The cyclone hit the southwestern coast of Bangladesh on Thursday before sweeping north to the capital Dhaka.}
 
-Finally, sometimes subsequent sentences have marginal differences:
+Finally, sometimes subsequent sentences have marginal or even no differences:
 %high example
 \textit{An unknown number of cats and dogs suffered kidney failure and about 10 died after eating the affected pet food, Menu Foods said in announcing the North American recall.}
 
@@ -714,7 +734,11 @@ We are seeking to find all of these sentences, but concentrate on the latter two
 
 Our method (\textbf{Unigrams}) consists of a simple unigram overlap score, which we found to outperform more sophisticated approaches:
 
-First, we remove all non-alphanumeric characters from both sentences and split them into words. We then treat the words as a set and divide the cardinality of the intersection of each sentence's set by the number of possible overlaps, which will be the number of unique tokens in the smaller sentence. A given threshold is then used to classify instances.
+\begin{itemize}
+\item First, we remove all non-alphanumeric characters from both sentences and split them into words
+\item We then treat the words as a set and divide the cardinality of the intersection of each sentence's set by the number of possible overlaps, which will be the number of unique tokens in the smaller sentence.
+\item A given threshold is then used to classify instances.
+\end{itemize}
 
 A number of other methods are also implemented: \textbf{Bigrams} is a variation of the \textbf{Unigrams} method which uses bigrams instead of unigrams. \textbf{Combined} is using a score that the mean of the \textbf{Unigrams} and \textbf{Bigrams} scores.
 
@@ -804,6 +828,7 @@ Neither of these methods had any positive effect on our results.
 %\section{Evaluation} oder auch nicht
 % or skip entirely and put in experiments? final results here?
 
+\newpage
 \section{Discussion}
 \label{discussion}
 % What seem to be the best methods for the various tasks and why?
@@ -811,17 +836,17 @@ Detecting linguistic quality violations automatically is not a trivial task. It 
 
 Despite that, sometimes the easier methods outperformed the more sophisticated approaches.
 
-In theory, \textbf{UnknownTokens-source} should return perfect results, with 100\% recall, precision and F-score. So why doesn't it? Some of this can probably be attributed to annotation mistakes during the annotation process of the subtypes. Manual inspection of the false positives showed that as the datelines (Section~\ref{s_datelines}) are not a part of the text of the source document (which we took the tokens from), geographical names only present in the datelines were wrongly assumed to be unknown tokens.
+In theory, \textbf{UnknownTokens-source} should return perfect results, with 100\% recall, precision and F-score. So why doesn't it? Some of this can probably be attributed to annotation mistakes during the annotation process of the subtypes. But manual inspection of the false positives showed that as the datelines (Section~\ref{s_datelines}) are not a part of the text of the source document (which we took the tokens from), geographical names only present in the datelines were wrongly assumed to be unknown tokens.
 
-\textbf{UnknownTokens-general}'s precision is weakened by a few words such as ``predisposes'' that were neither found in our Gigaword tokens, nor detected to be a named entity by either of our methods. The reader should keep in mind that because we are only evaluating this on \textit{dev-2} (as the subtypes are only annotated there) a couple of words can make a difference.
+\textbf{UnknownTokens-general}'s precision is weakened by a few words such as ``predisposes'' that were neither found in our Gigaword tokens, nor detected to be a named entity by either of our methods. The reader should keep in mind that because we are only evaluating this on \textit{dev-2} (as the subtypes are only annotated there) a couple of words can make a big difference.
 
-Without finding evidence for this in our results, in theory cases could occur where a token is a known token (and rightly so), but can also be formed from two other tokens, when missing a space. This could not be correctly classified without contextual knowledge. A fictitious example could be:
+Without finding evidence for this happening in our results, in theory cases could occur where a token is a known token (and rightly so), but can also be formed from two other tokens, when missing a space. This could not be correctly classified without contextual knowledge. A fictitious example could be:
 
 \quad\textit{To try this taskmaster the other one first.}
 
 As taskmaster is an English word, it might occur in the list of known tokens, but will still be annotated as missing a space, because \textit{in this context} it is a contraction of \textit{task} and \textit{master}.
 
-This means that achieving 100\% precision with this method is theoretically impossible.
+This means that achieving 100\% precision \textit{with this method} is theoretically impossible.
 
 We believe our method of detecting datelines is close to the optimum achievable with a regular expression based approach without accidentally detecting times, time ranges or locations that are mentioned in the text as datelines.
 When looking into the false positives, our decision to match abbreviations of month names leads to some sentences being classified as containing a dateline which actually do not contain one:
@@ -842,7 +867,7 @@ Out of all of our best methods, our \textbf{Unigrams} method for detection of re
 
 \quad\textit{\textbf{Defense Secretary Robert} M. \textbf{Gates} said \textbf{Friday} that he would move swiftly to improve conditions for wounded soldiers being treated as outpatients at \textbf{Walter Reed Army Medical Center}, \textbf{and he} warned that senior officials would be held accountable for the poor conditions.}
 
-While this example has some token overlap, the paraphrased content fails to be noticed by our system.
+While this example has some token overlap, the paraphrased content fails to get noticed by our system.
 
 Another cause of a relatively low score is that in the LQVSumm corpus, redundancy annotations can be done on a smaller scale than what is classified with using our method. For example, a repeated phrase within two long sentences could be marked in the corpus, but our or similar approaches will either not find these cases, or classify too much.
 
@@ -856,7 +881,7 @@ As can be seen in Section~\ref{s_subtypes}, the instances of \textit{other ungra
 %show example
 A legitimate criticism of our work is that our methods, experiments, and results are tailored to the LQVSumm corpus and to the summarization systems that participated in the TAC 2011 Guided Summarization task \citep{owczarzak2011overview}.
 
-
+\newpage
 \section{Conclusion \& Future Work}
 \label{conclusion}
 
@@ -868,7 +893,7 @@ Finally we developed a basic method of detecting redundancy. With the lowest per
 
 One could also try following \cite{hatzivassiloglou1999detecting} closely and applying some form of machine learning as well, possibly similar to our \textbf{RandomForest} method.
 
-\begin{table}
+\begin{table}[H]
 \begin{center}
 \begin{tabular}{|l|c|c|c|}
   \hline
