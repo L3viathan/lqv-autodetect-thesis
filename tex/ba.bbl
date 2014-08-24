@@ -180,11 +180,6 @@ Porter, M.~F. (1980).
 \newblock {\em Program: electronic library and information systems},
   14(3):130--137.
 
-\bibitem[{R Core Team}, 2013]{R}
-{R Core Team} (2013).
-\newblock {\em R: A Language and Environment for Statistical Computing}.
-\newblock R Foundation for Statistical Computing, Vienna, Austria.
-
 \bibitem[Schneider and McCoy, 1998]{schneider1998recognizing}
 Schneider, D. and McCoy, K.~F. (1998).
 \newblock Recognizing syntactic errors in the writing of second language
@@ -233,10 +228,5 @@ Wagner, J., Foster, J., and van Genabith, J. (2007).
 \newblock A comparative evaluation of deep and shallow approaches to the
   automatic detection of common grammatical errors.
 \newblock Association for Computational Linguistics.
-
-\bibitem[Wickham, 2009]{ggplot2}
-Wickham, H. (2009).
-\newblock {\em ggplot2: elegant graphics for data analysis}.
-\newblock Springer New York.
 
 \end{thebibliography}
