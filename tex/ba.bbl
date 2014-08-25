@@ -201,6 +201,12 @@ Sun, G., Liu, X., Cong, G., Zhou, M., Xiong, Z., Lee, J., and Lin, C.-Y.
 \newblock In {\em Annual Meeting-Association for Computational Linguistics},
   volume~45, page~81. Citeseer.
 
+\bibitem[Tetreault et~al., 2010]{tetreault2010using}
+Tetreault, J., Foster, J., and Chodorow, M. (2010).
+\newblock Using parse features for preposition selection and error detection.
+\newblock In {\em Proceedings of the ACL 2010 Conference Short Papers}, pages
+  353--358. Association for Computational Linguistics.
+
 \bibitem[Vadlapudi and Katragadda, 2010]{vadlapudi2010automated}
 Vadlapudi, R. and Katragadda, R. (2010).
 \newblock On automated evaluation of readability of summaries: capturing

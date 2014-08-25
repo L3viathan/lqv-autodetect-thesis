@@ -8,45 +8,45 @@ Warning--empty journal in fellbaum2005wordnet
 Warning--empty journal in friedrichlqvsumm
 Warning--can't use both volume and number fields in sun2007detecting
 Warning--empty booktitle in wagner2007comparative
-You've used 37 entries,
+You've used 38 entries,
             1935 wiz_defined-function locations,
-            681 strings with 10741 characters,
-and the built_in function-call counts, 15879 in all, are:
-= -- 1573
-> -- 618
-< -- 40
-+ -- 222
-- -- 208
-* -- 1214
-:= -- 2632
-add.period$ -- 120
-call.type$ -- 37
-change.case$ -- 283
-chr.to.int$ -- 37
-cite$ -- 42
-duplicate$ -- 713
-empty$ -- 1153
-format.name$ -- 258
-if$ -- 3254
+            686 strings with 10941 characters,
+and the built_in function-call counts, 16436 in all, are:
+= -- 1633
+> -- 636
+< -- 41
++ -- 228
+- -- 214
+* -- 1254
+:= -- 2715
+add.period$ -- 124
+call.type$ -- 38
+change.case$ -- 291
+chr.to.int$ -- 38
+cite$ -- 43
+duplicate$ -- 740
+empty$ -- 1195
+format.name$ -- 265
+if$ -- 3377
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 40
-newline$ -- 186
-num.names$ -- 111
-pop$ -- 344
+missing$ -- 41
+newline$ -- 191
+num.names$ -- 114
+pop$ -- 355
 preamble$ -- 1
-purify$ -- 287
+purify$ -- 295
 quote$ -- 0
-skip$ -- 519
+skip$ -- 540
 stack$ -- 0
-substring$ -- 980
-swap$ -- 157
-text.length$ -- 20
+substring$ -- 1024
+swap$ -- 167
+text.length$ -- 21
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 214
+type$ -- 220
 warning$ -- 5
-while$ -- 130
+while$ -- 135
 width$ -- 0
-write$ -- 480
+write$ -- 494
 (There were 5 warnings)

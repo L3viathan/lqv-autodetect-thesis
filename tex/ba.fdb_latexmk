@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex ba"] 1408902419 "ba.aux" "ba.bbl" "ba" 1408902422
+["bibtex ba"] 1408955342 "ba.aux" "ba.bbl" "ba" 1408956217
   "/usr/local/texlive/2012/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "ba.aux" 1408902422 9255 bb5a950c777cb4bfe23356032af41fed ""
+  "ba.aux" 1408956216 9429 5ab81e1f65af1d27c0b21862b219ef4f ""
   "ba.bcf" 0 -1 0 ""
   "referenzen.bib" 1408898934 12363 c93e7e41c7b14b1401e657b44fa13c25 ""
   (generated)
   "ba.bbl"
   "ba.blg"
-["pdflatex"] 1408902419 "ba.tex" "ba.pdf" "ba" 1408902422
+["pdflatex"] 1408956213 "ba.tex" "ba.pdf" "ba" 1408956217
   "./eule.png" 1368526714 13317 044aa032b9ef7b434f87da786908e4ab ""
   "/usr/local/texlive/2012/texmf-dist/tex/context/base/supp-pdf.mkii" 1337017135 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2012/texmf-dist/tex/generic/babel/babel.def" 1312409092 29228 2fe939254f4b17ac18a8c0fb8aa39dff ""
@@ -166,11 +166,11 @@
   "/usr/local/texlive/2012/texmf-dist/tex/latex/xcolor/xcolor.sty" 1169481954 55224 a43bab84e0ac5e6efcaf9a98bde73a94 ""
   "/usr/local/texlive/2012/texmf-dist/tex/latex/xkeyval/xkeyval.sty" 1218672668 4934 8ea45c150f1216b4eb8e3b63954e4bbf ""
   "/usr/local/texlive/2012/texmf-dist/tex/latex/xyling/xyling.sty" 1155513795 34663 ac631973e5977dd61e72ade3aa4aea8d ""
-  "a.png" 1408368844 509059 d778eb5b3f1f2b4d3552365c83f9ed20 ""
-  "ba.aux" 1408902422 9255 bb5a950c777cb4bfe23356032af41fed ""
-  "ba.bbl" 1408902419 9839 ebe0a5569df2727511ebcb6edf25517f "bibtex ba"
-  "ba.tex" 1408902414 70615 bfc088797d09d68165edd07ef8ecafad ""
-  "ba.toc" 1408902422 1569 ed85bce33f4d6a356ca395aaaa655602 ""
+  "a.png" 1408912326 425483 14c6a647aac532ed608615e21566dbce ""
+  "ba.aux" 1408956216 9429 5ab81e1f65af1d27c0b21862b219ef4f ""
+  "ba.bbl" 1408955343 10156 8bcda6ee0740b6d47612a2828fe0e07b "bibtex ba"
+  "ba.tex" 1408956212 74469 bec021c4e269a86f1d6e00c5a9f0dd41 ""
+  "ba.toc" 1408956216 1596 719f3a8f182c0be520ef4df4c620dab4 ""
   "here.sty" 1282150722 8528 5bb9106badb0ced5731e7cb55f84e6ab ""
   "subtypes_dev2.png" 1404020032 31185 adee37e18552a059cdca6dcab1675085 ""
   "title.tex" 1407333377 1012 6006fc8fa9516b63d7105d5c87ed0b76 ""
