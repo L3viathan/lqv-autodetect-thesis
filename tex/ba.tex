@@ -167,7 +167,7 @@ We are only concerned with extractive, multi-document summarization, because our
 Evaluation of automatic summarization systems has largely been done on content coverage. Along with the task being hard in general, this is one of the reasons generated summaries often lack linguistic quality \citep{nenkova2011foundations}, meaning that they contain errors of various kinds. A new focus on linguistic quality (LQ) evaluation would presumably help decrease these issues and produce overall better summarization systems.
 
 As a first step in this direction, \cite{friedrichlqvsumm} created the \textit{LQVSumm} corpus, which consists of multi-document summaries from the TAC 2011 shared task on Guided Summarization \citep{owczarzak2011overview}, annotated manually with LQ violations on entity and discourse level.
-The corpus also includes annotations on 50 summaries produced by G-Flow \citep{gflow}, which we disregard, because the linguistic quality is much higher than in the rest of the corpus, along with the fact that the size of the annotated G-Flow summaries is much smaller.
+The corpus also includes annotations on 50 summaries produced by G-Flow \citep{gflow}, which we disregard, because the linguistic quality is much higher than in the rest of the corpus, along with the fact that the number of annotated G-Flow summaries is much smaller.
 
 Manual annotation is an expensive and time-consuming process, for which an automatic system could be an alternative. Our work deals with creating such a system that manages at least part of the annotation automatically. We develop and evaluate our system on top of the \textit{LQVSumm} corpus. We also limit ourselves to the clause-level violations listed in \cite{friedrichlqvsumm}, except for \textit{no semantic relatedness} and \textit{no discourse relation}.
 
@@ -200,10 +200,10 @@ They then added error tags to words in their tag dictionary --- POS tags of word
 Most work in the field of automatic grammar checking has been done in the area of second language learning.
 \cite{bender2004arboretum} use the LKB parser and generator \citep{copestake2002implementing} with the English Resource Grammar \citep{flickinger2000building} to build \textit{Arboretum}, a system that, when given an erroneous input sentence, detects that error and outputs a corrected version of the sentence. Their method uses manually selected mal-rules \citep{schneider1998recognizing} to detect error types specific to second language learners of English.
 
-While this seems to work for their specific domain, it does not transform well into ours: The mistakes language learners make, and the kind of ungrammaticality summarization systems produce are very different. Source texts that are being summarized are usually grammatical, and get their ungrammaticality during summarization from being compressed from two formerly grammatical sentences into one ungrammatical one, for example. Mistakes typical for learners of English as a second language either usually do not occur in automatic summarizations (such as misspelled words), or do happen, but due to a different cause (for example agreement).
+While this seems to work for their specific domain, it does not transform well into ours: The mistakes language learners make, and the kind of ungrammaticality summarization systems produce are very different. Source texts that are being summarized are usually grammatical, and get their ungrammaticality during summarization from being compressed from two formerly grammatical sentences into one ungrammatical one, for example. Mistakes typical for learners of English as a second language either usually do not occur in automatic summarizations (such as misspelled words), or do happen, but due to a different cause (for example agreement). Like \cite{bender2004arboretum}, we're using the English Resource Grammar, for our parser features in Section~\ref{s_randomforestfull}.
 
 \cite{chodorow2000unsupervised} build \textit{ALEK}, a system to grade \textit{TOEFL} essays. It does so by viewing the task as an extension of Word Sense Disambiguation, and collecting n-grams of POS-tags and function words, and then classifying using primitive statistical measures like \textit{Mutual Information} and the $\chi^2$ test. However, only the whole essay is classified into one of six possible scores, and this decision is only made by looking at the test subject's understanding of the correct usage of the three words \textit{Concentrate}, \textit{Interest} and \textit{Knowledge} in context.
-Even more than \cite{bender2004arboretum}, this approach is not applicable to our task.
+Even more than \cite{bender2004arboretum}, this approach is not applicable to our task, because we're seeking to classify ungrammaticality per sentence and not just per essay/summary. In addition, the method won't transform well to our domain of news texts, where we can't rely on a few selected words to occur.
 
 \cite{sun2007detecting}, while also citing second language learning as their primary application, use a different approach: Instead of manually writing rules, they employ a supervised statistical learning method. They extract what they call \textit{labeled sequential patterns} (ngrams associated with a class) from both erroneous and correct sentences in their training corpus, enrich them with other automatically computed features, and use them as input for classification models; an SVM \citep[SVMlight,][]{Joachims/02a} and a Na\"ive Bayes classification model. The system achieves F-scores of around 80\%, evaluated on correct and erroneous corpora of second language learning.
 
@@ -253,7 +253,8 @@ They then trained a machine learning algorithm \citep{cohen1996learning} and eva
 \section{Corpus}
 \label{corpus_study}
 % describe the corpus and its flaws
-The LQVSumm corpus consists of annotations on summaries produced by systems participating in the TAC 2011 Guided Summarization Task \citep{owczarzak2011overview}. It contains 44 ``topics'', each of which contains 44 summaries.
+The LQVSumm corpus consists of annotations on summaries produced by systems participating in the TAC 2011 Guided Summarization Task \citep{owczarzak2011overview}. The source documents for the generated summaries are news articles.
+The corpus contains 44 ``topics'', each of which contains 44 summaries.
 Summaries in the same topic are based on the same source documents.
 
 \subsection{Violation types}
@@ -288,7 +289,7 @@ Because the instance counts for the last remaining violation types (\textit{no s
 Suggestions for possible detection methods for the omitted violation types are made in Section~\ref{conclusion}.
 
 \subsection{Experimental Setup}
-The annotation of LQVSumm was done using MMAX2 \citep{muller2006multi}. On top of these annotations, further annotations done from our side are applied to the existing files, but in separate tags splitting corpus data from classification or added features.
+The annotation of LQVSumm was done using the MAE annotation tool \citep{stubbs2011mae}. On top of these annotations, further annotations done from our side are applied to the existing files, but in separate tags splitting corpus data from classification or added features.
 
 We split the corpus into three parts, while making sure that topics weren't spread across sets: \textit{dev-1} and \textit{dev-2} are development sets, \textit{test} is our test set. We have two development sets, because for some methods, we developed on one part and trained on another.
 \textit{dev-1} contains 351 summaries, \textit{dev-2} contains 352, that is 8 topics per development set and about 20\% of the corpus each.
@@ -394,7 +395,7 @@ It is to be noted, that from here on, we consider \textit{incomplete sentence} t
 % All experiments, intermixed with small discussion segments
 We conduct a number of experiments to find automatic methods for detecting linguistic quality violations on the clause level. We focus on ungrammaticality, datelines and redundancy and propose methods based on a variety of syntactic features as well as features from language models and the output statistics of an HPSG parser.
 
-We use the standard metrics of Precision, Recall, F-Score, and Accuracy, which can be seen in Figure~\ref{metrics}. In general, we focus on Precision: We consider missing an violation (false negatives) to be far more acceptable than accidentally mislabeling a non-violation (false positives), because given a high recall, even with a very low precision, we don't add any erroneous information, if the list of classified violations is not considered to be neccesarily exhaustive. We assume a large number of false positives would lower the acceptance by people using our system.
+We use the standard metrics of Precision, Recall, F-Score, and Accuracy, which can be seen in Figure~\ref{metrics}. In general, we focus on Precision: We consider missing an violation (false negatives) to be far more acceptable than accidentally mislabeling a non-violation (false positives), because given a high recall, even with a very low precision, we don't add any erroneous information, if the list of classified violations is not considered to be necessarily exhaustive. We assume a large number of false positives would lower the acceptance by people using our system.
 
 \begin{figure}[H]
 	\begin{subequations*}
@@ -582,6 +583,7 @@ We use three features for building our classifier:
 %   128   53 |    b = ungrammaticality-yes
 
 \subsubsection{The RandomForest-LM+UT+words+parser method}
+\label{s_randomforestfull}
 We also investigated whether parser output would improve the results. For this task, we utilized the HPSG parser Answer Constraint Engine \citep{ace} with the English Resource Grammar \citep{copestake2002implementing} to parse the entire corpus and annotate it with output statistics of the parser: Following \cite{wagner2007comparative} loosely, we extracted the number of readings/parses, the amount of memory the parser used for the parse and the success status, which could be either ``ok'' or ``ignored'', the latter appearing when the parsing failed entirely for some reason.
 
 We then added these three features to \textbf{RandomForest-LM+UT+words} and call the new method \textbf{RandomForest-LM+UT+words+parser}.
@@ -902,13 +904,13 @@ Along with this paper, the authors will publish a toolchain that can be used to 
 
 We have presented a method to detect the kind of ungrammaticality that occurs in automatically generated extractive multi-document summaries. While the results are good, they do rely on a certain type of ungrammaticality occuring often (missing spaces). Future work could concentrate on improving other grammaticality violations, so that not only the accuracy rises, but also the generality. Such a system could potentially detect ungrammaticality in a much broader domain.
 
-There are a few subtypes for which detection appears fairly easy.
+Another direction of research for future work could be finding other features for the classifier. Training a language model on a similar domain as the data (news texts, in our case) could be rewarding, as could exploiting the parser output more: We only use parser statistics, not the actual parse, from which other features could potentially be extracted. Another direction would be using an LFG parser instead of our HPSG parser, like \cite{wagner2007comparative} did.
 
 We have also shown a simple but high-performing method of detecting datelines. We believe our results are close to what a human could achieve and don't see much room for improvement here, at least not with a variant of our method.
 
 Finally we developed a basic method of detecting redundancy. With the lowest performance of all methods in this paper, redundancy detection is requiring much more work. While we based our approach only on the two subsequent sentences on which redundancy was to be tested, future work could include information available in the context of these sentences or even, as we did in \textbf{UnknownTokens-source}, information from the source documents.
 
-One could also try following \cite{hatzivassiloglou1999detecting} closely and applying some form of machine learning as well, possibly similar to our \textbf{RandomForest} method.
+One could also try following \cite{hatzivassiloglou1999detecting} closely and applying some form of machine learning as well, possibly using a similar setup to the one used in our \textbf{RandomForest} method.
 
 \begin{table}[H]
 \begin{center}
@@ -930,7 +932,7 @@ One could also try following \cite{hatzivassiloglou1999detecting} closely and ap
 
 We only looked at a part of the violation types in \cite{friedrichlqvsumm}. Methods for detecting the last clause-level violation (no semantic relatedness), as well as the entity- and discourse-level violations have yet to be developed:
 
-For the pronoun violations (\textit{pronoun with missing antecedent} and \textit{pronoun with misleading antecendent}), one could use the output of a coreference resolution tool such as BART \citep{versley2008bart} or the Stanford coreference resolution system \citep{lee2011stanford} to infer coreferences between entities in the summaries as well as the source documents and compare the originating coreference chains.
+For the pronoun violations (\textit{pronoun with missing antecedent} and \textit{pronoun with misleading antecendent}), one could use the output of a coreference resolution tool such as BART \citep{versley2008bart} or the Stanford coreference resolution system \citep{lee2011stanford} to infer coreferences between entities in the summaries as well as the source documents and compare the originating coreference chains. If they match, the reference has probably been done correctly. If there's a mismatch, this points to a violation of one of the two pronoun violation types.
 
 Finding \textit{acronym without explanation} seems to have a straightforward two-step solution: For every sequence of all-uppercase letters, find out whether those are an acronym that is not in a list of well-known acronyms. If it is, look for the expanded form of the acronym near its first occurence.
 
@@ -944,11 +946,13 @@ It is to be seen whether this method works as well as the author believes.
 
 Going after the mention (\textit{first mention without explanation} and \textit{subsequent mention with explanation}) and noun phrase violations (\textit{definite noun phrase without reference to previous mention} and \textit{indefinite noun phrase with reference to previous mention}) would at least require a named entity recognition system, probably paired with at least some rudimentary form of semantic or discourse parsing.
 
+A simpler approach of detecting \textit{indefinite noun phrase with reference to previous mention} could be to mark indefinite noun phrases whose head occurs earlier in the summary, although recall will presumably be rather low with this approach.
+
 \textit{no semantic relatedness} also suggests an approach using semantic parsing, but usable results might even be achieved by some method based on the distance between content words in \textit{WordNet} \citep{fellbaum2005wordnet}.
 
-Finally, the straightforward solution for detecting the \textit{no discourse relation} violation seems to be parsing the two sentences \textit{without} the discourse connective using a discourse parser, and then comparing the derived discourse relation with the relation commonly linked with the connective.
+Finally, the straightforward solution for detecting the \textit{no discourse relation} violation seems to be parsing the two sentences \textit{without} the discourse connective using a discourse parser, and then comparing the derived discourse relation with the relation commonly linked with the connective. For the last two mentioned types a corpus with more occurences of them would be essential.
 
-Future work could also include annotating a corpus after segmenting it, and using the adapted violation type system developed by us for that task.
+Future work could also include annotating a corpus after segmenting it (into sentences or clauses), and using the adapted violation type system developed by us for that task.
 
 And finally, since some of the characteristics of the violations our methods were tailored to are specific to the domain and corpus, it is yet to be seen how well our system performs on other corpora, other data sets and other domains.
 Evaluation on anything other than extractive multi-document summarization systems however would probably lead to disappointing results: The violation types for which we have detection methods should not occur at all in abstractive systems, and some of them will likely not or only rarely occur in single-document summaries, for example \textit{redundant information} or some subtypes of \textit{other ungrammaticality}.

@@ -142,12 +142,6 @@ Maxwell, J. and Kaplan, R. (1996).
 \newblock An efficient parser for {LFG}.
 \newblock In {\em Proceedings of {LFG}}, volume~96, page 131.
 
-\bibitem[Müller and Strube, 2006]{muller2006multi}
-Müller, C. and Strube, M. (2006).
-\newblock Multi-level annotation of linguistic data with mmax2.
-\newblock {\em Corpus technology and language pedagogy: New resources, new
-  tools, new methods}, 3:197--214.
-
 \bibitem[Nenkova et~al., 2011]{nenkova2011foundations}
 Nenkova, A., McKeown, K., et~al. (2011).
 \newblock Foundations and trends{\textregistered} in information retrieval.
@@ -192,6 +186,12 @@ Schneider, D. and McCoy, K.~F. (1998).
 Stolcke, A. et~al. (2002).
 \newblock {SRILM}-an extensible language modeling toolkit.
 \newblock In {\em INTERSPEECH}.
+
+\bibitem[Stubbs, 2011]{stubbs2011mae}
+Stubbs, A. (2011).
+\newblock Mae and mai: Lightweight annotation and adjudication tools.
+\newblock In {\em Proceedings of the 5th Linguistic Annotation Workshop}, pages
+  129--133. Association for Computational Linguistics.
 
 \bibitem[Sun et~al., 2007]{sun2007detecting}
 Sun, G., Liu, X., Cong, G., Zhou, M., Xiong, Z., Lee, J., and Lin, C.-Y.

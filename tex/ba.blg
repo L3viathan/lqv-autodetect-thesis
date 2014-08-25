@@ -10,43 +10,43 @@ Warning--can't use both volume and number fields in sun2007detecting
 Warning--empty booktitle in wagner2007comparative
 You've used 38 entries,
             1935 wiz_defined-function locations,
-            686 strings with 10941 characters,
-and the built_in function-call counts, 16436 in all, are:
-= -- 1633
-> -- 636
-< -- 41
-+ -- 228
-- -- 214
-* -- 1254
-:= -- 2715
-add.period$ -- 124
+            685 strings with 10891 characters,
+and the built_in function-call counts, 16528 in all, are:
+= -- 1646
+> -- 630
+< -- 42
++ -- 226
+- -- 212
+* -- 1250
+:= -- 2718
+add.period$ -- 125
 call.type$ -- 38
-change.case$ -- 291
+change.case$ -- 290
 chr.to.int$ -- 38
 cite$ -- 43
-duplicate$ -- 740
-empty$ -- 1195
-format.name$ -- 265
-if$ -- 3377
+duplicate$ -- 753
+empty$ -- 1208
+format.name$ -- 261
+if$ -- 3411
 int.to.chr$ -- 1
 int.to.str$ -- 0
 missing$ -- 41
 newline$ -- 191
 num.names$ -- 114
-pop$ -- 355
+pop$ -- 359
 preamble$ -- 1
-purify$ -- 295
+purify$ -- 294
 quote$ -- 0
-skip$ -- 540
+skip$ -- 551
 stack$ -- 0
-substring$ -- 1024
-swap$ -- 167
-text.length$ -- 21
+substring$ -- 1031
+swap$ -- 176
+text.length$ -- 22
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 220
 warning$ -- 5
-while$ -- 135
+while$ -- 136
 width$ -- 0
-write$ -- 494
+write$ -- 495
 (There were 5 warnings)
